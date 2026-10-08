@@ -1,0 +1,16 @@
+# Running the experiments (scripts/): Linux, CUDA 12 GPU (~16 GB), Python 3.12.
+# Install on top of requirements.txt:  pip install -r requirements.txt -r requirements-experiments.txt
+# Versions are those the experiments ran with. The upstream drifting code (DRIFTING_DIR) also needs its own
+# dependencies: pip install -r $DRIFTING_DIR/requirements.txt.
+jax[cuda12]==0.4.37
+jax-cuda12-plugin==0.4.36
+jax-cuda12-pjrt==0.4.36
+flax==0.10.4
+huggingface-hub==1.7.1
+pillow==12.1.1
+tqdm==4.67.3
+# LPIPS is computed on the CPU:
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.14.1+cpu
+torchvision==0.29.1+cpu
+lpips==0.1.4

@@ -1,0 +1,15 @@
+# Python 3.12 (tested 2026-10-07 from a fresh virtual environment: all notebooks run on CPU).
+# Notebooks (CPU is enough): read results/ and draw the tables and figures.
+numpy==1.26.4
+scipy==1.17.1
+matplotlib==3.11.2
+jax==0.4.37
+jaxlib==0.4.36
+optax==0.2.5
+jupyterlab==4.6.4
+ipykernel==7.3.0
+
+# Running the experiments (scripts/) additionally needs a CUDA GPU, the upstream drifting code and weights
+# (see README), and:
+#   jax[cuda12]==0.4.37  flax==0.10.4  huggingface-hub==1.7.1  pillow==12.1.1  tqdm==4.67.3
+#   torch==2.14.1+cpu  torchvision==0.29.1+cpu  lpips==0.1.4   (LPIPS only, on CPU)

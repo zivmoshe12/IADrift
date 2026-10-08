@@ -1,0 +1,1102 @@
+[
+ {
+  "image_index": 1704,
+  "true_label": 251,
+  "true_class": "dalmatian",
+  "wrong_label": 643,
+  "wrong_class": "mask",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 5529,
+  "true_label": 596,
+  "true_class": "hatchet",
+  "wrong_label": 749,
+  "wrong_class": "quill",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 8111,
+  "true_label": 829,
+  "true_class": "streetcar",
+  "wrong_label": 42,
+  "wrong_class": "agama",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 8827,
+  "true_label": 893,
+  "true_class": "wallet",
+  "wrong_label": 279,
+  "wrong_class": "Arctic fox",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 1305,
+  "true_label": 215,
+  "true_class": "Brittany spaniel",
+  "wrong_label": 754,
+  "wrong_class": "radio",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 2238,
+  "true_label": 3,
+  "true_class": "tiger shark",
+  "wrong_label": 971,
+  "wrong_class": "bubble",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 2040,
+  "true_label": 282,
+  "true_class": "tiger cat",
+  "wrong_label": 529,
+  "wrong_class": "diaper",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 5733,
+  "true_label": 614,
+  "true_class": "kimono",
+  "wrong_label": 178,
+  "wrong_class": "Weimaraner",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 7154,
+  "true_label": 742,
+  "true_class": "printer",
+  "wrong_label": 402,
+  "wrong_class": "acoustic guitar",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 4840,
+  "true_label": 534,
+  "true_class": "dishwasher",
+  "wrong_label": 295,
+  "wrong_class": "American black bear",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 9479,
+  "true_label": 951,
+  "true_class": "lemon",
+  "wrong_label": 613,
+  "wrong_class": "joystick",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 7877,
+  "true_label": 807,
+  "true_class": "solar dish",
+  "wrong_label": 530,
+  "wrong_class": "digital clock",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 9648,
+  "true_label": 967,
+  "true_class": "espresso",
+  "wrong_label": 733,
+  "wrong_class": "pole",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 4009,
+  "true_label": 459,
+  "true_class": "brassiere",
+  "wrong_label": 8,
+  "wrong_class": "hen",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 733,
+  "true_label": 164,
+  "true_class": "bluetick",
+  "wrong_label": 477,
+  "wrong_class": "carpenter's kit",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 5035,
+  "true_label": 551,
+  "true_class": "face powder",
+  "wrong_label": 821,
+  "wrong_class": "steel arch bridge",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 2958,
+  "true_label": 364,
+  "true_class": "three-toed sloth",
+  "wrong_label": 415,
+  "wrong_class": "bakery",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 713,
+  "true_label": 162,
+  "true_class": "beagle",
+  "wrong_label": 258,
+  "wrong_class": "Samoyed",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 680,
+  "true_label": 16,
+  "true_class": "bulbul",
+  "wrong_label": 924,
+  "wrong_class": "guacamole",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 3154,
+  "true_label": 382,
+  "true_class": "squirrel monkey",
+  "wrong_label": 96,
+  "wrong_class": "toucan",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 7892,
+  "true_label": 809,
+  "true_class": "soup bowl",
+  "wrong_label": 451,
+  "wrong_class": "bolo tie",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 935,
+  "true_label": 182,
+  "true_class": "Border terrier",
+  "wrong_label": 559,
+  "wrong_class": "folding chair",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 8017,
+  "true_label": 82,
+  "true_class": "ruffed grouse",
+  "wrong_label": 883,
+  "wrong_class": "vase",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 8832,
+  "true_label": 894,
+  "true_class": "wardrobe",
+  "wrong_label": 619,
+  "wrong_class": "lampshade",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 3809,
+  "true_label": 440,
+  "true_class": "beer bottle",
+  "wrong_label": 629,
+  "wrong_class": "lipstick",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 9690,
+  "true_label": 971,
+  "true_class": "bubble",
+  "wrong_label": 14,
+  "wrong_class": "indigo bunting",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 96,
+  "true_label": 106,
+  "true_class": "wombat",
+  "wrong_label": 917,
+  "wrong_class": "comic book",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 7861,
+  "true_label": 806,
+  "true_class": "sock",
+  "wrong_label": 431,
+  "wrong_class": "bassinet",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 8584,
+  "true_label": 871,
+  "true_class": "trimaran",
+  "wrong_label": 218,
+  "wrong_class": "Welsh springer spaniel",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 3868,
+  "true_label": 446,
+  "true_class": "binder",
+  "wrong_label": 376,
+  "wrong_class": "proboscis monkey",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 7396,
+  "true_label": 764,
+  "true_class": "rifle",
+  "wrong_label": 569,
+  "wrong_class": "garbage truck",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 1192,
+  "true_label": 205,
+  "true_class": "flat-coated retriever",
+  "wrong_label": 136,
+  "wrong_class": "European gallinule",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 5249,
+  "true_label": 570,
+  "true_class": "gasmask",
+  "wrong_label": 150,
+  "wrong_class": "sea lion",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 3767,
+  "true_label": 437,
+  "true_class": "beacon",
+  "wrong_label": 916,
+  "wrong_class": "web site",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 1406,
+  "true_label": 224,
+  "true_class": "groenendael",
+  "wrong_label": 162,
+  "wrong_class": "beagle",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 354,
+  "true_label": 13,
+  "true_class": "junco",
+  "wrong_label": 563,
+  "wrong_class": "fountain pen",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 9753,
+  "true_label": 977,
+  "true_class": "sandbar",
+  "wrong_label": 734,
+  "wrong_class": "police van",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 2001,
+  "true_label": 279,
+  "true_class": "Arctic fox",
+  "wrong_label": 112,
+  "wrong_class": "conch",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 7315,
+  "true_label": 757,
+  "true_class": "recreational vehicle",
+  "wrong_label": 923,
+  "wrong_class": "plate",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 1638,
+  "true_label": 245,
+  "true_class": "French bulldog",
+  "wrong_label": 698,
+  "wrong_class": "palace",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 2492,
+  "true_label": 322,
+  "true_class": "ringlet",
+  "wrong_label": 838,
+  "wrong_class": "sunscreen",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 660,
+  "true_label": 158,
+  "true_class": "toy terrier",
+  "wrong_label": 655,
+  "wrong_class": "miniskirt",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 4365,
+  "true_label": 491,
+  "true_class": "chain saw",
+  "wrong_label": 736,
+  "wrong_class": "pool table",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 6083,
+  "true_label": 646,
+  "true_class": "maze",
+  "wrong_label": 544,
+  "wrong_class": "Dutch oven",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 2881,
+  "true_label": 358,
+  "true_class": "polecat",
+  "wrong_label": 402,
+  "wrong_class": "acoustic guitar",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 6098,
+  "true_label": 647,
+  "true_class": "measuring cup",
+  "wrong_label": 525,
+  "wrong_class": "dam",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 2280,
+  "true_label": 303,
+  "true_class": "long-horned beetle",
+  "wrong_label": 688,
+  "wrong_class": "oscilloscope",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 1233,
+  "true_label": 209,
+  "true_class": "Chesapeake Bay retriever",
+  "wrong_label": 738,
+  "wrong_class": "pot",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 7411,
+  "true_label": 766,
+  "true_class": "rotisserie",
+  "wrong_label": 454,
+  "wrong_class": "bookshop",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 3680,
+  "true_label": 43,
+  "true_class": "frilled lizard",
+  "wrong_label": 455,
+  "wrong_class": "bottlecap",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 7992,
+  "true_label": 818,
+  "true_class": "spotlight",
+  "wrong_label": 629,
+  "wrong_class": "lipstick",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 303,
+  "true_label": 125,
+  "true_class": "hermit crab",
+  "wrong_label": 449,
+  "wrong_class": "boathouse",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 725,
+  "true_label": 163,
+  "true_class": "bloodhound",
+  "wrong_label": 815,
+  "wrong_class": "spider web",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 107,
+  "true_label": 107,
+  "true_class": "jellyfish",
+  "wrong_label": 219,
+  "wrong_class": "cocker spaniel",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 9407,
+  "true_label": 945,
+  "true_class": "bell pepper",
+  "wrong_label": 320,
+  "wrong_class": "damselfly",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 3028,
+  "true_label": 370,
+  "true_class": "guenon",
+  "wrong_label": 454,
+  "wrong_class": "bookshop",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 6323,
+  "true_label": 668,
+  "true_class": "mosque",
+  "wrong_label": 604,
+  "wrong_class": "hourglass",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 2489,
+  "true_label": 321,
+  "true_class": "admiral",
+  "wrong_label": 817,
+  "wrong_class": "sports car",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 4563,
+  "true_label": 509,
+  "true_class": "confectionery",
+  "wrong_label": 426,
+  "wrong_class": "barometer",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 4851,
+  "true_label": 535,
+  "true_class": "disk brake",
+  "wrong_label": 675,
+  "wrong_class": "moving van",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 6358,
+  "true_label": 670,
+  "true_class": "motor scooter",
+  "wrong_label": 753,
+  "wrong_class": "radiator",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 9832,
+  "true_label": 984,
+  "true_class": "rapeseed",
+  "wrong_label": 455,
+  "wrong_class": "bottlecap",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 1963,
+  "true_label": 275,
+  "true_class": "African hunting dog",
+  "wrong_label": 104,
+  "wrong_class": "wallaby",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 6311,
+  "true_label": 667,
+  "true_class": "mortarboard",
+  "wrong_label": 681,
+  "wrong_class": "notebook",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 9042,
+  "true_label": 912,
+  "true_class": "worm fence",
+  "wrong_label": 81,
+  "wrong_class": "ptarmigan",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 423,
+  "true_label": 136,
+  "true_class": "European gallinule",
+  "wrong_label": 610,
+  "wrong_class": "jersey",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 2022,
+  "true_label": 280,
+  "true_class": "grey fox",
+  "wrong_label": 691,
+  "wrong_class": "oxygen mask",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 1273,
+  "true_label": 212,
+  "true_class": "English setter",
+  "wrong_label": 628,
+  "wrong_class": "liner",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 7846,
+  "true_label": 804,
+  "true_class": "soap dispenser",
+  "wrong_label": 618,
+  "wrong_class": "ladle",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 2778,
+  "true_label": 348,
+  "true_class": "ram",
+  "wrong_label": 796,
+  "wrong_class": "ski mask",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 2728,
+  "true_label": 343,
+  "true_class": "warthog",
+  "wrong_label": 979,
+  "wrong_class": "valley",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 3770,
+  "true_label": 438,
+  "true_class": "beaker",
+  "wrong_label": 460,
+  "wrong_class": "breakwater",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 7254,
+  "true_label": 751,
+  "true_class": "racer",
+  "wrong_label": 875,
+  "wrong_class": "trombone",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 2986,
+  "true_label": 367,
+  "true_class": "chimpanzee",
+  "wrong_label": 297,
+  "wrong_class": "sloth bear",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 5976,
+  "true_label": 636,
+  "true_class": "mailbag",
+  "wrong_label": 403,
+  "wrong_class": "aircraft carrier",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 6867,
+  "true_label": 716,
+  "true_class": "picket fence",
+  "wrong_label": 150,
+  "wrong_class": "sea lion",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 2448,
+  "true_label": 318,
+  "true_class": "lacewing",
+  "wrong_label": 579,
+  "wrong_class": "grand piano",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 22,
+  "true_label": 10,
+  "true_class": "brambling",
+  "wrong_label": 359,
+  "wrong_class": "black-footed ferret",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 5466,
+  "true_label": 590,
+  "true_class": "hand-held computer",
+  "wrong_label": 916,
+  "wrong_class": "web site",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 6347,
+  "true_label": 67,
+  "true_class": "diamondback",
+  "wrong_label": 851,
+  "wrong_class": "television",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 8433,
+  "true_label": 858,
+  "true_class": "tile roof",
+  "wrong_label": 428,
+  "wrong_class": "barrow",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 863,
+  "true_label": 176,
+  "true_class": "Saluki",
+  "wrong_label": 32,
+  "wrong_class": "tailed frog",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 6004,
+  "true_label": 639,
+  "true_class": "maillot",
+  "wrong_label": 438,
+  "wrong_class": "beaker",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 9631,
+  "true_label": 966,
+  "true_class": "red wine",
+  "wrong_label": 81,
+  "wrong_class": "ptarmigan",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 193,
+  "true_label": 115,
+  "true_class": "sea slug",
+  "wrong_label": 564,
+  "wrong_class": "four-poster",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 7010,
+  "true_label": 73,
+  "true_class": "barn spider",
+  "wrong_label": 20,
+  "wrong_class": "water ouzel",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 6284,
+  "true_label": 664,
+  "true_class": "monitor",
+  "wrong_label": 130,
+  "wrong_class": "flamingo",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 6167,
+  "true_label": 653,
+  "true_class": "milk can",
+  "wrong_label": 307,
+  "wrong_class": "weevil",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 9412,
+  "true_label": 946,
+  "true_class": "cardoon",
+  "wrong_label": 456,
+  "wrong_class": "bow",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 2993,
+  "true_label": 368,
+  "true_class": "gibbon",
+  "wrong_label": 671,
+  "wrong_class": "mountain bike",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 1516,
+  "true_label": 234,
+  "true_class": "Rottweiler",
+  "wrong_label": 945,
+  "wrong_class": "bell pepper",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 7471,
+  "true_label": 771,
+  "true_class": "safe",
+  "wrong_label": 820,
+  "wrong_class": "steam locomotive",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 1982,
+  "true_label": 277,
+  "true_class": "red fox",
+  "wrong_label": 190,
+  "wrong_class": "Sealyham terrier",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 788,
+  "true_label": 169,
+  "true_class": "borzoi",
+  "wrong_label": 892,
+  "wrong_class": "wall clock",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 8620,
+  "true_label": 875,
+  "true_class": "trombone",
+  "wrong_label": 475,
+  "wrong_class": "car mirror",
+  "csgm_kept_restart": {
+   "correct label": 0,
+   "wrong label": 0
+  }
+ },
+ {
+  "image_index": 2575,
+  "true_label": 33,
+  "true_class": "loggerhead",
+  "wrong_label": 138,
+  "wrong_class": "bustard",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 4261,
+  "true_label": 482,
+  "true_class": "cassette player",
+  "wrong_label": 773,
+  "wrong_class": "saltshaker",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 1564,
+  "true_label": 239,
+  "true_class": "Bernese mountain dog",
+  "wrong_label": 916,
+  "wrong_class": "web site",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 8143,
+  "true_label": 831,
+  "true_class": "studio couch",
+  "wrong_label": 701,
+  "wrong_class": "parachute",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ },
+ {
+  "image_index": 1572,
+  "true_label": 24,
+  "true_class": "great grey owl",
+  "wrong_label": 603,
+  "wrong_class": "horse cart",
+  "csgm_kept_restart": {
+   "correct label": 1,
+   "wrong label": 1
+  }
+ }
+]

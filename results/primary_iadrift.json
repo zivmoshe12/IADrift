@@ -1,0 +1,46 @@
+[
+ {
+  "comparison": "IADrift @1000, correct label + BP \u2212 CSGM, correct label + BP",
+  "metric": "psnr",
+  "mean": -2.9189897586860685,
+  "lo": -3.175578291742562,
+  "hi": -2.662401225629575,
+  "p": 3.896559845095909e-18,
+  "better": 0.0,
+  "n": 100.0,
+  "holm_p": 1.5586239380383637e-17
+ },
+ {
+  "comparison": "IADrift @1000, correct label + BP \u2212 CSGM, correct label + BP",
+  "metric": "lpips",
+  "mean": 0.08154969014227391,
+  "lo": 0.0663376970955806,
+  "hi": 0.09676168318896722,
+  "p": 3.4412810293497976e-15,
+  "better": 12.0,
+  "n": 100.0,
+  "holm_p": 1.0323843088049393e-14
+ },
+ {
+  "comparison": "IADrift @100, correct label + BP \u2212 CSGM, correct label + BP",
+  "metric": "psnr",
+  "mean": -0.12146088463241059,
+  "lo": -0.20383262100441965,
+  "hi": -0.039089148260401524,
+  "p": 0.001352884762170484,
+  "better": 33.0,
+  "n": 100.0,
+  "holm_p": 0.001352884762170484
+ },
+ {
+  "comparison": "IADrift @100, correct label + BP \u2212 CSGM, correct label + BP",
+  "metric": "lpips",
+  "mean": -0.008483829647302628,
+  "lo": -0.012683666555982687,
+  "hi": -0.00428399273862257,
+  "p": 1.891940866353517e-05,
+  "better": 72.0,
+  "n": 100.0,
+  "holm_p": 3.783881732707034e-05
+ }
+]

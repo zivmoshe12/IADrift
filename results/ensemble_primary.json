@@ -1,0 +1,24 @@
+[
+ {
+  "comparison": "E3w: weighted 5 CSGM runs + BP \u2212 CSGM, correct label + BP",
+  "metric": "psnr",
+  "mean": 1.5716727513913546,
+  "lo": 1.4010445755229244,
+  "hi": 1.742300927259785,
+  "p": 3.896559845095909e-18,
+  "better": 100.0,
+  "n": 100.0,
+  "holm_p": 7.793119690191818e-18
+ },
+ {
+  "comparison": "E3w: weighted 5 CSGM runs + BP \u2212 CSGM, correct label + BP",
+  "metric": "lpips",
+  "mean": -0.032130184322595595,
+  "lo": -0.04040400954041938,
+  "hi": -0.02385635910477181,
+  "p": 5.671494681756613e-10,
+  "better": 76.0,
+  "n": 100.0,
+  "holm_p": 5.671494681756613e-10
+ }
+]
