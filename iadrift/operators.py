@@ -15,7 +15,6 @@ from jax.scipy.sparse.linalg import cg
 
 HR_SHAPE = (256, 256, 3)
 LR_SHAPE = (64, 64, 3)
-LR_NYQUIST = 0.125  # highest frequency a 64x64 measurement holds, in cycles per HR pixel
 
 
 def A_sr4(x):

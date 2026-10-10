@@ -11,3 +11,5 @@ logs/
 /data/
 /hf_cache/
 /third_party/
+# written by scripts/report/make_figures.py
+/figures/report/

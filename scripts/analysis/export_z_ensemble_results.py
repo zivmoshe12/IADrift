@@ -22,8 +22,8 @@ Per-image results are cached in IADRIFT_DATA/z_ensemble_dev_v1/analysis/ and rec
 Usage:
     python scripts/analysis/export_z_ensemble_results.py                   # every image with runs
     python scripts/analysis/export_z_ensemble_results.py --images 403      # a subset
-Outputs: results/z_ensemble_dev.json, results/z_ensemble_examples.npz (example reconstructions for
-         scripts/report/make_figures.py), figures/z_ensemble_dev.png (PSNR and LPIPS against K)
+Outputs: results/z_ensemble_dev.json, and results/z_ensemble_examples.npz (example reconstructions for
+         scripts/report/make_figures.py)
 """
 
 import sys
@@ -52,7 +52,6 @@ from iadrift.operators import backproject, bicubic_up
 RUN_DIR = paths.DATA_DIR / "z_ensemble_dev_v1"
 CACHE_DIR = RUN_DIR / "analysis"
 OUT_JSON = paths.RESULTS_DIR / "z_ensemble_dev.json"
-OUT_PNG = paths.FIGURES_DIR / "z_ensemble_dev.png"
 OUT_EXAMPLES = paths.RESULTS_DIR / "z_ensemble_examples.npz"
 IMAGES = list(data.DEV_IMAGES_6)
 STEPS = (500, 1_000, 2_000, 5_000)
@@ -289,66 +288,7 @@ def aggregate(per_image, abl):
     return agg
 
 
-# ---------------------------------------------------------------- figures
-COLORS = {500: "#2a78d6", 1_000: "#eb6834", 2_000: "#1baf7a", 5_000: "#eda100", IAD: "#e87ba4"}
-BUDGET_LABEL = {500: "500 steps", 1_000: "1000 steps", 2_000: "2000 steps", 5_000: "5000 steps",
-                IAD: "5000 + IADrift 100"}
-INK, MUTED, GRID = "#0b0b0b", "#52514e", "#e4e3df"
-
-
-def plot(agg):
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-
-    fig, axes = plt.subplots(1, 2, figsize=(11, 4.4), facecolor="#fcfcfb")
-    refs = (("bicubic", "bicubic + BP", "-"), ("CSGM", "CSGM + BP", ":"), ("CSGM Ens-U", "Ens-U (5 members) + BP", "-."),
-            ("CSGM Ens-W", "Ens-W (5 members) + BP", "--"),
-            ("IADrift @100 Ens-W", "IADrift @100 Ens-W + BP", (0, (1, 3))))
-    budgets = [t for t in BUDGETS if str(t) in agg["budgets"]]
-    for ax, key, title in ((axes[0], "psnr", "PSNR after BP (dB) ↑"), (axes[1], "lpips", "LPIPS after BP ↓")):
-        ax.set_facecolor("#fcfcfb")
-        for ref, _, ls in refs:
-            ax.axhline(agg["references"][ref][key], color=MUTED, lw=1, ls=ls, zorder=1)
-        for t in budgets:
-            for mode, ls in (("uniform", "-"), ("weighted", "--")):
-                ys = [agg["k_curve"][str(k)][str(t)][mode][key] for k in KS]
-                ax.plot(KS, ys, ls, color=COLORS[t], lw=2, marker="o", ms=4, zorder=3,
-                        label=BUDGET_LABEL[t] if mode == "uniform" else None)
-        # reference labels at the right end of their lines, spaced so that close values stay legible
-        lo, hi = ax.get_ylim()
-        placed = []
-        for ref, label, _ in sorted(refs, key=lambda r: agg["references"][r[0]][key]):
-            v = agg["references"][ref][key]
-            pos = (v - lo) / (hi - lo)
-            if placed and pos - placed[-1] < 0.045:
-                pos = placed[-1] + 0.045
-            placed.append(pos)
-            ax.annotate(label, xy=(1.0, (v - lo) / (hi - lo)), xycoords="axes fraction", xytext=(1.01, pos),
-                        textcoords="axes fraction", va="center", fontsize=7.5, color=MUTED, annotation_clip=False)
-        ax.set_xscale("log", base=2)
-        ax.set_xticks(KS, [str(k) for k in KS])
-        ax.set_xlabel("members K", color=INK)
-        ax.set_title(title, color=INK, fontsize=10, loc="left")
-        ax.grid(True, color=GRID, lw=0.6)
-        for s in ("top", "right"):
-            ax.spines[s].set_visible(False)
-        for s in ("left", "bottom"):
-            ax.spines[s].set_color(MUTED)
-        ax.tick_params(colors=MUTED, labelsize=8)
-    handles, labels = axes[0].get_legend_handles_labels()
-    handles += [plt.Line2D([], [], color=MUTED, ls="-"), plt.Line2D([], [], color=MUTED, ls="--")]
-    labels += ["uniform mean", "weighted mean (LR loss)"]
-    fig.legend(handles, labels, loc="lower center", ncol=7, frameon=False, fontsize=8)
-    n = agg["n_images"]
-    fig.suptitle(f"Ensembles of K members with distinct (ε, z), development images (n = {n}), not the test set",
-                 fontsize=10, color=INK, x=0.01, ha="left")
-    fig.tight_layout(rect=(0, 0.08, 0.93, 0.95))
-    OUT_PNG.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT_PNG, dpi=160, facecolor=fig.get_facecolor())
-    print(f"wrote {OUT_PNG}", flush=True)
-
-
+# ---------------------------------------------------------------- example images
 # (name, K, T, weighted); the K members are r0..K-1, fixed in advance
 EXAMPLES = (("12 x 500", 12, 500, False), ("5 x 5000", 5, 5_000, False), ("12 x 5000", 12, 5_000, False),
             ("12 x (5000 + IADrift 100)", 12, IAD, False))
@@ -447,7 +387,6 @@ def main():
                                                          "CSGM solution (frozen IADrift @100)"}
     if agg["n_images"]:
         print_tables(agg)
-        plot(agg)
         export_examples(agg, index_rows, lr_all)
     atomic_write_bytes(OUT_JSON, (json.dumps(agg, indent=1) + "\n").encode())
     print(f"wrote {OUT_JSON}", flush=True)

@@ -7,7 +7,7 @@ loss) and fit weights and noise jointly:
     (theta_hat, eps_hat) = argmin_{theta, eps} ||HR - G_theta(eps; z, c)||^2
 
 theta starts at the pretrained weights (all 241 tensors). Two Adam optimizers with the SR IADrift learning rates:
-theta lr 1e-6 and 1e-5, eps lr 1e-3; 2,000 steps; z and the correct class fixed. Images 8117, 3939, 403, 347.
+theta lr 1e-5, eps lr 1e-3; 2,000 steps; z and the correct class fixed. Images 8117, 3939, 403, 347.
 Every 50 steps and at step 0 the compiled output is scored (HR loss, PSNR, LPIPS, LR loss, band SNR), for evaluation
 only. The final output comes from the eager generator path. Platform allocator (theta gradients).
 
@@ -46,7 +46,7 @@ from iadrift import data, paths
 from iadrift.checkpoint import atomic_write_bytes, load_npz
 
 DEV_IMAGES = list(data.DEV_IMAGES_4)
-SETTINGS = [(1e-6, 1e-3), (1e-5, 1e-3)]  # (theta lr, eps lr)
+SETTINGS = [(1e-5, 1e-3)]  # (theta lr, eps lr)
 STEPS = 2_000
 TRACE_EVERY = 50
 R1_DIR = paths.DATA_DIR / "representation_error_dev_v1"

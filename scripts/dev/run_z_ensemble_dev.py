@@ -5,7 +5,7 @@ tests whether shorter runs are enough once they are averaged. Correct label, dev
 
 Each member is one frozen CSGM run (Adam lr 0.02, CSGM.train_step, ||y - A G(eps; z, c)||^2, 5,000 steps) from
 csgm.initialize(i, r), which draws a fresh eps and z for each r. r0 and r1 are the saved CSGM restarts
-(run_csgm_dev.py, run_z_swap_confirm_dev.py), and the runner checks that they match bit for bit. The output, LR loss
+(run_csgm_dev.py, run_csgm_extra_dev.py), and the runner checks that they match bit for bit. The output, LR loss
 and eps are saved at steps 500, 1,000, 2,000 and 5,000; snapshots do not change the trajectory, so one run gives all
 four step budgets.
 

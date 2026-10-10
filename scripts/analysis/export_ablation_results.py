@@ -5,7 +5,6 @@ iadrift.metrics and iadrift.operators:
 
     results/ablation_metrics.json   per section: per-image metrics (PSNR, LPIPS, LR loss, band SNR, blockiness) and the
                                     section's own numbers (variance shares, eps statistics, screening runs, weights)
-    results/ablation_examples.npz   images for the figures, float16; the z x eps grid as uint8 at 128x128
 
 Sections and their sources in IADRIFT_DATA, with the runners that wrote them:
     1 z vs eps            noise_label_role_dev_v1/        scripts/dev/run_noise_label_role_dev.py
@@ -14,7 +13,7 @@ Sections and their sources in IADRIFT_DATA, with the runners that wrote them:
                           csgm_eps_projection_dev_v1/     scripts/dev/run_eps_projection_dev.py
     4 noise-label search  noise_label_search_dev_v1/      scripts/dev/run_noise_label_search_dev.py
     5 ensembles           csgm_dev_5000steps_lr0.02/
-                          z_swap_dev_v1/confirm/          scripts/dev/run_z_swap_confirm_dev.py
+                          z_swap_dev_v1/confirm/          scripts/dev/run_csgm_extra_dev.py
                           ensemble_dev_v1/, one_image_demos_v1/D_shift##_r0.npz   scripts/dev/run_ensemble_dev.py
                           iadrift_ensemble_dev_v1/        scripts/dev/run_iadrift_ensemble_dev.py
     6 colour penalty and frequency anchor
@@ -24,7 +23,7 @@ Ensemble weights are w_k ~ exp(-(L_k - L_min) / std L) from the CSGM members' LR
 never from HR. The kept CSGM restart is the one of r0, r1 with the lower LR loss.
 
 Usage:
-    python scripts/analysis/export_ablation_results.py            # write results/ablation_{metrics.json,examples.npz}
+    python scripts/analysis/export_ablation_results.py            # write results/ablation_metrics.json
     python scripts/analysis/export_ablation_results.py --check    # export to a temporary dir, compare with results/
 """
 
@@ -56,8 +55,7 @@ DEV4 = list(data.DEV_IMAGES_4)
 DEV6 = list(data.DEV_IMAGES_6)
 CSGM_DEV = DATA_DIR / "csgm_dev_5000steps_lr0.02"
 MEMBERS = {"r0": (0, 0), "r1": (0, 0), "shift01": (0, 1), "shift10": (1, 0), "shift11": (1, 1)}
-FILES = ("ablation_metrics.json", "ablation_examples.npz")
-EX = {}
+FILES = ("ablation_metrics.json",)
 
 torch.set_num_threads(4)  # LPIPS on the CPU; results/ was written with 4 threads
 
@@ -79,10 +77,6 @@ def with_bp(x, hr, y):
 def load(path, key="x_hat"):
     with np.load(path) as d:
         return d[key], (json.loads(str(d["metrics_json"])) if "metrics_json" in d.files else {})
-
-
-def keep(name, x, dtype=np.float16):
-    EX[name] = np.asarray(x, dtype)
 
 
 def unshift(x, m):
@@ -131,7 +125,6 @@ def chroma_hf(x):
 
 
 def export(out_dir):
-    EX.clear()
     index_rows = data.load_index()
     labels = data.labels_of(index_rows)
     names = data.class_names()
@@ -152,10 +145,6 @@ def export(out_dir):
                        "locality": {kind: {k: float(np.mean([r[k] for c in role["classes"] for r in loc[c][kind]]))
                                            for k in keys[kind]} | {"n": sum(len(loc[c][kind]) for c in role["classes"])}
                                     for kind in ("eps_patch", "z_coord")}}
-    with np.load(role_dir / "grid_class134.npz") as d:
-        g = d["x"].astype(np.float32)
-    g = g.reshape(8, 8, 128, 2, 128, 2, 3).mean(axis=(3, 5))  # 2x2 average pooling for display
-    keep("grid_crane", np.round((np.clip(g, -1, 1) + 1) * 127.5), np.uint8)
     print("1 done", flush=True)
 
     # ---- 2. an image in eps ----
@@ -168,13 +157,9 @@ def export(out_dir):
                 x = gen[f"{i}|{src}|{tag}"]
                 m = evaluate(x, img[i]["hr"], img[i]["y"])
                 sec[str(i)][f"{src}|{tag}"] = {k: m[k] for k in ("psnr", "lpips", "lr_loss")}
-                if i == 403 and tag in ("a0", "a0.5", "a1"):
-                    keep(f"eps_img|{i}|{src}|{tag}", x)
         x_csgm, _, _ = csgm_kept(i)
         sec[str(i)]["CSGM (5,000 steps)"] = {k: v for k, v in evaluate(x_csgm, img[i]["hr"], img[i]["y"]).items()
                                              if k in ("psnr", "lpips", "lr_loss")}
-    keep("eps_img|403|HR", img[403]["hr"])
-    keep("eps_img|403|bicubic", bicubic_up(img[403]["y"]))
     out["image_in_eps"] = sec
     print("2 done", flush=True)
 
@@ -185,17 +170,12 @@ def export(out_dir):
         hr, y = img[i]["hr"], img[i]["y"]
         sec[str(i)] = {"none": {**with_bp(x, hr, y), "eps": eps_stats(e, init_eps(i, r)),
                                 "init_eps": eps_stats(init_eps(i, r))}}
-        if i == 403:
-            keep("sphere|403|none", x)
         for slug, label in (("global_sphere", "global sphere"), ("perpatch_sphere", "per-patch sphere")):
             runs = [load(DATA_DIR / "csgm_eps_projection_dev_v1" / f"img{i:05d}_{slug}_r{rr}.npz") for rr in (0, 1)]
             rr = min((0, 1), key=lambda k: (runs[k][1]["final_loss"], k))
             with np.load(DATA_DIR / "csgm_eps_projection_dev_v1" / f"img{i:05d}_{slug}_r{rr}.npz") as d:
                 e = d["eps"]
             sec[str(i)][label] = {**with_bp(runs[rr][0], hr, y), "eps": eps_stats(e, init_eps(i, rr))}
-            if i == 403:
-                keep(f"sphere|403|{label}", runs[rr][0])
-    keep("sphere|403|HR", img[403]["hr"])
     out["sphere"] = sec
     print("3 done", flush=True)
 
@@ -214,11 +194,6 @@ def export(out_dir):
             screen.append({"key": key, "lr_loss": loss, "psnr": psnr(hr, xs), "lpips": lpips_dist(xs, hr)})
         sec[str(i)] = {"best": s["best"], "baseline": with_bp(x_base, hr, y), "search": with_bp(x_s, hr, y),
                        "screen": screen}
-        if i == 3939:
-            for k, x in (("baseline", x_base), ("search", x_s)):
-                keep(f"nls|{i}|{k}", x)
-                keep(f"nls|{i}|{k} + BP", backproject(x, y))
-            keep(f"nls|{i}|HR", hr)
     out["noise_label_search"] = sec
     print("4 done", flush=True)
 
@@ -250,9 +225,6 @@ def export(out_dir):
         sec[str(i)] = {"weights": dict(zip(MEMBERS, w.tolist())), "kept": kept, "L": dict(zip(MEMBERS, L)),
                        **{n: evaluate(x, hr, y) for n, x in bp.items()}}
         if i == 403:
-            keep("ens|403|HR", hr)
-            for n in ("CSGM", "CSGM Ens-U", "IADrift @1000", "IADrift @1000 Ens-U", "IADrift @100 Ens-U"):
-                keep(f"ens|403|{n} + BP", bp[n])
             members_403, w_403 = (csgm, iad), w
         print(f"5: image {i} done", flush=True)
     out["ensembles"] = sec
@@ -277,18 +249,13 @@ def export(out_dir):
                         ("weighted", sum(wk * mem[m] for wk, m in zip(w, MEMBERS)))):
             xb = backproject(x, y)
             sec[f"{n}|{kind}"] = {**evaluate(xb, hr, y), "chroma_hf": chroma_hf(xb)}
-            if kind in ("single", "weighted") and n in ("CSGM", "CSGM + A", "IADrift @1000", "IADrift + B @1000",
-                                                         "A → IADrift + B @1000"):
-                keep(f"hfc|{n}|{kind}", xb)
     x = backproject(bicubic_up(y), y)
     sec["bicubic + BP|single"] = {**evaluate(x, hr, y), "chroma_hf": chroma_hf(x)}
-    keep("hfc|HR", hr)
     out["hf_constraints"] = sec
     print("6 done", flush=True)
 
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "ablation_metrics.json").write_text(json.dumps(out, indent=1))
-    np.savez_compressed(out_dir / "ablation_examples.npz", **EX)
     for f in FILES:
         print(f"{f:24s} {(out_dir / f).stat().st_size / 1e6:6.2f} MB")
 
@@ -311,9 +278,8 @@ def max_rel_diff(a, b, path=""):
 def check(fresh_dir, ref_dir=paths.RESULTS_DIR):
     """Compare a fresh export with results/.
 
-    The saved files are bit-exact only on the platform that wrote them; on the CPU even bicubic_up differs from the
-    saved image by one float16 step. So metrics are compared to a relative 1e-4, float16 images to 2e-3, and the
-    kept restart and best search key must match exactly.
+    The saved file is bit-exact only on the platform that wrote it, so metrics are compared to a relative 1e-4; the
+    kept restart and the best search key must match exactly.
     """
     fresh = json.loads((fresh_dir / FILES[0]).read_text())
     ref = json.loads((ref_dir / FILES[0]).read_text())
@@ -322,14 +288,7 @@ def check(fresh_dir, ref_dir=paths.RESULTS_DIR):
         fresh["noise_label_search"][k]["best"] == ref["noise_label_search"][k]["best"]
         for k in ref["noise_label_search"])
     print(f"{FILES[0]}: identical {fresh == ref}; max relative difference {diff:.1e} at {where}; same choices {choices}")
-    with np.load(fresh_dir / FILES[1]) as a, np.load(ref_dir / FILES[1]) as b:
-        same_keys = set(a.files) == set(b.files)
-        unequal = [k for k in b.files if k in a.files and not np.array_equal(a[k], b[k])]
-        worst = max((float(np.max(np.abs(a[k].astype(np.float64) - b[k].astype(np.float64)))) for k in unequal),
-                    default=0.0)
-    print(f"{FILES[1]}: same arrays {same_keys}; {len(b.files) - len(unequal)} / {len(b.files)} bit-identical"
-          + (f"; the others differ by at most {worst:.1e}" if unequal else ""))
-    ok = same_keys and choices and diff < 1e-4 and worst < 2e-3
+    ok = choices and diff < 1e-4
     print("CHECK PASSED" if ok else "CHECK FAILED")
     return ok
 

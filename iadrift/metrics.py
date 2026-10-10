@@ -4,7 +4,6 @@
     lpips_dist      LPIPS with the AlexNet backbone (lpips 0.1.4), inputs clipped to [-1, 1]
     blockiness      pixel jump across the generator's 16-pixel tile borders relative to other 4-aligned positions
     band_snr_db     SNR in four radial frequency bands, two below the LR limit 0.125 and two above
-    radial_snr_db   SNR per radial frequency ring, for plots
     grid_score      spectral power on the 16-pixel patch-grid lines relative to neighbouring lines
 
 No JAX import; torch is imported on the first LPIPS call.
@@ -103,16 +102,6 @@ def band_snr_db(reconstruction, reference):
             for name, lo, hi in BANDS}
 
 
-def radial_snr_db(reconstruction, reference, num_bins=48):
-    """(bin centres, SNR in dB per ring) from 0 to 0.5 cycles/pixel, for plotting."""
-    signal = _power(reference)
-    error = _power(np.asarray(reconstruction, dtype=np.float64) - reference)
-    edges = np.linspace(0.0, 0.5, num_bins + 1)
-    snr = [_snr_db(signal[(RADIUS >= lo) & (RADIUS < hi)], error[(RADIUS >= lo) & (RADIUS < hi)])
-           for lo, hi in zip(edges[:-1], edges[1:])]
-    return (edges[:-1] + edges[1:]) / 2, np.asarray(snr)
-
-
 _PAD = SIZE // 2
 _fp = np.fft.fftfreq(SIZE + 2 * _PAD)
 _RADIUS_PADDED = np.sqrt(_fp[None, :] ** 2 + _fp[:, None] ** 2)
@@ -124,11 +113,6 @@ def band_filter(image, lo, hi):
     mask = ((_RADIUS_PADDED >= lo) & (_RADIUS_PADDED < hi))[..., None]
     filtered = np.real(np.fft.ifft2(np.fft.fft2(padded, axes=(0, 1)) * mask, axes=(0, 1)))
     return filtered[_PAD:_PAD + SIZE, _PAD:_PAD + SIZE].astype(np.float32)
-
-
-def fuse_with_bicubic(reconstruction, bicubic, lo=0.0625, hi=LR_NYQUIST):
-    """Frequency fusion, a development control: the reconstruction inside [lo, hi), bicubic elsewhere."""
-    return band_filter(bicubic, 0.0, lo) + band_filter(reconstruction, lo, hi) + band_filter(bicubic, hi, np.inf)
 
 
 def evaluate(x, hr, y=None, with_lpips=True):

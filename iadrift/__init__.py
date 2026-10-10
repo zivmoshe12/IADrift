@@ -10,7 +10,7 @@ Call ``iadrift.runtime.setup`` before importing anything that imports JAX.
     csgm         CSGM: optimize the noise input of the frozen generator
     adaptation   IADrift: joint (theta, eps) adaptation; theta-only adaptation
     ensemble     shifted CSGM members and the posterior-mean ensembles
-    metrics      PSNR, LPIPS, blockiness, band / radial SNR, patch-grid score
+    metrics      PSNR, LPIPS, blockiness, band SNR, patch-grid score
     stats        paired statistics and Holm's correction (docs/PROTOCOL.md, Section 6)
     checkpoint   resumable, hashed experiment checkpoints (JSONL + .npz)
 """

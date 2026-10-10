@@ -2,8 +2,7 @@
 
 Forward passes only:
 1. Random samples x = G(eps; z, c, cfg) for the classes of images 8117, 3939, 403, 347. Two draws per class, (eps, z)
-   from key fold_in(fold_in(2031, class), draw), each at classifier-free guidance 1.0, 1.5 and 2.5 with the same eps
-   and z. They show that the 16-pixel patch grid comes from the generator itself, not from the inversion.
+   from key fold_in(fold_in(2031, class), draw), at guidance 1.0. They show that the 16-pixel patch grid comes from the generator itself, not from the inversion.
 2. The in-range SR targets x* = G(eps*; z*, c) of run_representation_dev.py (R3; key fold_in(2032, image), guidance
    1.0). That runner does not save x*.
 Before saving, the saved R3 CSGM outputs are rescored against the regenerated x* and must give the PSNR stored in
@@ -14,8 +13,8 @@ Usage:
     python scripts/dev/run_generator_samples_dev.py --smoke     # regenerate 2 arrays, compare exactly; writes nothing
     python scripts/dev/run_generator_samples_dev.py             # create the file if it is missing
 
-Output (IADRIFT_DATA/generator_samples_dev_v1.npz): sample_img<i>_draw<d>_cfg<1|1.5|2.5> and xstar_img<i>, float32
-[256, 256, 3] (28 arrays). Read by scripts/analysis/export_dev_results.py.
+Output (IADRIFT_DATA/generator_samples_dev_v1.npz): sample_img<i>_draw<d>_cfg1 and xstar_img<i>, float32
+[256, 256, 3] (12 arrays). Read by scripts/analysis/export_dev_results.py.
 """
 
 import sys
@@ -44,7 +43,7 @@ from iadrift.checkpoint import atomic_write_bytes, load_npz
 OUT_PATH = paths.DATA_DIR / "generator_samples_dev_v1.npz"
 REP_DIR = paths.DATA_DIR / "representation_error_dev_v1"
 DEV_IMAGES = list(data.DEV_IMAGES_4)
-SAMPLE_SEED, CFG_SCALES, SAMPLE_DRAWS = 2031, (1.0, 1.5, 2.5), 2
+SAMPLE_SEED, CFG_SCALES, SAMPLE_DRAWS = 2031, (1.0,), 2
 INRANGE_SEED = 2032
 SMOKE_KEYS = ("xstar_img403", "sample_img403_draw0_cfg1")
 

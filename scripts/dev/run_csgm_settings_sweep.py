@@ -25,7 +25,7 @@ Usage:
 
 Outputs (IADRIFT_DATA): phase1_sr4_oracle_moments_dev_v1_6b22675bd557.{jsonl,manifest.json}, one JSON row per run
 (settings, initial/final LR loss, penalty and objective, HR PSNR, eps statistics, seconds); no arrays. The 100-image
-pool in this file is also where run_csgm_dev.py and run_z_swap_confirm_dev.py draw the development images from.
+pool in this file is also where run_csgm_dev.py and run_csgm_extra_dev.py draw the development images from.
 phase1_sr4_oracle_moments_dev_v1_795139bf9252.* is an abandoned 2,000-step version of the same plan (2 runs).
 About 50 s per run on an RTX A4000, so ~22 h for the whole sweep.
 """

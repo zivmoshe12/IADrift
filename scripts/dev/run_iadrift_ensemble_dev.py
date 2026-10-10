@@ -12,7 +12,7 @@ and 1,000 are saved in the member's own, possibly shifted, frame. Averaging, un-
 are in scripts/analysis/export_ablation_results.py, with weights from the CSGM members' LR losses. The printed PSNR
 uses HR shifted into the member's frame and is only logged.
 
-Needs the member files of run_csgm_dev.py, run_z_swap_confirm_dev.py and run_ensemble_dev.py.
+Needs the member files of run_csgm_dev.py, run_csgm_extra_dev.py and run_ensemble_dev.py.
 
 Usage:
     python scripts/dev/run_iadrift_ensemble_dev.py --dry-run   # plan and cache status; runs and writes nothing (CPU)

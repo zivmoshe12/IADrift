@@ -8,8 +8,7 @@ A (CSGM stage, default allocator, --a): CSGM with a penalty on high-frequency co
     L(eps) = ||S_s y - A G(eps)||^2 + lam_A ||HP(chroma(G(eps)))||^2,
 
    otherwise frozen CSGM (Adam lr 0.02 on eps, 5,000 steps). Members as in the development ensemble: restarts r0, r1
-   and the r0-start runs on y shifted by (0, 1), (1, 0), (1, 1) LR pixels. lam_A = 0.1 for all members, also 0.3
-   for r0.
+   and the r0-start runs on y shifted by (0, 1), (1, 0), (1, 1) LR pixels. lam_A = 0.1.
 B (IADrift stage, platform allocator, --b): IADrift (joint theta + eps, Adam theta lr 1e-5, eps lr 1e-3, 1,000 steps,
    eager outputs at 100 and 1,000) with an anchor that keeps the high band close to the start image x0, the member's
    CSGM output:
@@ -29,7 +28,7 @@ Usage:
     python scripts/dev/run_hf_constraints_dev.py --a                # run the missing A members, then:
     python scripts/dev/run_hf_constraints_dev.py --b                # the missing B members (separate process)
 
-Outputs (IADRIFT_DATA/hf_constraints_dev_v1/): A_lam{0.1,0.3}_<member>.npz (metrics_json {image, member, shift, lam_A,
+Outputs (IADRIFT_DATA/hf_constraints_dev_v1/): A_lam0.1_<member>.npz (metrics_json {image, member, shift, lam_A,
 fit_loss, chroma_hf, seconds}; x_hat, eps, noise_labels), B_from_{base,A}_<member>.npz (metrics_json {image, start,
 member, shift, lam_B, step100/step1000: {lr_loss, anchor, finite}, seconds}; x_step100, x_step1000).
 Used in the full report, Development ablations ("Also tried").
@@ -61,7 +60,7 @@ I = 403
 OUT_DIR = paths.DATA_DIR / "hf_constraints_dev_v1"
 CSGM_CACHE = paths.DATA_DIR / "csgm_dev_5000steps_lr0.02"
 DEMO_DIR = paths.DATA_DIR / "one_image_demos_v1"
-LAM_A = {"r0": (0.1, 0.3), "r1": (0.1,), "shift01": (0.1,), "shift10": (0.1,), "shift11": (0.1,)}
+LAM_A = {"r0": (0.1,), "r1": (0.1,), "shift01": (0.1,), "shift10": (0.1,), "shift11": (0.1,)}
 LAM_B = 0.02
 SHIFTS = {"r0": (0, 0), "r1": (0, 0), "shift01": (0, 1), "shift10": (1, 0), "shift11": (1, 1)}
 STEPS_A, CKPTS_B = 5_000, (100, 1000)

@@ -9,9 +9,7 @@ the restart with the lower final LR loss (never HR).
 
 Images: 8117 (streetcar), 3939 (bonnet), 403 (crane), 347 (spoonbill), drawn with seed 2030 from the 100 images of
 the CSGM settings sweep (run_csgm_settings_sweep.py, whose results file this script reads) and checked to lie outside
-the test split. Labels per image: the correct class ("oracle") and one random wrong class (data.wrong_label_for, as
-in the test benchmark). Image 8117 also gets 5 more random wrong classes (seed (2031, 8117), files "label<c>"). All
-labels start from the same (eps, z).
+the test split. Correct class label only.
 
 The saved runs were made with XLA_PYTHON_CLIENT_ALLOCATOR=platform. This script uses the default allocator, like the
 other CSGM runners; it still reproduces img08117_oracle_r1 bit for bit.
@@ -21,7 +19,7 @@ Usage:
     python scripts/dev/run_csgm_dev.py --smoke       # rerun the first 500 steps of img08117_oracle_r1; writes nothing
     python scripts/dev/run_csgm_dev.py               # run what is missing (existing files are kept)
 
-Outputs (IADRIFT_DATA/csgm_dev_5000steps_lr0.02/): img#####_{oracle,wrong,label<c>}_r{0,1}.npz with metrics_json
+Outputs (IADRIFT_DATA/csgm_dev_5000steps_lr0.02/): img#####_oracle_r{0,1}.npz with metrics_json
 (initial/final LR loss, PSNR, eps statistics, class_label), eps, noise_labels, x_hat, trace_steps, trace_loss.
 Read by scripts/analysis/export_dev_results.py and export_ablation_results.py (report Table 2).
 """
@@ -51,7 +49,6 @@ from iadrift.checkpoint import load_npz, load_results, save_npz
 CSGM_DIR = paths.DATA_DIR / "csgm_dev_5000steps_lr0.02"
 DEV_SEED = 2030                 # draws the 4 development images from the sweep's 100
 SWEEP_RESULTS = "phase1_sr4_oracle_moments_dev_v1_6b22675bd557.jsonl"
-LABEL_IMAGE, NUM_EXTRA_WRONG, LABEL_SEED = 8117, 5, 2031
 NUM_RESTARTS = 2
 SMOKE = {"image_index": 8117, "condition": "oracle", "restart": 1, "steps": 500}
 
@@ -68,17 +65,8 @@ def check_dev(images, train_indices, test_indices):
 
 
 def build_plan(images, labels):
-    """[(image, condition, restart, class label)]: oracle and wrong for every image, 5 extra labels for 8117."""
-    plan = []
-    for i in images:
-        true_label = int(labels[i])
-        conditions = [("oracle", true_label), ("wrong", data.wrong_label_for(i, true_label))]
-        if i == LABEL_IMAGE:
-            rng = np.random.default_rng([LABEL_SEED, LABEL_IMAGE])
-            extra = rng.choice(np.setdiff1d(np.arange(1000), [true_label]), NUM_EXTRA_WRONG, replace=False)
-            conditions += [(f"label{int(c)}", int(c)) for c in extra]
-        plan += [(i, cond, r, label) for cond, label in conditions for r in range(NUM_RESTARTS)]
-    return plan
+    """[(image, "oracle", restart, class label)] for every image and restart."""
+    return [(i, "oracle", r, int(labels[i])) for i in images for r in range(NUM_RESTARTS)]
 
 
 def path_of(i, condition, restart):

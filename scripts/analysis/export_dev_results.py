@@ -3,15 +3,13 @@
 Development images only, never test images: 8117 streetcar, 3939 bonnet, 403 crane, 347 spoonbill; correct label.
 Reads the cached outputs of the development runs and computes all metrics on the CPU:
 
-    results/dev_metrics.json    per image and method: PSNR, LPIPS, LR loss, band SNR, blockiness, patch-grid score,
-                                radial SNR curve; in-range SR (R3) metrics; patch-grid scores of random samples
+    results/dev_metrics.json    per image and method: PSNR, LPIPS, LR loss, band SNR, blockiness, patch-grid score;
+                                in-range SR (R3) metrics; patch-grid scores of generator samples
     results/dev_traces.json     loss curves every 50 steps: theta-only adaptation (SR) and IADrift fitted to HR
-    results/dev_examples.npz    images for the figures, float16: 2 development images x all methods, the in-range
-                                targets and reconstructions, and random generator samples at CFG 1.0, 1.5 and 2.5
 
 Methods per image: bicubic, CSGM (restart with the lowest final LR loss) and IADrift (theta lr 1e-5, eps lr 1e-3,
 1,000 steps), each raw and + BP; theta-only adaptation (theta lr 1e-6 and 1e-5); CSGM-HR (R1) and IADrift-HR
-(theta lr 1e-6 and 1e-5). In-range SR (R3) is scored against the generated target x*, not HR.
+(theta lr 1e-5). In-range SR (R3) is scored against the generated target x*, not HR.
 
 Reads from IADRIFT_DATA, written by these runners in scripts/dev/:
     csgm_dev_5000steps_lr0.02/      run_csgm_dev.py
@@ -45,24 +43,22 @@ import torch
 
 from iadrift import data, paths
 from iadrift.checkpoint import load_npz
-from iadrift.metrics import band_snr_db, blockiness, grid_score, lpips_dist, psnr, radial_snr_db
+from iadrift.metrics import band_snr_db, blockiness, grid_score, lpips_dist, psnr
 from iadrift.operators import A_sr4, backproject, bicubic_up
 
 DEV_IMAGES = list(data.DEV_IMAGES_4)
-FIGURE_IMAGES = [403, 8117]  # stored for the figures: crane (strongest effects), streetcar
 IAD_CFG = "lrt1e-05_lre0.001"
 R3_CONDITIONS = ("noise labels known", "noise labels random")
-FILES = ("dev_metrics.json", "dev_traces.json", "dev_examples.npz")
+FILES = ("dev_metrics.json", "dev_traces.json")
 
 torch.set_num_threads(4)  # LPIPS values depend slightly on the thread count; results/ was written with 4
 
 
 def evaluate(x, ref, y):
-    f, s = radial_snr_db(x, ref)
     # LR loss summed over the [64, 64, 3] array
     lr_loss = float(jnp.sum((A_sr4(jnp.asarray(x, jnp.float32)[None])[0] - jnp.asarray(y, jnp.float32)) ** 2))
     return {"psnr": psnr(ref, x), "lpips": lpips_dist(x, ref), "lr_loss": lr_loss, "band_snr_db": band_snr_db(x, ref),
-            "blockiness": blockiness(x), "grid_score": grid_score(x), "radial_snr": s.tolist()}
+            "blockiness": blockiness(x), "grid_score": grid_score(x)}
 
 
 def best_of(file_paths):
@@ -86,7 +82,7 @@ def export(out_dir):
     gen = np.load(D / "generator_samples_dev_v1.npz")
     r3_summary = json.loads((D / "representation_error_dev_v1" / "summary.json").read_text())["R3"]
 
-    metrics, traces, ex = {"images": {}, "r3": {}, "samples_grid_score": {}}, {"theta_only": {}, "hr_fit": {}}, {}
+    metrics, traces = {"images": {}, "r3": {}, "samples_grid_score": {}}, {"theta_only": {}, "hr_fit": {}}
     for i in DEV_IMAGES:
         label = int(labels[i])
         hr, y = data.hr_image(index_rows, i), np.asarray(lr_all[i], np.float32)
@@ -101,7 +97,7 @@ def export(out_dir):
                 out[f"theta-only, lr {lt}"] = d["x"]
                 traces["theta_only"][f"{i}|{lt}"] = json.loads(str(d["result_json"]))["trace"]
         out["CSGM-HR"], _ = best_of([D / "representation_error_dev_v1" / f"R1_img{i:05d}_r{r}.npz" for r in (0, 1)])
-        for lt in ("1e-06", "1e-05"):
+        for lt in ("1e-05",):
             with np.load(D / "hr_fit_iadrift_dev_v1" / f"img{i:05d}_lrt{lt}_lre0.001_steps2000.npz") as d:
                 out[f"IADrift-HR, lr {lt}"] = d["x"]
                 traces["hr_fit"][f"{i}|{lt}"] = json.loads(str(d["result_json"]))["trace"]
@@ -122,23 +118,12 @@ def export(out_dir):
         for cond in R3_CONDITIONS:
             metrics["r3"][str(i)][f"CSGM, {cond}"]["eps_rel_error"] = r3_summary[str(i)][f"eps_err, {cond}"]
         metrics["samples_grid_score"][str(i)] = [grid_score(gen[f"sample_img{i}_draw{d}_cfg1"]) for d in (0, 1)]
-
-        if i in FIGURE_IMAGES:
-            for m, x in {"HR": hr, "LR": y, **out}.items():
-                ex[f"{i}|{m}"] = np.asarray(x, np.float16)
-            for m, x in {"x*": x_star, "y*": y_star, **r3}.items():
-                ex[f"r3|{i}|{m}"] = np.asarray(x, np.float16)
-            for d in (0, 1):
-                for cfg in ("1", "1.5", "2.5"):
-                    ex[f"sample|{i}|{d}|{cfg}"] = np.asarray(gen[f"sample_img{i}_draw{d}_cfg{cfg}"], np.float16)
         print(f"image {i} done: CSGM {metrics['images'][str(i)]['CSGM']['psnr']:.2f} dB, "
               f"IADrift-HR 1e-5 {metrics['images'][str(i)]['IADrift-HR, lr 1e-05']['psnr']:.2f} dB", flush=True)
 
-    metrics["radial_freqs"] = radial_snr_db(hr, hr + 1e-3)[0].tolist()
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "dev_metrics.json").write_text(json.dumps(metrics, indent=1))
     (out_dir / "dev_traces.json").write_text(json.dumps(traces))
-    np.savez_compressed(out_dir / "dev_examples.npz", **ex)
     for f in FILES:
         print(f"{f:20s} {(out_dir / f).stat().st_size / 1e6:6.2f} MB")
 
@@ -172,11 +157,6 @@ def check(reference_dir):
             print(f"{f}: byte-identical {new == ref}; max |difference| {worst:.3g}; "
                   f"structural differences {issues[:5]}")
             ok &= new == ref
-        with np.load(tmp / "dev_examples.npz") as new, np.load(reference_dir / "dev_examples.npz") as ref:
-            same_keys = sorted(new.files) == sorted(ref.files)
-            diff = [k for k in new.files if k in ref.files and not np.array_equal(new[k], ref[k])]
-        print(f"dev_examples.npz: same keys {same_keys}; arrays that differ: {len(diff)} {diff[:5]}")
-        ok &= same_keys and not diff
     print("CHECK PASSED" if ok else "CHECK FAILED")
     return ok
 

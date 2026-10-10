@@ -14,7 +14,7 @@ scoring are in scripts/analysis/export_ablation_results.py.
 Images: 8117, 3939, 403, 347, 9780, 8405. The shifted runs of image 403 were made first, as a one-image demo, and
 live in one_image_demos_v1/; the other images' runs are in ensemble_dev_v1/.
 Restart members: csgm_dev_5000steps_lr0.02/img#####_oracle_r{0,1}.npz for the first 4 images (run_csgm_dev.py) and
-z_swap_dev_v1/confirm/img#####_csgm_r{0,1}.npz for 9780 and 8405 (run_z_swap_confirm_dev.py).
+z_swap_dev_v1/confirm/img#####_csgm_r{0,1}.npz for 9780 and 8405 (run_csgm_extra_dev.py).
 
 Usage:
     python scripts/dev/run_ensemble_dev.py --dry-run   # plan and cache status (incl. restart members); writes nothing
@@ -122,7 +122,7 @@ def main():
         print(f"image {i} shift ({sy}, {sx}): final LR loss {m['final_loss']:.1f} ({m['seconds']:.0f} s)", flush=True)
     missing = [p for p in (restart_path(i, r) for i in IMAGES for r in (0, 1)) if not p.exists()]
     if missing:
-        print("Restart members still missing (run_csgm_dev.py / run_z_swap_confirm_dev.py):", missing)
+        print("Restart members still missing (run_csgm_dev.py / run_csgm_extra_dev.py):", missing)
     else:
         print("ALL RUNS COMPLETE")
 

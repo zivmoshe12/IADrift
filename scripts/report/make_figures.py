@@ -15,8 +15,6 @@ Figures (report = the 7-page report, full = the full report):
     z_iad_examples       report Fig. 4                12-member averages, crops (needs results/z_ensemble_examples.npz)
     z_ensemble_examples  full Fig. 8                  the same, full images and crops
 
-The method diagram of the full report (Fig. 1) is drawn by hand: figures/methods_overview.pdf.
-
 Fonts: DejaVu Serif, which ships with matplotlib, so the figures look the same on every machine.
 """
 

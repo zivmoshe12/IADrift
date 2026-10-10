@@ -8,8 +8,8 @@ theta starts at the pretrained weights (all 241 tensors); (eps, z) at the CSGM r
 with the lower final LR loss (run_csgm_dev.py). Two Adam optimizers, 1,000 steps, grid theta lr {1e-6, 3e-6, 1e-5}
 x eps lr {0 (eps frozen), 1e-3} = 6 settings x 4 images (8117, 3939, 403, 347). Every 50 steps and at step 0 the
 compiled output is scored against HR (PSNR, LR loss, band SNR), for evaluation only, never to stop or choose. The
-final output comes from the eager generator path and is also saved after BP (back-projection onto {x : A x = y}) and
-after fusion (bicubic outside 0.0625-0.125 cycles/pixel). The setting used later (theta lr 1e-5, eps lr 1e-3) was
+final output comes from the eager generator path and is also saved after BP (back-projection onto {x : A x = y}).
+The setting used later (theta lr 1e-5, eps lr 1e-3) was
 fixed before this grid; the grid only shows the trade-off. Platform allocator (theta gradients).
 
 Reproducibility: this was the first IADrift run, made before XLA's deterministic GPU ops were enabled for
@@ -23,8 +23,8 @@ Usage:
     python scripts/dev/run_iadrift_dev.py --smoke       # rerun 100 steps of one saved run, compare the trace; no writes
     python scripts/dev/run_iadrift_dev.py               # run what is missing (existing files are kept)
 
-Outputs (IADRIFT_DATA/iadrift_dev_tuning_v1/): img#####_lrt{lr}_lre{lr}.npz with arrays "IADrift", "IADrift + BP",
-"IADrift + fusion" and result_json (settings, the every-50-steps trace, metrics of the three outputs).
+Outputs (IADRIFT_DATA/iadrift_dev_tuning_v1/): img#####_lrt{lr}_lre{lr}.npz with arrays "IADrift", "IADrift + BP"
+and result_json (settings, the every-50-steps trace, metrics of both outputs).
 scripts/analysis/export_dev_results.py reads the lrt1e-05_lre0.001 files (IADrift rows of report Table 2).
 """
 
@@ -50,7 +50,7 @@ import numpy as np
 
 from iadrift import data, paths
 from iadrift.checkpoint import atomic_write_bytes, load_npz
-from iadrift.metrics import BANDS, band_snr_db, fuse_with_bicubic, psnr
+from iadrift.metrics import BANDS, band_snr_db, psnr
 
 OUT_DIR = paths.DATA_DIR / "iadrift_dev_tuning_v1"
 CSGM_DIR = paths.DATA_DIR / "csgm_dev_5000steps_lr0.02"
@@ -59,7 +59,7 @@ CONFIGS = [(lr_theta, lr_eps) for lr_theta in (1e-6, 3e-6, 1e-5) for lr_eps in (
 STEPS = 1_000
 EVAL_EVERY = 50
 BAND_NAMES = [name for name, *_ in BANDS]
-OUTPUTS = ("IADrift", "IADrift + BP", "IADrift + fusion")
+OUTPUTS = ("IADrift", "IADrift + BP")
 SMOKE = {"image_index": 8117, "lr_theta": 1e-5, "lr_eps": 1e-3, "steps": 100}
 
 
@@ -147,7 +147,7 @@ def main():
     import jax.numpy as jnp
 
     from iadrift.generator import load_generator
-    from iadrift.operators import backproject, bicubic_up
+    from iadrift.operators import backproject
 
     runner = DevIADrift(load_generator())
     lr_all = data.load_measurements()
@@ -156,7 +156,7 @@ def main():
         label = int(labels[i])
         r, eps, noise_labels = csgm_start(i, label)
         return {"label": label, "hr": data.hr_image(index_rows, i), "y": jnp.asarray(lr_all[i:i + 1], jnp.float32),
-                "eps": eps, "noise_labels": noise_labels, "bicubic": bicubic_up(lr_all[i])}
+                "eps": eps, "noise_labels": noise_labels}
 
     if args.smoke:
         i, lt, le, k = SMOKE["image_index"], SMOKE["lr_theta"], SMOKE["lr_eps"], SMOKE["steps"]
@@ -183,8 +183,7 @@ def main():
         for i in todo:
             im = images.setdefault(i, image(i))
             trace, x = runner.adapt(im, lt, le, STEPS, step_fn)
-            outputs = {"IADrift": x, "IADrift + BP": backproject(x, lr_all[i]),
-                       "IADrift + fusion": fuse_with_bicubic(x, im["bicubic"])}
+            outputs = {"IADrift": x, "IADrift + BP": backproject(x, lr_all[i])}
             result = {"image_index": i, "lr_theta": lt, "lr_eps": le, "steps": STEPS, "trace": trace,
                       "metrics": {name: runner.evaluate(out, im["hr"], im["y"]) for name, out in outputs.items()}}
             buffer = io.BytesIO()
