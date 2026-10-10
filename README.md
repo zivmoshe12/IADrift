@@ -24,12 +24,12 @@ command-line runner per experiment (`scripts/`), and notebooks that present the 
 | CSGM + BP | 22.75 | 0.284 |
 | IADrift @100 steps + BP | 22.63 | 0.276 |
 | IADrift @1000 steps + BP | 19.83 | 0.366 |
-| *Post-hoc addendum:* weighted ensemble of 5 CSGM runs (E3w) + BP | 24.32 | 0.252 |
-| *Post-hoc addendum, secondary:* uniform ensemble of the same 5 runs (E3) + BP | 24.88 | **0.247** |
+| *Post-hoc addendum:* weighted ensemble of 5 CSGM runs (Ens-W) + BP | 24.32 | 0.252 |
+| *Post-hoc addendum, secondary:* uniform ensemble of the same 5 runs (Ens-U) + BP | 24.88 | **0.247** |
 
 BP = back-projection onto the images consistent with the measurement. The first four rows are pre-registered
-(`docs/PROTOCOL.md`, frozen before the IADrift test run); the ensembles were specified in a protocol addendum (§11)
-before their test run, with E3w as the primary method and E3 as a secondary one (uncorrected). With this generator, CSGM is perceptually better than bicubic (LPIPS) but worse in PSNR;
+(`docs/PROTOCOL.md`, frozen before the IADrift test run); the ensembles were specified in a protocol addendum (Section 11 of the protocol)
+before their test run, with Ens-W as the primary method and Ens-U as a secondary one (uncorrected). With this generator, CSGM is perceptually better than bicubic (LPIPS) but worse in PSNR;
 adapting the weights keeps lowering the measurement loss while filling the unmeasured frequencies above the LR limit
 with invented detail; averaging several reconstructions (an approximate posterior mean) removes much of it.
 
@@ -99,18 +99,18 @@ python scripts/data/prepare_data.py --check    # verify (index, split, test samp
 
 | Experiment | Runner | Notebook |
 |---|---|---|
-| CSGM settings sweep (100 images; chose lr 0.02, no regularizer) | `run_csgm_settings_sweep.py` | 01 §4 |
-| IADrift learning rates and the step-100 checkpoint | `run_iadrift_dev.py` | 01 §5 |
+| CSGM settings sweep (100 images; chose lr 0.02, no regularizer) | `run_csgm_settings_sweep.py` | 01, Section 4 |
+| IADrift learning rates and the step-100 checkpoint | `run_iadrift_dev.py` | 01, Section 5 |
 | CSGM on the development images | `run_csgm_dev.py` | 02 |
-| Fitting the HR image directly (CSGM-HR, IADrift-HR) | `run_representation_dev.py`, `run_hr_fit_dev.py` | 02 §1 |
-| θ-only adaptation | `run_theta_only_dev.py` | 02 §3 |
-| In-range SR, generator samples | `run_representation_dev.py`, `run_generator_samples_dev.py` | 02 §4-5 |
-| What z and ε control; an image in place of ε | `run_noise_label_role_dev.py`, `run_image_in_eps_dev.py` | 04 §1-2 |
-| ε kept on the Gaussian shell | `run_eps_projection_dev.py` | 04 §3 |
-| Noise-label search | `run_noise_label_search_dev.py`, `run_z_swap_confirm_dev.py` | 04 §4 |
-| Ensembles of CSGM and of IADrift runs | `run_ensemble_dev.py`, `run_iadrift_ensemble_dev.py` | 04 §5 |
+| Fitting the HR image directly (CSGM-HR, IADrift-HR) | `run_representation_dev.py`, `run_hr_fit_dev.py` | 02, Section 1 |
+| θ-only adaptation | `run_theta_only_dev.py` | 02, Section 3 |
+| In-range SR, generator samples | `run_representation_dev.py`, `run_generator_samples_dev.py` | 02, Sections 4-5 |
+| What z and ε control; an image in place of ε | `run_noise_label_role_dev.py`, `run_image_in_eps_dev.py` | 04, Sections 1-2 |
+| ε kept on the Gaussian shell | `run_eps_projection_dev.py` | 04, Section 3 |
+| Noise-label search | `run_noise_label_search_dev.py`, `run_z_swap_confirm_dev.py` | 04, Section 4 |
+| Ensembles of CSGM and of IADrift runs | `run_ensemble_dev.py`, `run_iadrift_ensemble_dev.py` | 04, Section 5 |
 | Larger ensembles: 12 distinct z, shorter runs (500-2,000 steps), grid shifts, IADrift @100 members | `run_z_ensemble_dev.py` | — (`results/z_ensemble_dev.json`, `figures/z_ensemble_dev*.png`) |
-| Colour penalty and frequency anchor | `run_hf_constraints_dev.py` | 04 §6 |
+| Colour penalty and frequency anchor | `run_hf_constraints_dev.py` | 04, Section 6 |
 
 Some runners start from another runner's outputs, so run them in this order: `run_csgm_settings_sweep.py` (its image
 pool fixes the development images) → `run_csgm_dev.py`, `run_z_swap_confirm_dev.py` → `run_ensemble_dev.py` →

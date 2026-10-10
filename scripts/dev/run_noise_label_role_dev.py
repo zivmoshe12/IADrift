@@ -1,4 +1,4 @@
-"""What do the noise labels z control, and what does eps control? (development, generator only; notebook 04 §1).
+"""What do the noise labels z control, and what does eps control? (development, generator only; notebook 04, Section 1).
 
 No optimization, no HR, no test images: forward passes of the frozen generator (CFG 1.0, eager path) for 8 classes,
 the classes of the 4 development images (8117, 3939, 403, 347) plus 4 more drawn with numpy seed 2034.

@@ -1,4 +1,4 @@
-> **Note for readers of the repository.** This is the project's working protocol, unchanged except for this note and the removal of a pointer to an internal working file. It refers to files by their internal names: `notebooks/03_csgm_test_analysis.ipynb` and `notebooks/07_ensemble_test.ipynb` are in `notebooks/dev_archive/` (outputs cleared); their results are presented in `notebooks/01_sr4_csgm_vs_iadrift.ipynb` and `notebooks/03_ensemble_posterior_mean.ipynb`. Paths under `~/work/datasets/ImageNetV2/` are experiment caches outside the repository. One difference between the text and the code: §6 and §11 say "t-based 95% CI", but the paired tests were computed with the normal approximation, mean ± 1.96 s/√n (`iadrift/stats.py`, `paired_stats`). With n = 100 the t-based interval would be about 1% wider, which changes none of the reported conclusions.
+> **Note for readers of the repository.** This is the project's working protocol, unchanged except for this note, the removal of a pointer to an internal working file, and the description of the paired-test interval in Sections 6 and 11, which now states the interval the code computes. It refers to files by their internal names: `notebooks/03_csgm_test_analysis.ipynb` and `notebooks/07_ensemble_test.ipynb` are in `notebooks/dev_archive/` (outputs cleared); their results are presented in `notebooks/01_sr4_csgm_vs_iadrift.ipynb` and `notebooks/03_ensemble_posterior_mean.ipynb`. Paths under `~/work/datasets/ImageNetV2/` are experiment caches outside the repository.
 
 # IADrift test protocol (SR ×4)
 
@@ -6,7 +6,7 @@
 Choices below were made on development images only (notebooks 02, 04, 05) and confirmed by the project owner on 2026-10-05.
 Any later change must be logged in "Deviations" at the end, with the date and reason, and must not be motivated by IADrift test results.
 
-The CSGM test benchmark (M1) and its post-processing and metrics (M2–M3) were frozen and run earlier; they're restated in §3 so the whole test comparison is defined in one place.
+The CSGM test benchmark and its post-processing and metrics were frozen and run earlier; they're restated in Section 3 so the whole test comparison is defined in one place.
 
 ---
 
@@ -33,11 +33,11 @@ All methods are evaluated for both label conditions, except bicubic (label-free)
 
 | Method | Definition | Status |
 |---|---|---|
-| bicubic | `jax.image.resize(y, 256, cubic, antialias=False)` | done (M1) |
-| CSGM | frozen generator; Adam lr 0.02 on ε; 5,000 steps; 2 restarts (`initialize(image, restart)`), keep the **lowest final LR loss** | done (M1) |
-| **IADrift @100** | from the CSGM solution (§4); joint θ + ε; output after **100** steps | done (M5, 2026-10-05; §9) |
-| **IADrift @1000** | same run; output after **1,000** steps | done (M5, 2026-10-05; §9) |
-| *each of the above* **+ BP** | back-projection x + Aᵀ(AAᵀ)⁻¹(y − A x), conjugate gradients, tolerance 1e-6, at most 500 iterations | done (M2; IADrift in M5 analysis) |
+| bicubic | `jax.image.resize(y, 256, cubic, antialias=False)` | done |
+| CSGM | frozen generator; Adam lr 0.02 on ε; 5,000 steps; 2 restarts (`initialize(image, restart)`), keep the **lowest final LR loss** | done |
+| **IADrift @100** | from the CSGM solution (Section 4); joint θ + ε; output after **100** steps | done (2026-10-05; Section 9) |
+| **IADrift @1000** | same run; output after **1,000** steps | done (2026-10-05; Section 9) |
+| *each of the above* **+ BP** | back-projection x + Aᵀ(AAᵀ)⁻¹(y − A x), conjugate gradients, tolerance 1e-6, at most 500 iterations | done (for IADrift, in its test analysis) |
 
 Not part of the test comparison (development-only ablations): frequency fusion, ε sphere projection, noise-label search, θ-only adaptation, constrained θ adaptation.
 
@@ -85,7 +85,7 @@ Not part of the test comparison (development-only ablations): frequency fusion, 
 1. IADrift @1000 + BP vs CSGM + BP
 2. IADrift @100 + BP vs CSGM + BP
 
-That's 2 comparisons × 2 metrics = **4 primary tests**. Paired over the 100 images: mean difference with t-based 95% CI, Wilcoxon signed-rank p-value, count of images where the first method is better. **Holm correction across the 4 primary tests.**
+That's 2 comparisons × 2 metrics = **4 primary tests**. Paired over the 100 images: for each image i, the difference dᵢ = mᵢ(first method) − mᵢ(second method) of metric m; their mean d̄ with a normal-approximation 95% CI, d̄ ± 1.96 s/√n, where s is the sample standard deviation of the dᵢ (divisor n − 1) and n = 100 is the number of images, so s/√n is the standard error of d̄; Wilcoxon signed-rank p-value, count of images where the first method is better. **Holm correction across the 4 primary tests.**
 
 **Secondary (reported, uncorrected, labelled exploratory):**
 - the same comparisons without BP; and with the wrong label;
@@ -106,7 +106,7 @@ That's 2 comparisons × 2 metrics = **4 primary tests**. Paired over the 100 ima
 
 - **2026-10-05, infrastructure only (method unchanged):** the first 32-run chunk of the full IADrift test run segfaulted inside the Python interpreter after 16 completed runs (exit 139). The 16 runs were saved atomically and kept. The driver was changed to **10-run chunks** and now counts a chunk as failed only if it saved no new run; the run resumed from run 17 with identical settings. Not motivated by any result.
 
-## 9. Outcome (added after the run, 2026-10-05; does not change §1–§7)
+## 9. Outcome (added after the run, 2026-10-05; does not change Sections 1–7)
 
 The run completed as specified: 200/200 runs, all outputs finite, the regenerated CSGM starts identical to the saved ones. Analysis: `notebooks/03_csgm_test_analysis.ipynb`, Part 3 (cache `iadrift_test_postproc_v1/`, primary tests in `primary.json`).
 
@@ -117,28 +117,28 @@ The run completed as specified: 200/200 runs, all outputs finite, the regenerate
 | IADrift @1000 + BP | −2.92 dB [−3.18, −2.66], Holm p 1.6e-17, better on 0/100 | +0.082 [+0.066, +0.097], Holm p 1.0e-14, better on 12/100 |
 | IADrift @100 + BP | −0.12 dB [−0.20, −0.04], Holm p 1.4e-3, better on 33/100 | −0.008 [−0.013, −0.004], Holm p 3.8e-5, better on 72/100 |
 
-**Reporting note.** Both checkpoints were declared in §4.1, so both are reported. The fact that step 100 turns out better than step 1,000 on the test set is a **result**, not a new choice. Any further work that treats the step-100 variant as "the" IADrift method (e.g. new experiments built on it) is a post-hoc decision informed by test results. It must be labelled as such and developed on development images only.
+**Reporting note.** Both checkpoints were declared in Section 4.1, so both are reported. The fact that step 100 turns out better than step 1,000 on the test set is a **result**, not a new choice. Any further work that treats the step-100 variant as "the" IADrift method (e.g. new experiments built on it) is a post-hoc decision informed by test results. It must be labelled as such and developed on development images only.
 
 ## 10. Development work after the test run (not part of this protocol)
 
-After §9, further experiments were run **on development images only** (notebook 04, Checks 9–16): noise-label optimization and swaps, IADrift from better starts, one-image post-processing demos, posterior-mean ensembles of CSGM and IADrift runs, and high-frequency constraints (colour penalty, frequency anchor). None of them was run on the test set, and none changes §1–§9. They are exploratory (n = 1–6 images) and must be reported as such.
+After Section 9, further experiments were run **on development images only** (notebook 04, Checks 9–16): noise-label optimization and swaps, IADrift from better starts, one-image post-processing demos, posterior-mean ensembles of CSGM and IADrift runs, and high-frequency constraints (colour penalty, frequency anchor). None of them was run on the test set, and none changes Sections 1–9. They are exploratory (n = 1–6 images) and must be reported as such.
 
 ## 11. Addendum A (post-hoc, 2026-10-06): posterior-mean ensemble on the test set
 
-**Status:** post-hoc. Motivated by development results (notebook 04 Check 13, 6 images) obtained after §9. Frozen before any run below; signed off by the project owner on **2026-10-06**. Does not change §1–§10.
+**Status:** post-hoc. Motivated by development results (notebook 04 Check 13, 6 images) obtained after Section 9. Frozen before any run below; signed off by the project owner on **2026-10-06**. Does not change Sections 1–10.
 
-- **Images:** the 100 test images of §1, **correct label only**.
-- **Members (5 per image):** the saved CSGM test restarts r0, r1 (§3; `phase1_sr4_csgm_label_test_v2_n100_9e24c78a47ab_arrays/img#####_oracle_r{0,1}.npz`), plus 3 new frozen-CSGM runs (§3 settings: Adam lr 0.02, 5,000 steps, no regularizer) on y circularly shifted by (0,1), (1,0), (1,1) LR pixels, each started from the r0 initialization (`initialize(image, 0)`), output shifted back by 4 HR pixels per LR pixel. The optimization loop is imported unchanged from `scripts/run_sr4_csgm_test.py`.
-- **Primary method E3w:** x̂ = BP(Σ wₖ xₖ), wₖ ∝ exp(−(Lₖ − L_min)/T), Lₖ = eager LR loss ‖y − A xₖ‖² of member k in original coordinates, T = max(std(L), 1e-6) (population std), weights normalized to sum 1. BP as in §3.
-- **Secondary ensembles:** E3 (uniform mean of the 5), E1 (mean of r0, r1), E2 (mean of r0 + 3 shifts), each + BP.
-- **Reference:** CSGM + BP as frozen in §3 (restart with the lowest final LR loss), recomputed and checked against `csgm_test_postproc_v1/`.
-- **Primary tests (Holm over 2):** E3w + BP vs CSGM + BP, on PSNR and on LPIPS; paired over the 100 images, mean difference with t-based 95% CI, Wilcoxon signed-rank p, count of images better (as in §6).
-- **Secondary (uncorrected, exploratory):** E3, E1, E2 + BP vs CSGM + BP; every ensemble vs bicubic + BP; PSNR of mean MSE; blockiness; band SNR; LR losses; weight entropy / effective number of members; MMSE check (members' mean MSE ÷ E3 MSE before BP, in dB, vs the independent-sample prediction 10·log₁₀(2/1.2) = 2.22 dB, with caveats); the first 4 images of the fixed sample as visual examples.
+- **Images:** the 100 test images of Section 1, **correct label only**.
+- **Members (5 per image):** the saved CSGM test restarts r0, r1 (Section 3; `phase1_sr4_csgm_label_test_v2_n100_9e24c78a47ab_arrays/img#####_oracle_r{0,1}.npz`), plus 3 new frozen-CSGM runs (Section 3 settings: Adam lr 0.02, 5,000 steps, no regularizer) on y circularly shifted by (0,1), (1,0), (1,1) LR pixels, each started from the r0 initialization (`initialize(image, 0)`), output shifted back by 4 HR pixels per LR pixel. The optimization loop is imported unchanged from `scripts/run_sr4_csgm_test.py`.
+- **Primary method Ens-W:** x̂ = BP(Σ wₖ xₖ), wₖ ∝ exp(−(Lₖ − L_min)/T), Lₖ = eager LR loss ‖y − A xₖ‖² of member k in original coordinates, T = max(std(L), 1e-6) (population std), weights normalized to sum 1. BP as in Section 3.
+- **Secondary ensembles:** Ens-U (uniform mean of the 5), E1 (mean of r0, r1), E2 (mean of r0 + 3 shifts), each + BP.
+- **Reference:** CSGM + BP as frozen in Section 3 (restart with the lowest final LR loss), recomputed and checked against `csgm_test_postproc_v1/`.
+- **Primary tests (Holm over 2):** Ens-W + BP vs CSGM + BP, on PSNR and on LPIPS; paired over the 100 images, mean difference d̄ with a normal-approximation 95% CI, d̄ ± 1.96 s/√n (s = sample standard deviation of the 100 per-image differences, n = 100; as in Section 6), Wilcoxon signed-rank p, count of images better (as in Section 6).
+- **Secondary (uncorrected, exploratory):** Ens-U, E1, E2 + BP vs CSGM + BP; every ensemble vs bicubic + BP; PSNR of mean MSE; blockiness; band SNR; LR losses; weight entropy / effective number of members; MMSE check (members' mean MSE ÷ Ens-U MSE before BP, in dB, vs the independent-sample prediction 10·log₁₀(2/1.2) = 2.22 dB, with caveats); the first 4 images of the fixed sample as visual examples.
 - **Runner:** `scripts/run_sr4_ensemble_test.py`, settings hash **`ca2d0ec5e6ff`**, driver `scripts/run_overnight_ensemble_test.sh` (10-run chunks, log `logs/sr4_ensemble_test_n100.log`), output `csgm_test_ensemble_v1/`; analysis `notebooks/07_ensemble_test.ipynb` Part 1, cache `csgm_test_ensemble_postproc_v1/`.
 - **Pre-launch checks (2026-10-06, passed):** `--repro-check` reproduced bit-exactly (final loss, ε, output, loss trace) the saved CSGM test run 1704/oracle/r0 (final loss 100.2454833984375) and the development shifted run 9780 shift (0,1) from notebook 04 Check 13 (107.30801391601562). Allocator: default (not `platform`).
-- **Failure handling:** as in §7.
+- **Failure handling:** as in Section 7.
 
-### 11.1 Outcome (added after the run, 2026-10-07; does not change §11)
+### 11.1 Outcome (added after the run, 2026-10-07; does not change Section 11)
 
 The run completed as specified: 300/300 shifted runs, all finite; settings hash `ca2d0ec5e6ff` unchanged. Analysis: `notebooks/07_ensemble_test.ipynb` Part 1 (cache `csgm_test_ensemble_postproc_v1/`, primary tests in `primary.json`); presentation: `github/notebooks/03_ensemble_posterior_mean.ipynb`. The recomputed CSGM + BP reference is identical to `csgm_test_postproc_v1/`.
 
@@ -146,8 +146,8 @@ The run completed as specified: 300/300 shifted runs, all finite; settings hash 
 
 | vs CSGM + BP | PSNR | LPIPS (lower is better) |
 |---|---|---|
-| E3w + BP | +1.57 dB [+1.40, +1.74], Holm p 7.8e-18, better on 100/100 | −0.032 [−0.040, −0.024], Holm p 5.7e-10, better on 76/100 |
+| Ens-W + BP | +1.57 dB [+1.40, +1.74], Holm p 7.8e-18, better on 100/100 | −0.032 [−0.040, −0.024], Holm p 5.7e-10, better on 76/100 |
 
-Secondary (exploratory): uniform E3 + BP +2.13 dB / LPIPS −0.037 vs CSGM + BP; MMSE check 2.33 dB measured vs 2.22 dB predicted.
+Secondary (exploratory): uniform Ens-U + BP +2.13 dB / LPIPS −0.037 vs CSGM + BP; MMSE check 2.33 dB measured vs 2.22 dB predicted.
 
 **Deviation (infrastructure only, 2026-10-06):** the first launch was killed by the Linux OOM killer during run 3 (a concurrent smoke-test process used the memory); runs 1–2 had been saved atomically and were kept (deterministic); the driver was relaunched with identical settings. Not motivated by any result.

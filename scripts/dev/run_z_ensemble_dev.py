@@ -1,6 +1,6 @@
 """Larger posterior-mean ensembles over many noise labels z (development, 6 images).
 
-Extends the 5-member ensembles of notebook 04 §5 to K = 12 CSGM members with distinct (eps, z), and tests whether
+Extends the 5-member ensembles of notebook 04, Section 5 to K = 12 CSGM members with distinct (eps, z), and tests whether
 shorter runs are enough when they are averaged. Correct label, development images only.
 
 Every member is one frozen CSGM run (Adam lr 0.02, CSGM.train_step, ||y - A G(eps; z, c)||^2, 5,000 steps) from
@@ -12,10 +12,10 @@ Arms (per image, in this order):
     A   distinct z: r = 0..N-1 on y                                          -> img#####_r##.npz
     C   z and grid phase: r = 0..3 on the shifted measurement S_s y = jnp.roll(y, s, axis=(1, 2)) for s in
         iadrift.ensemble.SHIFTS. Each snapshot is shifted back to the original frame (iadrift.ensemble.unshift_x)
-        and its LR loss is computed there, as for E3w (PROTOCOL §11)       -> img#####_r##_shift##.npz
+        and its LR loss is computed there, as for Ens-W (protocol Section 11)       -> img#####_r##_shift##.npz
 
 IADrift continuation (--iadrift, a separate process: gradients w.r.t. theta need the 'platform' allocator, see
-iadrift.runtime). From each arm-A member's CSGM solution at step 5,000, IADrift as frozen (PROTOCOL §4): joint Adam on
+iadrift.runtime). From each arm-A member's CSGM solution at step 5,000, IADrift as frozen (protocol Section 4): joint Adam on
 all generator weights theta (lr 1e-5) and on eps (lr 1e-3), fresh optimizer states, 100 steps against y. This is
 IADrift @100 of that member                                                  -> img#####_r##_iad100.npz
 
@@ -168,7 +168,7 @@ def main():
                 if shift is not None:
                     arrays[f"lr_loss_shifted_frame_step{step}"] = np.float32(loss)
                     x = unshift_x(x, *shift)
-                    loss = lr_loss(x, y0)  # in the original frame, as for E3w
+                    loss = lr_loss(x, y0)  # in the original frame, as for Ens-W
                 arrays[f"x_hat_step{step}"] = x
                 arrays[f"lr_loss_step{step}"] = np.float32(loss)
                 arrays[f"eps_step{step}"] = np.asarray(eps, dtype=np.float32)

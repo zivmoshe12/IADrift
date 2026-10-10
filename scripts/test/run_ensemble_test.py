@@ -1,11 +1,11 @@
-"""Shifted CSGM ensemble members on the test set (docs/PROTOCOL.md §11, Addendum A; post-hoc test, 100 images).
+"""Shifted CSGM ensemble members on the test set (docs/PROTOCOL.md, Section 11, Addendum A; post-hoc test, 100 images).
 
 Per test image (correct label only), three new frozen-CSGM runs (iadrift.csgm.FROZEN_CONFIG: Adam lr 0.02, 5,000 steps,
 no regularizer) on the LR measurement circularly shifted by (sy, sx) LR pixels,
     y_s = roll(y, (sy, sx)),   (sy, sx) in {(0, 1), (1, 0), (1, 1)},
 all started from initialize(image, 0), i.e. the same eps and noise labels as the saved test restart r0. The saved x_hat
 is in the shifted frame; the analysis shifts it back by -4 (sy, sx) HR pixels (iadrift.ensemble.unshift_x). The two
-unshifted members (restarts r0, r1) are the saved CSGM test runs. The ensembles E1-E3w (+ BP) and the 2 primary tests
+unshifted members (restarts r0, r1) are the saved CSGM test runs. The ensembles E1-Ens-W (+ BP) and the 2 primary tests
 are computed by scripts/analysis/evaluate_test.py --part ensemble (notebook dev_archive/07 Part 1). Method identical to
 development Check 13 (notebook dev_archive/04 cells 79-81). Nothing is chosen with HR.
 

@@ -1,4 +1,4 @@
-"""CSGM with eps projected onto the Gaussian shell (development, 4 images; notebook 04 §3, "eps on the sphere").
+"""CSGM with eps projected onto the Gaussian shell (development, 4 images; notebook 04, Section 3, "eps on the sphere").
 
 Does keeping eps on the shell of a typical Gaussian draw (PULSE-like) help CSGM? After every Adam step:
     global sphere      eps <- eps sqrt(d) / ||eps||,  d = 196,608

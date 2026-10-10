@@ -1,4 +1,4 @@
-"""IADrift test run (docs/PROTOCOL.md §4, method M5; pre-registered): 100 test images x {correct, wrong label}.
+"""IADrift test run (docs/PROTOCOL.md, Section 4; pre-registered): 100 test images x {correct, wrong label}.
 
 For each image of the fixed 100-image test sample and each label condition:
     start   the saved CSGM test run with the lowest final LR loss (its eps, noise labels z and class label;
@@ -25,7 +25,7 @@ Usage:
 Outputs (IADRIFT_DATA): phase2_sr4_iadrift_test_v1_n<N>_<hash>.{jsonl,manifest.json} and ..._arrays/
 img#####_{oracle,wrong}.npz (x_step{100,1000}, eps_step{100,1000}, trace_steps, trace_loss, noise_labels). For N = 100
 the hash is 00ca59364e18. ~60-70 s per run on an RTX A4000 (200 runs ~3.5 h); runs in chunks of 10 (a 32-run chunk
-segfaulted after 16 runs, PROTOCOL §8).
+segfaulted after 16 runs, protocol Section 8).
 """
 
 import os

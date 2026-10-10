@@ -2,22 +2,23 @@
 
 Reads the saved GPU outputs and computes everything the reported test numbers are built from:
 
-  --part csgm      (notebook 03 Parts 1-2; benchmark M1 + post-processing M2/M3)
+  --part csgm      (notebook 03 Parts 1-2; the CSGM benchmark, back-projection and metrics)
       Restart selection: per image and label condition, the CSGM restart with the lowest final LR loss (never HR).
       Methods: bicubic, bicubic + BP, CSGM (correct label), CSGM (correct) + BP, CSGM (wrong label), CSGM (wrong) + BP.
-  --part iadrift   (notebook 03 Part 3; method M5, pre-registered)
-      IADrift outputs at steps 100 and 1,000, correct and wrong label, raw and + BP. Primary analysis (PROTOCOL §6):
+  --part iadrift   (notebook 03 Part 3; pre-registered)
+      IADrift outputs at steps 100 and 1,000, correct and wrong label, raw and + BP. Primary analysis (protocol Section 6):
       IADrift @1000 + BP and @100 + BP vs CSGM + BP, correct label, on PSNR and LPIPS: 4 tests, Holm-corrected.
-  --part ensemble  (notebook 07 Part 1; PROTOCOL §11, post-hoc)
-      Members r0, r1 (saved CSGM test restarts) and 3 shifted CSGM runs (shifted back); ensembles E1, E2, E3 (uniform)
-      and E3w (w_k ~ exp(-(L_k - L_min) / std L), L_k = ||y - A x_k||^2), each + BP; CSGM + BP reference. Primary
-      analysis: E3w + BP vs CSGM + BP on PSNR and LPIPS, Holm over 2. MMSE check fields: each member's MSE to HR and
+  --part ensemble  (notebook 07 Part 1; protocol Section 11, post-hoc)
+      Members r0, r1 (saved CSGM test restarts) and 3 shifted CSGM runs (shifted back); ensembles E1, E2, Ens-U (uniform)
+      and Ens-W (w_k ~ exp(-(L_k - L_min) / std L), L_k = ||y - A x_k||^2), each + BP; CSGM + BP reference. Primary
+      analysis: Ens-W + BP vs CSGM + BP on PSNR and LPIPS, Holm over 2. MMSE check fields: each member's MSE to HR and
       each ensemble's MSE and LR loss before BP.
 
 Back-projection BP(x) = x + A^T (A A^T)^{-1} (y - A x) (parameter-free; CG tol 1e-6, at most 500 iterations).
 Metrics per method and image: PSNR (data range 2) and clipped PSNR, LPIPS (AlexNet, inputs clipped to [-1, 1]),
 blockiness (16-pixel tile seams; ~1 = none), LR loss ||y - A x||^2, band SNR (4 radial bands). Paired tests: mean
-difference with a normal 95% interval (1.96 s / sqrt n), Wilcoxon signed-rank p, count of images where A is better.
+of the per-image differences d_i with a normal 95% interval (mean +- 1.96 s / sqrt n; s = sample standard deviation
+of the d_i, divisor n - 1; n = number of images), Wilcoxon signed-rank p, count of images where A is better.
 Secondary comparisons (exploratory, uncorrected) are printed, not stored (as in the notebooks).
 
 Usage:
@@ -33,7 +34,7 @@ Outputs (per part, default directory IADRIFT_DATA; refuses to overwrite an exist
                                 (metrics_json, bp_{oracle,wrong}_step{100,1000})
     csgm_test_ensemble_postproc_v1/  metrics.json (incl. "info": member LR losses, kept restart, weights, n_eff,
                                 mse_raw, lr_loss_raw, member_mse), primary.json (2 tests; only with all 100 images),
-                                img#####.npz (metrics_json, E1_BP, E2_BP, E3_BP, E3w_BP, CSGM_BP)
+                                img#####.npz (metrics_json, E1_BP, E2_BP, Ens-U_BP, Ens-W_BP, CSGM_BP)
 The iadrift and ensemble parts read the CSGM part's results from DIR/csgm_test_postproc_v1 if it exists there (e.g.
 computed in the same call), else from IADRIFT_DATA.
 """
@@ -81,7 +82,7 @@ CSGM_METHODS = ["bicubic", "bicubic + BP", "CSGM, correct label", "CSGM, correct
                 "CSGM, wrong label", "CSGM, wrong label + BP"]
 IAD_METHODS = [f"IADrift @{s}, {COND_NAME[c]}{bp}" for c in CONDITIONS for s in CKPTS for bp in ("", " + BP")]
 ENSEMBLES = {"E1: mean of 2 restarts": ["r0", "r1"], "E2: mean of r0 + 3 shifts": ["r0"] + list(MEMBERS[2:]),
-             "E3: mean of 5 CSGM runs": list(MEMBERS), "E3w: weighted 5 CSGM runs": list(MEMBERS)}
+             "Ens-U: mean of 5 CSGM runs": list(MEMBERS), "Ens-W: weighted 5 CSGM runs": list(MEMBERS)}
 ENS_METHODS = [n + " + BP" for n in ENSEMBLES]
 
 # Bicubic baseline exactly as in the notebooks (jitted; iadrift.operators.bicubic_up is the same resize, not jitted).
@@ -294,7 +295,7 @@ def part_iadrift(inp, out_dir, post):
              for s in (1000, 100) for key in ("psnr", "lpips")]
     summary = primary(tests, v)
     write_json(out_dir / "primary.json", summary)
-    print_primary(f"[iadrift] PRIMARY (PROTOCOL §6; {len(images)} test images, correct label, Holm over 4)", summary)
+    print_primary(f"[iadrift] PRIMARY (protocol Section 6; {len(images)} test images, correct label, Holm over 4)", summary)
     print_secondary("[iadrift] secondary", [(f"IADrift @{s}, correct label", "CSGM, correct label") for s in CKPTS]
                     + [(f"IADrift @{s}, wrong label + BP", "CSGM, wrong label + BP") for s in CKPTS]
                     + [(f"IADrift @{s}, correct label + BP", "bicubic + BP") for s in CKPTS]
@@ -348,7 +349,7 @@ def part_ensemble(inp, out_dir, csgm_dir, csgm_post):
         outputs, info = {}, {"L": L, "kept": kept}
         outputs["CSGM, correct label + BP"] = backproject(members[f"r{kept}"], y)
         for name, names in ENSEMBLES.items():
-            w = weights(np.array([L[m] for m in names]), name.startswith("E3w"))
+            w = weights(np.array([L[m] for m in names]), name.startswith("Ens-W"))
             mean_x = sum(wk * members[m] for wk, m in zip(w, names))
             info[name] = {"weights": w.tolist(), "n_eff": float(1 / np.sum(w ** 2)),
                           "mse_raw": mse(hr, mean_x), "lr_loss_raw": lr_loss(mean_x, y)}
@@ -378,22 +379,22 @@ def part_ensemble(inp, out_dir, csgm_dir, csgm_post):
                      ["bicubic + BP", "CSGM, correct label + BP"] + ENS_METHODS, v)
     if len(images) < 2:
         return ens_post
-    summary = primary([("E3w: weighted 5 CSGM runs + BP", "CSGM, correct label + BP", key)
+    summary = primary([("Ens-W: weighted 5 CSGM runs + BP", "CSGM, correct label + BP", key)
                        for key in ("psnr", "lpips")], v)
     if complete:  # as in the notebook: primary.json only for the full test sample
         write_json(out_dir / "primary.json", summary)
-    print_primary(f"[ensemble] PRIMARY (PROTOCOL §11; {len(images)} test images, Holm over 2)", summary)
+    print_primary(f"[ensemble] PRIMARY (protocol Section 11; {len(images)} test images, Holm over 2)", summary)
     print_secondary("[ensemble] secondary", [(m, "CSGM, correct label + BP") for m in ENS_METHODS
-                                             if not m.startswith("E3w")]
+                                             if not m.startswith("Ens-W")]
                     + [(m, "bicubic + BP") for m in ENS_METHODS]
-                    + [("E3w: weighted 5 CSGM runs + BP", "E3: mean of 5 CSGM runs + BP")], v)
-    n_eff = np.array([ens_post[i]["info"]["E3w: weighted 5 CSGM runs"]["n_eff"] for i in images])
+                    + [("Ens-W: weighted 5 CSGM runs + BP", "Ens-U: mean of 5 CSGM runs + BP")], v)
+    n_eff = np.array([ens_post[i]["info"]["Ens-W: weighted 5 CSGM runs"]["n_eff"] for i in images])
     gain = np.array([10 * np.log10(np.mean(list(ens_post[i]["info"]["member_mse"].values()))
-                                   / ens_post[i]["info"]["E3: mean of 5 CSGM runs"]["mse_raw"]) for i in images])
+                                   / ens_post[i]["info"]["Ens-U: mean of 5 CSGM runs"]["mse_raw"]) for i in images])
     half = stats.t.ppf(0.975, len(gain) - 1) * gain.std(ddof=1) / np.sqrt(len(gain))
-    print(f"\n[ensemble] E3w effective members 1/sum w^2: mean {n_eff.mean():.2f} (min {n_eff.min():.2f}, "
+    print(f"\n[ensemble] Ens-W effective members 1/sum w^2: mean {n_eff.mean():.2f} (min {n_eff.min():.2f}, "
           f"max {n_eff.max():.2f}) of 5")
-    print(f"[ensemble] MMSE check (E3, before BP): mean gain {gain.mean():.2f} dB [95% CI {gain.mean() - half:.2f}, "
+    print(f"[ensemble] MMSE check (Ens-U, before BP): mean gain {gain.mean():.2f} dB [95% CI {gain.mean() - half:.2f}, "
           f"{gain.mean() + half:.2f}]; independent posterior samples would give {10 * np.log10(2 / 1.2):.2f} dB")
     return ens_post
 

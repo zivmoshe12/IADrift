@@ -1,11 +1,11 @@
-"""Export the posterior-mean ensemble test results (docs/PROTOCOL.md §11, Addendum A) into results/. CPU only.
+"""Export the posterior-mean ensemble test results (docs/PROTOCOL.md, Section 11, Addendum A) into results/. CPU only.
 
-    results/ensemble_test_metrics.json   per test image (100): metrics of CSGM + BP and of the ensembles E1, E2, E3, E3w
+    results/ensemble_test_metrics.json   per test image (100): metrics of CSGM + BP and of the ensembles E1, E2, Ens-U, Ens-W
                                          (+ BP); the 5 members' LR losses and MSEs, the ensemble weights, and the MSE of
                                          each ensemble before BP (for the MMSE check)
     results/ensemble_primary.json        the 2 primary tests (Holm), as computed by evaluate_test.py --part ensemble
     results/ensemble_examples.npz        first 4 test images (fixed sample order): the 5 members (shifted back to the
-                                         original frame), E3 + BP and E3w + BP, float16
+                                         original frame), Ens-U + BP and Ens-W + BP, float16
 
 Sources (IADRIFT_DATA): csgm_test_ensemble_postproc_v1/ (scripts/analysis/evaluate_test.py --part ensemble),
 csgm_test_ensemble_v1/ (shifted CSGM runs, scripts/test/run_ensemble_test.py),
@@ -57,7 +57,7 @@ def export(out):
             with np.load(D / RUNS / f"img{i:05d}_shift{sy}{sx}_r0.npz") as d:
                 ex[f"{k}|shift{sy}{sx}"] = unshift_x(d["x_hat"], sy, sx)
         with np.load(D / POST / f"img{i:05d}.npz") as d:
-            ex[f"{k}|E3 + BP"], ex[f"{k}|E3w + BP"] = d["E3_BP"], d["E3w_BP"]
+            ex[f"{k}|Ens-U + BP"], ex[f"{k}|Ens-W + BP"] = d["Ens-U_BP"], d["Ens-W_BP"]
     np.savez_compressed(out / "ensemble_examples.npz", image_index=np.array(sample[:NUM_EXAMPLES]),
                         **{key: np.asarray(x, np.float16) for key, x in ex.items()})
     for f in FILES:

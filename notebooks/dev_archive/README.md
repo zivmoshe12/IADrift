@@ -11,9 +11,9 @@ cells it was ported from, and its `--dry-run` finds the cached outputs these not
 | Notebook | Content | Used by |
 |---|---|---|
 | `01_phase1_baseline.ipynb` | first CSGM baseline on a few images | — (superseded) |
-| `02_iadrift_dev_tuning.ipynb` | IADrift learning-rate grid on 4 development images; basis of the step-100 checkpoint | notebook 1 §5 (choices), notebook 2 |
-| `03_csgm_test_analysis.ipynb` | **the pre-registered test analysis** (CSGM, BP, LPIPS, IADrift; `docs/PROTOCOL.md` §9) | notebook 1 |
+| `02_iadrift_dev_tuning.ipynb` | IADrift learning-rate grid on 4 development images; basis of the step-100 checkpoint | notebook 1, Section 5 (choices), notebook 2 |
+| `03_csgm_test_analysis.ipynb` | **the pre-registered test analysis** (CSGM, BP, LPIPS, IADrift; `docs/PROTOCOL.md`, Section 9) | notebook 1 |
 | `04_postproc_controls_dev.ipynb` | development Checks 1–16 (fusion, θ-only, generator diagnostics, ε projection, representation tests, z experiments, ensembles, penalties) | notebooks 2 and 4 |
-| `05_theta_only_dev.ipynb` | θ-only adaptation runs | notebook 2 §3 |
-| `06_noise_label_role_dev.ipynb` | what z and ε control (8 classes) | notebook 4 §1 |
-| `07_ensemble_test.ipynb` | analysis of the post-hoc ensemble test run (`docs/PROTOCOL.md` §11) | notebook 3 |
+| `05_theta_only_dev.ipynb` | θ-only adaptation runs | notebook 2, Section 3 |
+| `06_noise_label_role_dev.ipynb` | what z and ε control (8 classes) | notebook 4, Section 1 |
+| `07_ensemble_test.ipynb` | analysis of the post-hoc ensemble test run (`docs/PROTOCOL.md`, Section 11) | notebook 3 |

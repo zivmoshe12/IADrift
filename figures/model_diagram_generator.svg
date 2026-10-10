@@ -5062,7 +5062,7 @@ z
      <use xlink:href="#DejaVuSans-4e" transform="translate(4742.890625 0)"/>
      <use xlink:href="#DejaVuSans-11" transform="translate(4800.796875 0)"/>
     </g>
-    <!--    In our experiments z decides the scene (layout, palette, texture); ε adjusts local detail (notebook 2, §4). -->
+    <!--    In our experiments z decides the scene (layout, palette, texture); ε adjusts local detail (notebook 2, Section 4). -->
     <g transform="translate(18.36 517.195244) scale(0.083 -0.083)">
      <defs>
       <path id="DejaVuSans-2c" d="M 628 4666 

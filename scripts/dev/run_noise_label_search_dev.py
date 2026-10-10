@@ -1,6 +1,6 @@
-"""Noise-label search for CSGM (development, 4 images; notebook 04 §4; selection by LR loss only).
+"""Noise-label search for CSGM (development, 4 images; notebook 04, Section 4; selection by LR loss only).
 
-z selects most of the scene (notebook 04 §1), but CSGM keeps the z drawn at initialization. Here each development image
+z selects most of the scene (notebook 04, Section 1), but CSGM keeps the z drawn at initialization. Here each development image
 (8117, 3939, 403, 347; correct label) gets 16 candidates: the 2 baseline eps starts initialize(i, r), r in {0, 1}, x
 8 noise-label sets per start (k = 0: the baseline's own z; k = 1..7: randint(fold(fold(fold(PRNGKey(2033), i), r), k))).
 Every candidate gets a 500-step CSGM screening run; the 2 with the lowest screening LR loss are run to the full 5,000

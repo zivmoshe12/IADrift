@@ -49,7 +49,7 @@
     "very high": -4.687065735222185
    }
   },
-  "CSGM E3": {
+  "CSGM Ens-U": {
    "psnr": 24.812296689690047,
    "lpips": 0.30176252871751785,
    "blockiness": 1.147405604367245,
@@ -60,7 +60,7 @@
     "very high": -2.0174173297808378
    }
   },
-  "CSGM E3w": {
+  "CSGM Ens-W": {
    "psnr": 24.04431953388762,
    "lpips": 0.27346450587113696,
    "blockiness": 1.1978450580029574,
@@ -82,7 +82,7 @@
     "very high": -5.120588213201171
    }
   },
-  "IADrift @100 E3": {
+  "IADrift @100 Ens-U": {
    "psnr": 24.71416608833496,
    "lpips": 0.2926221291224162,
    "blockiness": 1.1387635361908965,
@@ -93,7 +93,7 @@
     "very high": -2.2506037696151764
    }
   },
-  "IADrift @100 E3w": {
+  "IADrift @100 Ens-W": {
    "psnr": 23.823020332018128,
    "lpips": 0.27286649743715924,
    "blockiness": 1.1838550931239975,
@@ -105,7 +105,7 @@
    }
   }
  },
- "references_note": "All + BP. bicubic = BP(bicubic_up(y)), computed here; the rest from results/ablation_metrics.json['ensembles'] (notebook 04 \u00a75): CSGM = the better of r0, r1 (5,000 steps); E3 / E3w = 5 x 5,000 steps (r0, r1 and 3 shifts of r0, so 2 distinct z); IADrift @100 [E3, E3w] = IADrift @100 from the same members (E3w weighted by the CSGM losses)",
+ "references_note": "All + BP. bicubic = BP(bicubic_up(y)), computed here; the rest from results/ablation_metrics.json['ensembles'] (notebook 04 \u00a75): CSGM = the better of r0, r1 (5,000 steps); Ens-U / Ens-W = 5 x 5,000 steps (r0, r1 and 3 shifts of r0, so 2 distinct z); IADrift @100 [Ens-U, Ens-W] = IADrift @100 from the same members (Ens-W weighted by the CSGM losses)",
  "csgm_rule": {
   "500": {
    "psnr_raw": 17.911055223294706,
@@ -1188,16 +1188,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 3,
-   "better_psnr_than_CSGM E3": 3,
-   "better_lpips_than_CSGM E3": 3,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 2,
+   "better_psnr_than_CSGM Ens-U": 3,
+   "better_lpips_than_CSGM Ens-U": 3,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 2,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 6,
-   "better_lpips_than_IADrift @100 E3": 2,
-   "better_psnr_than_IADrift @100 E3w": 6,
-   "better_lpips_than_IADrift @100 E3w": 2
+   "better_psnr_than_IADrift @100 Ens-U": 6,
+   "better_lpips_than_IADrift @100 Ens-U": 2,
+   "better_psnr_than_IADrift @100 Ens-W": 6,
+   "better_lpips_than_IADrift @100 Ens-W": 2
   },
   {
    "ensemble": "12 x 500 weighted",
@@ -1220,16 +1220,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 3,
-   "better_psnr_than_CSGM E3": 3,
-   "better_lpips_than_CSGM E3": 3,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 3,
+   "better_psnr_than_CSGM Ens-U": 3,
+   "better_lpips_than_CSGM Ens-U": 3,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 3,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 5,
-   "better_lpips_than_IADrift @100 E3": 2,
-   "better_psnr_than_IADrift @100 E3w": 6,
-   "better_lpips_than_IADrift @100 E3w": 1
+   "better_psnr_than_IADrift @100 Ens-U": 5,
+   "better_lpips_than_IADrift @100 Ens-U": 2,
+   "better_psnr_than_IADrift @100 Ens-W": 6,
+   "better_lpips_than_IADrift @100 Ens-W": 1
   },
   {
    "ensemble": "12 x 1000 uniform",
@@ -1252,16 +1252,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 4,
-   "better_psnr_than_CSGM E3": 4,
-   "better_lpips_than_CSGM E3": 3,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 3,
+   "better_psnr_than_CSGM Ens-U": 4,
+   "better_lpips_than_CSGM Ens-U": 3,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 3,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 6,
-   "better_lpips_than_IADrift @100 E3": 2,
-   "better_psnr_than_IADrift @100 E3w": 6,
-   "better_lpips_than_IADrift @100 E3w": 2
+   "better_psnr_than_IADrift @100 Ens-U": 6,
+   "better_lpips_than_IADrift @100 Ens-U": 2,
+   "better_psnr_than_IADrift @100 Ens-W": 6,
+   "better_lpips_than_IADrift @100 Ens-W": 2
   },
   {
    "ensemble": "12 x 1000 weighted",
@@ -1284,16 +1284,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 4,
-   "better_psnr_than_CSGM E3": 4,
-   "better_lpips_than_CSGM E3": 4,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 4,
+   "better_psnr_than_CSGM Ens-U": 4,
+   "better_lpips_than_CSGM Ens-U": 4,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 4,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 5,
-   "better_lpips_than_IADrift @100 E3": 3,
-   "better_psnr_than_IADrift @100 E3w": 6,
-   "better_lpips_than_IADrift @100 E3w": 4
+   "better_psnr_than_IADrift @100 Ens-U": 5,
+   "better_lpips_than_IADrift @100 Ens-U": 3,
+   "better_psnr_than_IADrift @100 Ens-W": 6,
+   "better_lpips_than_IADrift @100 Ens-W": 4
   },
   {
    "ensemble": "12 x 2000 uniform",
@@ -1316,16 +1316,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 4,
-   "better_psnr_than_CSGM E3": 4,
-   "better_lpips_than_CSGM E3": 4,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 3,
+   "better_psnr_than_CSGM Ens-U": 4,
+   "better_lpips_than_CSGM Ens-U": 4,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 3,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 6,
-   "better_lpips_than_IADrift @100 E3": 4,
-   "better_psnr_than_IADrift @100 E3w": 6,
-   "better_lpips_than_IADrift @100 E3w": 4
+   "better_psnr_than_IADrift @100 Ens-U": 6,
+   "better_lpips_than_IADrift @100 Ens-U": 4,
+   "better_psnr_than_IADrift @100 Ens-W": 6,
+   "better_lpips_than_IADrift @100 Ens-W": 4
   },
   {
    "ensemble": "12 x 2000 weighted",
@@ -1348,16 +1348,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 4,
-   "better_psnr_than_CSGM E3": 4,
-   "better_lpips_than_CSGM E3": 3,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 5,
+   "better_psnr_than_CSGM Ens-U": 4,
+   "better_lpips_than_CSGM Ens-U": 3,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 5,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 5,
-   "better_lpips_than_IADrift @100 E3": 3,
-   "better_psnr_than_IADrift @100 E3w": 6,
-   "better_lpips_than_IADrift @100 E3w": 5
+   "better_psnr_than_IADrift @100 Ens-U": 5,
+   "better_lpips_than_IADrift @100 Ens-U": 3,
+   "better_psnr_than_IADrift @100 Ens-W": 6,
+   "better_lpips_than_IADrift @100 Ens-W": 5
   },
   {
    "ensemble": "5 x 5000 uniform",
@@ -1380,16 +1380,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 4,
-   "better_psnr_than_CSGM E3": 2,
-   "better_lpips_than_CSGM E3": 5,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 3,
+   "better_psnr_than_CSGM Ens-U": 2,
+   "better_lpips_than_CSGM Ens-U": 5,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 3,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 3,
-   "better_lpips_than_IADrift @100 E3": 4,
-   "better_psnr_than_IADrift @100 E3w": 6,
-   "better_lpips_than_IADrift @100 E3w": 4
+   "better_psnr_than_IADrift @100 Ens-U": 3,
+   "better_lpips_than_IADrift @100 Ens-U": 4,
+   "better_psnr_than_IADrift @100 Ens-W": 6,
+   "better_lpips_than_IADrift @100 Ens-W": 4
   },
   {
    "ensemble": "5 x 5000 weighted",
@@ -1412,16 +1412,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 4,
-   "better_psnr_than_CSGM E3": 1,
-   "better_lpips_than_CSGM E3": 5,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 5,
+   "better_psnr_than_CSGM Ens-U": 1,
+   "better_lpips_than_CSGM Ens-U": 5,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 5,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 2,
-   "better_lpips_than_IADrift @100 E3": 4,
-   "better_psnr_than_IADrift @100 E3w": 5,
-   "better_lpips_than_IADrift @100 E3w": 5
+   "better_psnr_than_IADrift @100 Ens-U": 2,
+   "better_lpips_than_IADrift @100 Ens-U": 4,
+   "better_psnr_than_IADrift @100 Ens-W": 5,
+   "better_lpips_than_IADrift @100 Ens-W": 5
   },
   {
    "ensemble": "12 x 5000 uniform",
@@ -1444,16 +1444,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 4,
-   "better_psnr_than_CSGM E3": 4,
-   "better_lpips_than_CSGM E3": 5,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 5,
+   "better_psnr_than_CSGM Ens-U": 4,
+   "better_lpips_than_CSGM Ens-U": 5,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 5,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 5,
-   "better_lpips_than_IADrift @100 E3": 5,
-   "better_psnr_than_IADrift @100 E3w": 6,
-   "better_lpips_than_IADrift @100 E3w": 5
+   "better_psnr_than_IADrift @100 Ens-U": 5,
+   "better_lpips_than_IADrift @100 Ens-U": 5,
+   "better_psnr_than_IADrift @100 Ens-W": 6,
+   "better_lpips_than_IADrift @100 Ens-W": 5
   },
   {
    "ensemble": "12 x 5000 weighted",
@@ -1476,16 +1476,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 5,
-   "better_psnr_than_CSGM E3": 4,
-   "better_lpips_than_CSGM E3": 5,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 5,
+   "better_psnr_than_CSGM Ens-U": 4,
+   "better_lpips_than_CSGM Ens-U": 5,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 5,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 4,
-   "better_lpips_than_IADrift @100 E3": 4,
-   "better_psnr_than_IADrift @100 E3w": 6,
-   "better_lpips_than_IADrift @100 E3w": 5
+   "better_psnr_than_IADrift @100 Ens-U": 4,
+   "better_lpips_than_IADrift @100 Ens-U": 4,
+   "better_psnr_than_IADrift @100 Ens-W": 6,
+   "better_lpips_than_IADrift @100 Ens-W": 5
   },
   {
    "ensemble": "5 x (5000 + IADrift 100) uniform",
@@ -1508,16 +1508,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 4,
-   "better_psnr_than_CSGM E3": 3,
-   "better_lpips_than_CSGM E3": 5,
-   "better_psnr_than_CSGM E3w": 5,
-   "better_lpips_than_CSGM E3w": 4,
+   "better_psnr_than_CSGM Ens-U": 3,
+   "better_lpips_than_CSGM Ens-U": 5,
+   "better_psnr_than_CSGM Ens-W": 5,
+   "better_lpips_than_CSGM Ens-W": 4,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 2,
-   "better_lpips_than_IADrift @100 E3": 5,
-   "better_psnr_than_IADrift @100 E3w": 6,
-   "better_lpips_than_IADrift @100 E3w": 5
+   "better_psnr_than_IADrift @100 Ens-U": 2,
+   "better_lpips_than_IADrift @100 Ens-U": 5,
+   "better_psnr_than_IADrift @100 Ens-W": 6,
+   "better_lpips_than_IADrift @100 Ens-W": 5
   },
   {
    "ensemble": "5 x (5000 + IADrift 100) weighted",
@@ -1540,16 +1540,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 4,
-   "better_psnr_than_CSGM E3": 1,
-   "better_lpips_than_CSGM E3": 5,
-   "better_psnr_than_CSGM E3w": 4,
-   "better_lpips_than_CSGM E3w": 4,
+   "better_psnr_than_CSGM Ens-U": 1,
+   "better_lpips_than_CSGM Ens-U": 5,
+   "better_psnr_than_CSGM Ens-W": 4,
+   "better_lpips_than_CSGM Ens-W": 4,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 1,
-   "better_lpips_than_IADrift @100 E3": 5,
-   "better_psnr_than_IADrift @100 E3w": 5,
-   "better_lpips_than_IADrift @100 E3w": 5
+   "better_psnr_than_IADrift @100 Ens-U": 1,
+   "better_lpips_than_IADrift @100 Ens-U": 5,
+   "better_psnr_than_IADrift @100 Ens-W": 5,
+   "better_lpips_than_IADrift @100 Ens-W": 5
   },
   {
    "ensemble": "5 x (5000 + IADrift 100) weighted_csgm",
@@ -1572,16 +1572,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 4,
-   "better_psnr_than_CSGM E3": 1,
-   "better_lpips_than_CSGM E3": 5,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 4,
+   "better_psnr_than_CSGM Ens-U": 1,
+   "better_lpips_than_CSGM Ens-U": 5,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 4,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 2,
-   "better_lpips_than_IADrift @100 E3": 5,
-   "better_psnr_than_IADrift @100 E3w": 5,
-   "better_lpips_than_IADrift @100 E3w": 5
+   "better_psnr_than_IADrift @100 Ens-U": 2,
+   "better_lpips_than_IADrift @100 Ens-U": 5,
+   "better_psnr_than_IADrift @100 Ens-W": 5,
+   "better_lpips_than_IADrift @100 Ens-W": 5
   },
   {
    "ensemble": "12 x (5000 + IADrift 100) uniform",
@@ -1604,16 +1604,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 4,
-   "better_psnr_than_CSGM E3": 3,
-   "better_lpips_than_CSGM E3": 5,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 5,
+   "better_psnr_than_CSGM Ens-U": 3,
+   "better_lpips_than_CSGM Ens-U": 5,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 5,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 4,
-   "better_lpips_than_IADrift @100 E3": 5,
-   "better_psnr_than_IADrift @100 E3w": 6,
-   "better_lpips_than_IADrift @100 E3w": 5
+   "better_psnr_than_IADrift @100 Ens-U": 4,
+   "better_lpips_than_IADrift @100 Ens-U": 5,
+   "better_psnr_than_IADrift @100 Ens-W": 6,
+   "better_lpips_than_IADrift @100 Ens-W": 5
   },
   {
    "ensemble": "12 x (5000 + IADrift 100) weighted",
@@ -1636,16 +1636,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 4,
-   "better_psnr_than_CSGM E3": 3,
-   "better_lpips_than_CSGM E3": 5,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 5,
+   "better_psnr_than_CSGM Ens-U": 3,
+   "better_lpips_than_CSGM Ens-U": 5,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 5,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 3,
-   "better_lpips_than_IADrift @100 E3": 5,
-   "better_psnr_than_IADrift @100 E3w": 6,
-   "better_lpips_than_IADrift @100 E3w": 5
+   "better_psnr_than_IADrift @100 Ens-U": 3,
+   "better_lpips_than_IADrift @100 Ens-U": 5,
+   "better_psnr_than_IADrift @100 Ens-W": 6,
+   "better_lpips_than_IADrift @100 Ens-W": 5
   },
   {
    "ensemble": "12 x (5000 + IADrift 100) weighted_csgm",
@@ -1668,16 +1668,16 @@
    "better_lpips_than_bicubic": 6,
    "better_psnr_than_CSGM": 6,
    "better_lpips_than_CSGM": 4,
-   "better_psnr_than_CSGM E3": 3,
-   "better_lpips_than_CSGM E3": 5,
-   "better_psnr_than_CSGM E3w": 6,
-   "better_lpips_than_CSGM E3w": 5,
+   "better_psnr_than_CSGM Ens-U": 3,
+   "better_lpips_than_CSGM Ens-U": 5,
+   "better_psnr_than_CSGM Ens-W": 6,
+   "better_lpips_than_CSGM Ens-W": 5,
    "better_psnr_than_IADrift @100": 6,
    "better_lpips_than_IADrift @100": 4,
-   "better_psnr_than_IADrift @100 E3": 4,
-   "better_lpips_than_IADrift @100 E3": 5,
-   "better_psnr_than_IADrift @100 E3w": 6,
-   "better_lpips_than_IADrift @100 E3w": 5
+   "better_psnr_than_IADrift @100 Ens-U": 4,
+   "better_lpips_than_IADrift @100 Ens-U": 5,
+   "better_psnr_than_IADrift @100 Ens-W": 6,
+   "better_lpips_than_IADrift @100 Ens-W": 5
   }
  ],
  "arm_c_images": [
@@ -2437,7 +2437,7 @@
       "very high": -7.539149194762792
      }
     },
-    "CSGM E3": {
+    "CSGM Ens-U": {
      "psnr": 24.245729732434516,
      "lpips": 0.22900454699993134,
      "blockiness": 1.261172005102595,
@@ -2448,7 +2448,7 @@
       "very high": -2.1752702365194754
      }
     },
-    "CSGM E3w": {
+    "CSGM Ens-W": {
      "psnr": 22.080881106234447,
      "lpips": 0.29129937291145325,
      "blockiness": 1.4854274878240885,
@@ -2470,7 +2470,7 @@
       "very high": -8.797126384979245
      }
     },
-    "IADrift @100 E3": {
+    "IADrift @100 Ens-U": {
      "psnr": 23.935036943819004,
      "lpips": 0.2353733777999878,
      "blockiness": 1.2687953354559316,
@@ -2481,7 +2481,7 @@
       "very high": -2.789480169179524
      }
     },
-    "IADrift @100 E3w": {
+    "IADrift @100 Ens-W": {
      "psnr": 21.43146466748285,
      "lpips": 0.31481224298477173,
      "blockiness": 1.453096712768721,
@@ -2806,7 +2806,7 @@
       "very high": -5.4283943807444395
      }
     },
-    "CSGM E3": {
+    "CSGM Ens-U": {
      "psnr": 25.33700933241724,
      "lpips": 0.2367541790008545,
      "blockiness": 1.1599947508370694,
@@ -2817,7 +2817,7 @@
       "very high": -2.36867044129193
      }
     },
-    "CSGM E3w": {
+    "CSGM Ens-W": {
      "psnr": 24.78282102248866,
      "lpips": 0.26068824529647827,
      "blockiness": 1.1382830945511202,
@@ -2839,7 +2839,7 @@
       "very high": -5.971493734523811
      }
     },
-    "IADrift @100 E3": {
+    "IADrift @100 Ens-U": {
      "psnr": 25.355662314100634,
      "lpips": 0.2270057648420334,
      "blockiness": 1.1607282178488807,
@@ -2850,7 +2850,7 @@
       "very high": -2.530106073723694
      }
     },
-    "IADrift @100 E3w": {
+    "IADrift @100 Ens-W": {
      "psnr": 24.663103218964814,
      "lpips": 0.2437519133090973,
      "blockiness": 1.1113634760988813,
@@ -3175,7 +3175,7 @@
       "very high": -5.918942149703729
      }
     },
-    "CSGM E3": {
+    "CSGM Ens-U": {
      "psnr": 24.673121234218414,
      "lpips": 0.3286958634853363,
      "blockiness": 1.0712154972652934,
@@ -3186,7 +3186,7 @@
       "very high": -1.2898845564444448
      }
     },
-    "CSGM E3w": {
+    "CSGM Ens-W": {
      "psnr": 24.292617886371488,
      "lpips": 0.3608859181404114,
      "blockiness": 1.0111401986114914,
@@ -3208,7 +3208,7 @@
       "very high": -5.259059001735209
      }
     },
-    "IADrift @100 E3": {
+    "IADrift @100 Ens-U": {
      "psnr": 24.79503224944212,
      "lpips": 0.34185802936553955,
      "blockiness": 1.057618842517003,
@@ -3219,7 +3219,7 @@
       "very high": -1.1593238369313363
      }
     },
-    "IADrift @100 E3w": {
+    "IADrift @100 Ens-W": {
      "psnr": 24.39045548331121,
      "lpips": 0.37005841732025146,
      "blockiness": 1.013366484135832,
@@ -3544,7 +3544,7 @@
       "very high": -5.054607289373053
      }
     },
-    "CSGM E3": {
+    "CSGM Ens-U": {
      "psnr": 22.819545917058633,
      "lpips": 0.43939682841300964,
      "blockiness": 1.132734284217334,
@@ -3555,7 +3555,7 @@
       "very high": -5.400433208381693
      }
     },
-    "CSGM E3w": {
+    "CSGM Ens-W": {
      "psnr": 22.97227611359994,
      "lpips": 0.26612719893455505,
      "blockiness": 1.2835840712100017,
@@ -3577,7 +3577,7 @@
       "very high": -4.654176983462387
      }
     },
-    "IADrift @100 E3": {
+    "IADrift @100 Ens-U": {
      "psnr": 22.783608512918935,
      "lpips": 0.43179354071617126,
      "blockiness": 1.096445138941786,
@@ -3588,7 +3588,7 @@
       "very high": -5.6716802060531135
      }
     },
-    "IADrift @100 E3w": {
+    "IADrift @100 Ens-W": {
      "psnr": 22.92928181899522,
      "lpips": 0.2662287652492523,
      "blockiness": 1.2685075397723145,
@@ -3913,7 +3913,7 @@
       "very high": -2.7890966496688323
      }
     },
-    "CSGM E3": {
+    "CSGM Ens-U": {
      "psnr": 23.113507195615348,
      "lpips": 0.33017563819885254,
      "blockiness": 1.1449362538841574,
@@ -3924,7 +3924,7 @@
       "very high": -0.3486691614166059
      }
     },
-    "CSGM E3w": {
+    "CSGM Ens-W": {
      "psnr": 21.898012256746586,
      "lpips": 0.2017870843410492,
      "blockiness": 1.3433992406066955,
@@ -3946,7 +3946,7 @@
       "very high": -3.1240550882987383
      }
     },
-    "IADrift @100 E3": {
+    "IADrift @100 Ens-U": {
      "psnr": 23.073996120120086,
      "lpips": 0.30904924869537354,
      "blockiness": 1.1498161265686186,
@@ -3957,7 +3957,7 @@
       "very high": -0.47655371641602934
      }
     },
-    "IADrift @100 E3w": {
+    "IADrift @100 Ens-W": {
      "psnr": 21.758984782030723,
      "lpips": 0.20154479146003723,
      "blockiness": 1.342464265189462,
@@ -4282,7 +4282,7 @@
       "very high": -1.3922047470802688
      }
     },
-    "CSGM E3": {
+    "CSGM Ens-U": {
      "psnr": 28.68486672639614,
      "lpips": 0.2465481162071228,
      "blockiness": 1.1143808348970201,
@@ -4293,7 +4293,7 @@
       "very high": -0.5215763746308776
      }
     },
-    "CSGM E3w": {
+    "CSGM Ens-W": {
      "psnr": 28.239308817884595,
      "lpips": 0.25999921560287476,
      "blockiness": 0.925236255214347,
@@ -4315,7 +4315,7 @@
       "very high": -2.9176180862076366
      }
     },
-    "IADrift @100 E3": {
+    "IADrift @100 Ens-U": {
      "psnr": 28.34166038960897,
      "lpips": 0.21065281331539154,
      "blockiness": 1.099177555813159,
@@ -4326,7 +4326,7 @@
       "very high": -0.8764786153873603
      }
     },
-    "IADrift @100 E3w": {
+    "IADrift @100 Ens-W": {
      "psnr": 27.76483202132394,
      "lpips": 0.2408028542995453,
      "blockiness": 0.9143320807787744,

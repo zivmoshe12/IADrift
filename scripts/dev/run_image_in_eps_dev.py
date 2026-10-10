@@ -1,4 +1,4 @@
-"""Feeding an image instead of noise eps (development, 3 images; forward passes only; notebook 04 §2).
+"""Feeding an image instead of noise eps (development, 3 images; forward passes only; notebook 04, Section 2).
 
 For development images 403, 3939, 8405 (correct label, the noise labels z of CSGM restart 0 = initialize(i, 0)[1],
 CFG 1.0), the generator's output x = G(eps_in; z, c) for

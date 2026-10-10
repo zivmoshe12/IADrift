@@ -17,7 +17,7 @@ One round:
 HR is never used for any decision.
 
 Controls (same start): ε-only CSGM continuation for the same number of ε steps on the accepted path, and for
-the total number of ε steps spent (all branches); cached F0 (+2,000) from Check 9 for reference.
+the total number of ε steps spent (all branches); the cached ε-only run (+2,000) from Check 9 for reference.
 
 Outputs: ~/work/datasets/ImageNetV2/z_swap_dev_v1/ (one .npz per image and control, summary.json).
 Usage:  python scripts/run_z_swap_dev.py [--images 8117 ...] [--max-rounds N] [--tag NAME]

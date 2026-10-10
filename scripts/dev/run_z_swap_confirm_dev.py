@@ -1,4 +1,4 @@
-"""Early noise-label swaps vs CSGM on two fresh development images (development; notebook 04 §5 uses its CSGM runs).
+"""Early noise-label swaps vs CSGM on two fresh development images (development; notebook 04, Section 5 uses its CSGM runs).
 
 Check 10b. Every eps step is the frozen CSGM step (CSGM.train_step), so a run in which no swap is accepted is
 bit-identical to CSGM.

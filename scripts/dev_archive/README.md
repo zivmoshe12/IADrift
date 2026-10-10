@@ -1,6 +1,6 @@
 # Archived side-experiment scripts (unported)
 
-These four development experiments are mentioned in one line each in `notebooks/04_development_ablations.ipynb` §7
+These four development experiments are mentioned in one line each in `notebooks/04_development_ablations.ipynb`, Section 7
 ("also tried") and are **not** part of any reported table or figure, so they were not ported to the `iadrift/`
 library. They are kept exactly as they were run, together with the original modules they import, for transparency:
 

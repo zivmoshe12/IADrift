@@ -1,8 +1,8 @@
-"""IADrift from every member of the development CSGM ensemble (development, 6 images; notebook 04 §5).
+"""IADrift from every member of the development CSGM ensemble (development, 6 images; notebook 04, Section 5).
 
 Check 14. For each of the 6 development images (8117, 3939, 403, 347, 9780, 8405; correct label) and each CSGM ensemble
 member (restarts r0, r1 and the r0-start runs on the measurement shifted by (0, 1), (1, 0), (1, 1) LR pixels; see
-run_ensemble_dev.py), IADrift exactly as frozen (docs/PROTOCOL.md §4; iadrift.adaptation): joint Adam on all generator
+run_ensemble_dev.py), IADrift exactly as frozen (docs/PROTOCOL.md, Section 4; iadrift.adaptation): joint Adam on all generator
 weights theta (lr 1e-5) and on eps (lr 1e-3) from that member's (eps, z), 1,000 steps, against that member's
 measurement (shifted for shift members),
     min_{theta, eps} ||S_s y - A G_theta(eps; z, c)||^2,

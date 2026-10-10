@@ -1,4 +1,4 @@
-"""Shifted CSGM members of the development posterior-mean ensemble (development, 6 images; notebook 04 §5).
+"""Shifted CSGM members of the development posterior-mean ensemble (development, 6 images; notebook 04, Section 5).
 
 Members per image (correct label; iadrift.ensemble): the 2 CSGM restarts r0, r1 (saved elsewhere, see below) and
 3 CSGM runs on the measurement circularly shifted by s in {(0, 1), (1, 0), (1, 1)} LR pixels, all from the r0 start

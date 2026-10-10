@@ -1,7 +1,9 @@
-"""Paired statistics for method comparisons (docs/PROTOCOL.md §6).
+"""Paired statistics for method comparisons (docs/PROTOCOL.md, Section 6).
 
-For methods a, b and a metric, per-image differences d_i = m_i(a) - m_i(b): mean with a 95% interval
-(mean +- 1.96 s_d / sqrt(n)), the Wilcoxon signed-rank p-value, and the number of images where a is better.
+For methods a, b and a metric, per-image differences d_i = m_i(a) - m_i(b), i = 1..n (n = number of images): mean
+d_bar with a 95% interval d_bar +- 1.96 s_d / sqrt(n), where s_d is the sample standard deviation of the d_i (divisor
+n - 1), so s_d / sqrt(n) is the standard error of d_bar; the Wilcoxon signed-rank p-value; and the number of images
+where a is better.
 Primary tests are corrected with Holm's step-down method.
 """
 
@@ -31,6 +33,7 @@ def holm(pvalues):
 
 
 def mean_ci(values):
-    """Mean and t-based 95% half-width."""
+    """Mean and t-based 95% half-width t_{0.975, n-1} * s / sqrt(n) (s = sample standard deviation, divisor n - 1;
+    n = number of values)."""
     values = np.asarray(values, np.float64)
     return float(values.mean()), float(stats.t.ppf(0.975, len(values) - 1) * values.std(ddof=1) / np.sqrt(len(values)))

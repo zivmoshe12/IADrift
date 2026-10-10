@@ -1,5 +1,5 @@
 """Two high-frequency constraints: a colour penalty in CSGM and a frequency anchor in IADrift (development, image 403;
-notebook 04 §6).
+notebook 04, Section 6).
 
 Check 16, one development image (403, crane), correct label. HP keeps radial frequencies >= 0.125 cycles/pixel (the LR
 limit; circular FFT mask); chroma = (Cb, Cr) of YCbCr. HR is never used for a decision.

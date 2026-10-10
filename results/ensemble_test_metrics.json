@@ -29,7 +29,7 @@
     "mse_raw": 0.022350938028500078,
     "lr_loss_raw": 65.46896362304688
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -41,7 +41,7 @@
     "mse_raw": 0.022195675856856778,
     "lr_loss_raw": 59.42748260498047
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.07449058980547178,
      0.4790376146679577,
@@ -100,7 +100,7 @@
     "very high": -0.44173545789410595
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.201957649801752,
    "psnr_clipped": 24.210510804235167,
    "lpips": 0.16331350803375244,
@@ -113,7 +113,7 @@
     "very high": -0.701117724893739
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.38435275235851,
    "psnr_clipped": 23.4075861061361,
    "lpips": 0.22919729351997375,
@@ -157,7 +157,7 @@
     "mse_raw": 0.03231104100873571,
     "lr_loss_raw": 37.27478790283203
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -169,7 +169,7 @@
     "mse_raw": 0.031921204140810414,
     "lr_loss_raw": 38.175724029541016
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.30861537467909195,
      0.022180841658663356,
@@ -228,7 +228,7 @@
     "very high": -0.49090884266797474
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 21.694501331513926,
    "psnr_clipped": 21.69705978663984,
    "lpips": 0.4331558346748352,
@@ -241,7 +241,7 @@
     "very high": -0.4092335969354613
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 21.563484545996396,
    "psnr_clipped": 21.566486428737907,
    "lpips": 0.4127538502216339,
@@ -285,7 +285,7 @@
     "mse_raw": 0.032095466748987715,
     "lr_loss_raw": 62.83967208862305
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -297,7 +297,7 @@
     "mse_raw": 0.028832293901071764,
     "lr_loss_raw": 52.62811279296875
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.05827916340306584,
      0.677757580879492,
@@ -356,7 +356,7 @@
     "very high": -2.8429424396697622
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 22.50872392873262,
    "psnr_clipped": 22.53239930297759,
    "lpips": 0.22206629812717438,
@@ -369,7 +369,7 @@
     "very high": -2.169308426340814
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 22.497056217031076,
    "psnr_clipped": 22.522590760186976,
    "lpips": 0.2023683339357376,
@@ -413,7 +413,7 @@
     "mse_raw": 0.005945202762896584,
     "lr_loss_raw": 10.07669734954834
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -425,7 +425,7 @@
     "mse_raw": 0.005686968815629534,
     "lr_loss_raw": 10.43155574798584
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.39043808003072367,
      0.04121300982523707,
@@ -484,7 +484,7 @@
     "very high": -3.0725983187339945
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 29.49814357739854,
    "psnr_clipped": 29.545569259378205,
    "lpips": 0.13689197599887848,
@@ -497,7 +497,7 @@
     "very high": -2.576446803333096
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 29.224901861333823,
    "psnr_clipped": 29.25899395612653,
    "lpips": 0.1349821388721466,
@@ -541,7 +541,7 @@
     "mse_raw": 0.011177891258437067,
     "lr_loss_raw": 21.671844482421875
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -553,7 +553,7 @@
     "mse_raw": 0.010628163423800177,
     "lr_loss_raw": 19.132965087890625
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.2434389159282411,
      0.47393790830097987,
@@ -612,7 +612,7 @@
     "very high": -1.4568876098444346
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 26.838462141245692,
    "psnr_clipped": 26.867435793737585,
    "lpips": 0.2692127227783203,
@@ -625,7 +625,7 @@
     "very high": -1.1961825134529365
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 26.323717039448002,
    "psnr_clipped": 26.369144788420755,
    "lpips": 0.28065672516822815,
@@ -669,7 +669,7 @@
     "mse_raw": 0.007643956934345987,
     "lr_loss_raw": 4.302263259887695
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -681,7 +681,7 @@
     "mse_raw": 0.007183713217633773,
     "lr_loss_raw": 6.580329895019531
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.28548327504788545,
      0.020224799915799972,
@@ -740,7 +740,7 @@
     "very high": -2.562129880868096
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 27.975429221299777,
    "psnr_clipped": 28.051734800457304,
    "lpips": 0.19024552404880524,
@@ -753,7 +753,7 @@
     "very high": -2.084888445910897
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 27.627744946308148,
    "psnr_clipped": 27.732884891258905,
    "lpips": 0.1799943745136261,
@@ -797,7 +797,7 @@
     "mse_raw": 0.014695523637110061,
     "lr_loss_raw": 23.081619262695312
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -809,7 +809,7 @@
     "mse_raw": 0.013548127108461922,
     "lr_loss_raw": 22.32369041442871
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.529885645729098,
      0.052297726610511956,
@@ -868,7 +868,7 @@
     "very high": -2.1535139971483326
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 25.632616423931175,
    "psnr_clipped": 25.65040340138371,
    "lpips": 0.21965456008911133,
@@ -881,7 +881,7 @@
     "very high": -1.7261780795442894
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 24.624950735083047,
    "psnr_clipped": 24.656544289621895,
    "lpips": 0.2531290054321289,
@@ -925,7 +925,7 @@
     "mse_raw": 0.021698371806012907,
     "lr_loss_raw": 39.572811126708984
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -937,7 +937,7 @@
     "mse_raw": 0.022118574884124092,
     "lr_loss_raw": 42.796356201171875
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.2689781721395664,
      0.020328592368320682,
@@ -996,7 +996,7 @@
     "very high": -1.0750111789217849
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 23.70863837348111,
    "psnr_clipped": 23.72185977682491,
    "lpips": 0.30541953444480896,
@@ -1009,7 +1009,7 @@
     "very high": -0.9757902044173965
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.71513165919737,
    "psnr_clipped": 23.730053535749498,
    "lpips": 0.328887015581131,
@@ -1053,7 +1053,7 @@
     "mse_raw": 0.012622789510252504,
     "lr_loss_raw": 41.515602111816406
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -1065,7 +1065,7 @@
     "mse_raw": 0.012834086240044609,
     "lr_loss_raw": 43.418426513671875
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.09592131416035411,
      0.03178809447083464,
@@ -1124,7 +1124,7 @@
     "very high": -1.699621043904421
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 27.036393239393348,
    "psnr_clipped": 27.233622668160088,
    "lpips": 0.19371765851974487,
@@ -1137,7 +1137,7 @@
     "very high": -1.6445630589831608
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 26.581566302043832,
    "psnr_clipped": 26.83235032689113,
    "lpips": 0.18343201279640198,
@@ -1181,7 +1181,7 @@
     "mse_raw": 0.027556111600620575,
     "lr_loss_raw": 27.907821655273438
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -1193,7 +1193,7 @@
     "mse_raw": 0.028515388100934336,
     "lr_loss_raw": 39.83076095581055
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.24870176047618184,
      0.02016836505295805,
@@ -1252,7 +1252,7 @@
     "very high": -1.693234405861333
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 22.344770877602528,
    "psnr_clipped": 22.392370068324876,
    "lpips": 0.18316364288330078,
@@ -1265,7 +1265,7 @@
     "very high": -1.3789859505700919
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 22.27457533860558,
    "psnr_clipped": 22.31957432621291,
    "lpips": 0.18705567717552185,
@@ -1309,7 +1309,7 @@
     "mse_raw": 0.0324589547412699,
     "lr_loss_raw": 77.69676208496094
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -1321,7 +1321,7 @@
     "mse_raw": 0.03116493684555802,
     "lr_loss_raw": 76.94561767578125
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.04049199453635619,
      0.040933081136990394,
@@ -1380,7 +1380,7 @@
     "very high": -1.4093246644836297
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 22.586113790842425,
    "psnr_clipped": 22.59708951781945,
    "lpips": 0.3050146996974945,
@@ -1393,7 +1393,7 @@
     "very high": -1.0972286741971433
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 22.435241347943162,
    "psnr_clipped": 22.446237232648528,
    "lpips": 0.295918345451355,
@@ -1437,7 +1437,7 @@
     "mse_raw": 0.017579400380625717,
     "lr_loss_raw": 17.098247528076172
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -1449,7 +1449,7 @@
     "mse_raw": 0.01582886180674267,
     "lr_loss_raw": 14.904458045959473
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.32541208375598996,
      0.4754166619345945,
@@ -1508,7 +1508,7 @@
     "very high": -1.977575527526445
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.60451287063907,
    "psnr_clipped": 24.607068460912384,
    "lpips": 0.2625475525856018,
@@ -1521,7 +1521,7 @@
     "very high": -1.4559216134467756
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 24.608622842135755,
    "psnr_clipped": 24.612607774296865,
    "lpips": 0.23134739696979523,
@@ -1565,7 +1565,7 @@
     "mse_raw": 0.016529062390144802,
     "lr_loss_raw": 94.5094985961914
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -1577,7 +1577,7 @@
     "mse_raw": 0.015672289292935557,
     "lr_loss_raw": 86.08320617675781
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.11880717717479815,
      0.5532247864502746,
@@ -1636,7 +1636,7 @@
     "very high": -0.771075641206823
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 27.68938363725176,
    "psnr_clipped": 27.70396929732318,
    "lpips": 0.3567417562007904,
@@ -1649,7 +1649,7 @@
     "very high": -0.6534938548098326
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 27.304779801735613,
    "psnr_clipped": 27.340881282639575,
    "lpips": 0.3234776556491852,
@@ -1693,7 +1693,7 @@
     "mse_raw": 0.023542541569995284,
     "lr_loss_raw": 101.86966705322266
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -1705,7 +1705,7 @@
     "mse_raw": 0.023869349104180013,
     "lr_loss_raw": 102.95756530761719
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.5303899131831149,
      0.02876985895860079,
@@ -1764,7 +1764,7 @@
     "very high": -1.4472891644356254
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.91762505340236,
    "psnr_clipped": 24.945709123684146,
    "lpips": 0.2357453852891922,
@@ -1777,7 +1777,7 @@
     "very high": -2.513863449271309
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 24.803951608493268,
    "psnr_clipped": 24.837759853339186,
    "lpips": 0.22930118441581726,
@@ -1821,7 +1821,7 @@
     "mse_raw": 0.012746326385059117,
     "lr_loss_raw": 30.823843002319336
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -1833,7 +1833,7 @@
     "mse_raw": 0.011935963851230552,
     "lr_loss_raw": 25.503215789794922
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.24249927251088327,
      0.5208883255419777,
@@ -1892,7 +1892,7 @@
     "very high": -0.4987092974823747
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 26.514757584522574,
    "psnr_clipped": 26.540118725733812,
    "lpips": 0.24795910716056824,
@@ -1905,7 +1905,7 @@
     "very high": -0.5317689357849996
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 26.191222453038634,
    "psnr_clipped": 26.222748060587904,
    "lpips": 0.23880043625831604,
@@ -1949,7 +1949,7 @@
     "mse_raw": 0.025520449970991742,
     "lr_loss_raw": 52.93098831176758
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -1961,7 +1961,7 @@
     "mse_raw": 0.023549908217154903,
     "lr_loss_raw": 43.06977844238281
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.049554814591092254,
      0.6996573251340219,
@@ -2020,7 +2020,7 @@
     "very high": -1.22406010673445
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 23.41662180389287,
    "psnr_clipped": 23.44814208875412,
    "lpips": 0.26298069953918457,
@@ -2033,7 +2033,7 @@
     "very high": -0.8959989944853047
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.32674805685375,
    "psnr_clipped": 23.365405047696257,
    "lpips": 0.2625526189804077,
@@ -2077,7 +2077,7 @@
     "mse_raw": 0.025997657853009528,
     "lr_loss_raw": 107.88742065429688
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -2089,7 +2089,7 @@
     "mse_raw": 0.023562683108549573,
     "lr_loss_raw": 92.13517761230469
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.05459412782286229,
      0.6902838389832525,
@@ -2148,7 +2148,7 @@
     "very high": -2.766987747711859
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.806236850739918,
    "psnr_clipped": 24.870161267223448,
    "lpips": 0.18303890526294708,
@@ -2161,7 +2161,7 @@
     "very high": -2.5500749784204775
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.200662446864797,
    "psnr_clipped": 23.308915076849264,
    "lpips": 0.21766456961631775,
@@ -2205,7 +2205,7 @@
     "mse_raw": 0.010446663066587968,
     "lr_loss_raw": 47.834381103515625
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -2217,7 +2217,7 @@
     "mse_raw": 0.008991378595023766,
     "lr_loss_raw": 36.87060546875
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.11513763779757606,
      0.6540270683921069,
@@ -2276,7 +2276,7 @@
     "very high": -2.0255894646537653
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 29.04561449686262,
    "psnr_clipped": 29.05445416297524,
    "lpips": 0.13762536644935608,
@@ -2289,7 +2289,7 @@
     "very high": -1.737388995469725
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 28.153825406117914,
    "psnr_clipped": 28.177945776520488,
    "lpips": 0.1294192224740982,
@@ -2333,7 +2333,7 @@
     "mse_raw": 0.030148127824238966,
     "lr_loss_raw": 109.17902374267578
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -2345,7 +2345,7 @@
     "mse_raw": 0.030036657844795617,
     "lr_loss_raw": 110.22785186767578
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.7134588645578145,
      0.041114895524261584,
@@ -2404,7 +2404,7 @@
     "very high": -0.6714828499183381
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 23.736051382605737,
    "psnr_clipped": 23.74123198282213,
    "lpips": 0.28744545578956604,
@@ -2417,7 +2417,7 @@
     "very high": -0.5823998166251678
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.44805824927856,
    "psnr_clipped": 23.455476058361384,
    "lpips": 0.27774181962013245,
@@ -2461,7 +2461,7 @@
     "mse_raw": 0.004252802794336216,
     "lr_loss_raw": 4.675755977630615
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -2473,7 +2473,7 @@
     "mse_raw": 0.004290821442099276,
     "lr_loss_raw": 5.275694847106934
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.28405203258425044,
      0.020614526635636475,
@@ -2532,7 +2532,7 @@
     "very high": -0.6539938071733052
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 30.4135602762894,
    "psnr_clipped": 30.416981337397804,
    "lpips": 0.16437610983848572,
@@ -2545,7 +2545,7 @@
     "very high": -0.908713878352611
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 30.445919905802015,
    "psnr_clipped": 30.449510556541117,
    "lpips": 0.17767320573329926,
@@ -2589,7 +2589,7 @@
     "mse_raw": 0.006207736708960855,
     "lr_loss_raw": 15.277766227722168
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -2601,7 +2601,7 @@
     "mse_raw": 0.005894780919255333,
     "lr_loss_raw": 13.83023452758789
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.3924865812242795,
      0.3962253344670797,
@@ -2660,7 +2660,7 @@
     "very high": -1.0174024306211469
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 29.72867527278355,
    "psnr_clipped": 29.74850205381204,
    "lpips": 0.11059467494487762,
@@ -2673,7 +2673,7 @@
     "very high": -0.9820373438950294
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 29.078514447415547,
    "psnr_clipped": 29.11765157485542,
    "lpips": 0.1410951465368271,
@@ -2717,7 +2717,7 @@
     "mse_raw": 0.010322128161975442,
     "lr_loss_raw": 15.084129333496094
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -2729,7 +2729,7 @@
     "mse_raw": 0.009936488811742297,
     "lr_loss_raw": 19.403532028198242
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.2857978967784136,
      0.020191216657935013,
@@ -2788,7 +2788,7 @@
     "very high": -2.724990317706632
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 27.163551232184005,
    "psnr_clipped": 27.167003776340074,
    "lpips": 0.24002867937088013,
@@ -2801,7 +2801,7 @@
     "very high": -2.148741801729357
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 26.787823920588856,
    "psnr_clipped": 26.791556387778357,
    "lpips": 0.2525289058685303,
@@ -2845,7 +2845,7 @@
     "mse_raw": 0.0508890068076567,
     "lr_loss_raw": 120.27306365966797
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -2857,7 +2857,7 @@
     "mse_raw": 0.04512276951212771,
     "lr_loss_raw": 83.27733612060547
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.06208852363570842,
      0.7458301784578407,
@@ -2916,7 +2916,7 @@
     "very high": -2.019596720423581
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 20.522927811056782,
    "psnr_clipped": 20.52645520637579,
    "lpips": 0.3462510108947754,
@@ -2929,7 +2929,7 @@
     "very high": -1.621573316698637
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 18.53952121222966,
    "psnr_clipped": 18.58191353118315,
    "lpips": 0.3552216589450836,
@@ -2973,7 +2973,7 @@
     "mse_raw": 0.0032775165808155635,
     "lr_loss_raw": 3.111914873123169
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -2985,7 +2985,7 @@
     "mse_raw": 0.002552179456189165,
     "lr_loss_raw": 3.1458301544189453
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.5447571602120395,
      0.02782451113485358,
@@ -3044,7 +3044,7 @@
     "very high": -6.303781446330391
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 32.54262203212119,
    "psnr_clipped": 32.54355716439576,
    "lpips": 0.22457186877727509,
@@ -3057,7 +3057,7 @@
     "very high": -5.077602514932611
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 30.478531679639183,
    "psnr_clipped": 30.488376793785573,
    "lpips": 0.25451529026031494,
@@ -3101,7 +3101,7 @@
     "mse_raw": 0.03383397456623636,
     "lr_loss_raw": 175.31671142578125
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -3113,7 +3113,7 @@
     "mse_raw": 0.029334891098018383,
     "lr_loss_raw": 155.94674682617188
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.10916367988830093,
      0.6349049741367959,
@@ -3172,7 +3172,7 @@
     "very high": -4.081647127687539
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.435137309850774,
    "psnr_clipped": 24.506599263228356,
    "lpips": 0.2520199418067932,
@@ -3185,7 +3185,7 @@
     "very high": -3.301146482209907
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.54906104500438,
    "psnr_clipped": 23.61800089752935,
    "lpips": 0.3173239529132843,
@@ -3229,7 +3229,7 @@
     "mse_raw": 0.0049306873334278205,
     "lr_loss_raw": 15.755758285522461
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -3241,7 +3241,7 @@
     "mse_raw": 0.004696006575070012,
     "lr_loss_raw": 14.599764823913574
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.02239631331876419,
      0.26740666334611113,
@@ -3300,7 +3300,7 @@
     "very high": -2.6501443192915977
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 31.200886031474827,
    "psnr_clipped": 31.266545155139976,
    "lpips": 0.08861089497804642,
@@ -3313,7 +3313,7 @@
     "very high": -2.520720988269518
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 30.964974198931028,
    "psnr_clipped": 31.042989978058092,
    "lpips": 0.08352120965719223,
@@ -3357,7 +3357,7 @@
     "mse_raw": 0.008807598114924335,
     "lr_loss_raw": 9.401334762573242
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -3369,7 +3369,7 @@
     "mse_raw": 0.008515735381466091,
     "lr_loss_raw": 8.540621757507324
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.47253716396066,
      0.1890147290060494,
@@ -3428,7 +3428,7 @@
     "very high": -0.5668007896012524
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 27.346366965552402,
    "psnr_clipped": 27.3773911104473,
    "lpips": 0.2565593719482422,
@@ -3441,7 +3441,7 @@
     "very high": -0.6980079281222773
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 26.928998713513842,
    "psnr_clipped": 26.95413600616977,
    "lpips": 0.24474002420902252,
@@ -3485,7 +3485,7 @@
     "mse_raw": 0.012207244950494462,
     "lr_loss_raw": 26.096935272216797
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -3497,7 +3497,7 @@
     "mse_raw": 0.0117872533911762,
     "lr_loss_raw": 23.74774169921875
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.12253880058296222,
      0.38970882960726333,
@@ -3556,7 +3556,7 @@
     "very high": -2.530715987021411
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 26.46704278677053,
    "psnr_clipped": 26.632125870626886,
    "lpips": 0.10634976625442505,
@@ -3569,7 +3569,7 @@
     "very high": -2.48199049296254
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 25.948248050726885,
    "psnr_clipped": 26.173054282119246,
    "lpips": 0.14260517060756683,
@@ -3613,7 +3613,7 @@
     "mse_raw": 0.014195340955184063,
     "lr_loss_raw": 8.127435684204102
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -3625,7 +3625,7 @@
     "mse_raw": 0.013342964310864286,
     "lr_loss_raw": 9.702399253845215
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.28987198338758136,
      0.020333084597336223,
@@ -3684,7 +3684,7 @@
     "very high": -2.698933598747506
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 25.168027970222365,
    "psnr_clipped": 25.175491671845283,
    "lpips": 0.20750021934509277,
@@ -3697,7 +3697,7 @@
     "very high": -2.0868156278636896
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 24.895004855749804,
    "psnr_clipped": 24.905176448742516,
    "lpips": 0.2139609009027481,
@@ -3741,7 +3741,7 @@
     "mse_raw": 0.04028456282689112,
     "lr_loss_raw": 79.85466003417969
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -3753,7 +3753,7 @@
     "mse_raw": 0.038109752165131176,
     "lr_loss_raw": 58.378135681152344
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.21002469945323937,
      0.522468634390879,
@@ -3812,7 +3812,7 @@
     "very high": -1.8287382717001
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 21.10440985466759,
    "psnr_clipped": 21.353694354530603,
    "lpips": 0.1197594404220581,
@@ -3825,7 +3825,7 @@
     "very high": -1.9677893096696495
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 19.943627856351437,
    "psnr_clipped": 20.309787134723823,
    "lpips": 0.1386992186307907,
@@ -3869,7 +3869,7 @@
     "mse_raw": 0.046280583939240144,
     "lr_loss_raw": 217.50440979003906
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -3881,7 +3881,7 @@
     "mse_raw": 0.04430423384418162,
     "lr_loss_raw": 208.60324096679688
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.024484048768031196,
      0.2364443819681172,
@@ -3940,7 +3940,7 @@
     "very high": -5.180890142069943
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 22.810877720116174,
    "psnr_clipped": 22.844373615027393,
    "lpips": 0.18461358547210693,
@@ -3953,7 +3953,7 @@
     "very high": -4.195180836180437
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 22.45413199486048,
    "psnr_clipped": 22.498649617427432,
    "lpips": 0.21248438954353333,
@@ -3997,7 +3997,7 @@
     "mse_raw": 0.03321779760222823,
     "lr_loss_raw": 16.522750854492188
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -4009,7 +4009,7 @@
     "mse_raw": 0.03143777770776192,
     "lr_loss_raw": 14.475391387939453
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.18703745032649052,
      0.645923351478736,
@@ -4068,7 +4068,7 @@
     "very high": -1.5619784076686327
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 21.307155040417936,
    "psnr_clipped": 21.31366722534468,
    "lpips": 0.2994127869606018,
@@ -4081,7 +4081,7 @@
     "very high": -1.2029588722771378
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 20.839566482845942,
    "psnr_clipped": 20.85065752837933,
    "lpips": 0.25267094373703003,
@@ -4125,7 +4125,7 @@
     "mse_raw": 0.0648552558237924,
     "lr_loss_raw": 207.34437561035156
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -4137,7 +4137,7 @@
     "mse_raw": 0.058546092472214366,
     "lr_loss_raw": 159.93450927734375
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.15543814344995563,
      0.6779962936920215,
@@ -4196,7 +4196,7 @@
     "very high": -0.6509847414385759
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 20.056638096272668,
    "psnr_clipped": 20.164450793545463,
    "lpips": 0.21255546808242798,
@@ -4209,7 +4209,7 @@
     "very high": -0.596748955144675
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 19.252041833006075,
    "psnr_clipped": 19.45203707640087,
    "lpips": 0.21209383010864258,
@@ -4253,7 +4253,7 @@
     "mse_raw": 0.01496300608772895,
     "lr_loss_raw": 17.520923614501953
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -4265,7 +4265,7 @@
     "mse_raw": 0.01342234932047527,
     "lr_loss_raw": 13.825967788696289
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.10282702225008097,
      0.6083488787055616,
@@ -4324,7 +4324,7 @@
     "very high": -0.5862140784830785
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 25.306867417115217,
    "psnr_clipped": 25.336733860047865,
    "lpips": 0.2839704155921936,
@@ -4337,7 +4337,7 @@
     "very high": -0.5760868089917296
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 25.331829654605595,
    "psnr_clipped": 25.402364369092155,
    "lpips": 0.22428706288337708,
@@ -4381,7 +4381,7 @@
     "mse_raw": 0.027577957907233556,
     "lr_loss_raw": 74.6340560913086
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -4393,7 +4393,7 @@
     "mse_raw": 0.025892024977243053,
     "lr_loss_raw": 61.88195037841797
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.19809001138017812,
      0.6086803756322519,
@@ -4452,7 +4452,7 @@
     "very high": -1.1868015985765275
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 23.25504650981152,
    "psnr_clipped": 23.259982225680247,
    "lpips": 0.2566492557525635,
@@ -4465,7 +4465,7 @@
     "very high": -1.082070942206184
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 22.684676919497097,
    "psnr_clipped": 22.70576619638242,
    "lpips": 0.21340787410736084,
@@ -4509,7 +4509,7 @@
     "mse_raw": 0.014932099798338308,
     "lr_loss_raw": 11.796150207519531
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -4521,7 +4521,7 @@
     "mse_raw": 0.014656919854488788,
     "lr_loss_raw": 12.869036674499512
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.3241637964892373,
      0.02464516038062609,
@@ -4580,7 +4580,7 @@
     "very high": -0.3898855528479508
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.922945839167113,
    "psnr_clipped": 24.923241138326926,
    "lpips": 0.2758500576019287,
@@ -4593,7 +4593,7 @@
     "very high": -0.26951295003193715
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 24.732043966830673,
    "psnr_clipped": 24.73376984665429,
    "lpips": 0.2465835064649582,
@@ -4637,7 +4637,7 @@
     "mse_raw": 0.004184771044842467,
     "lr_loss_raw": 5.407086372375488
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -4649,7 +4649,7 @@
     "mse_raw": 0.0038943795271232794,
     "lr_loss_raw": 4.23079252243042
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.13629648710687647,
      0.46143452062020385,
@@ -4708,7 +4708,7 @@
     "very high": -4.020047664743739
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 30.70343284857447,
    "psnr_clipped": 30.711410229381954,
    "lpips": 0.18895700573921204,
@@ -4721,7 +4721,7 @@
     "very high": -4.1227012068391335
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 29.770105335982358,
    "psnr_clipped": 29.783621153605985,
    "lpips": 0.2412298321723938,
@@ -4765,7 +4765,7 @@
     "mse_raw": 0.00898525639514524,
     "lr_loss_raw": 14.451997756958008
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -4777,7 +4777,7 @@
     "mse_raw": 0.008536958498487365,
     "lr_loss_raw": 14.150840759277344
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.5201278836269557,
      0.06699255077680186,
@@ -4836,7 +4836,7 @@
     "very high": -0.7279319549133052
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 27.75443015767337,
    "psnr_clipped": 27.75456386916769,
    "lpips": 0.3143542408943176,
@@ -4849,7 +4849,7 @@
     "very high": -0.5130465214366378
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 27.47020054773943,
    "psnr_clipped": 27.470679692903552,
    "lpips": 0.35332727432250977,
@@ -4893,7 +4893,7 @@
     "mse_raw": 0.03856415388787784,
     "lr_loss_raw": 38.619083404541016
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -4905,7 +4905,7 @@
     "mse_raw": 0.03300594340071252,
     "lr_loss_raw": 32.39326858520508
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.04570659233137705,
      0.7309531729987062,
@@ -4964,7 +4964,7 @@
     "very high": -4.380905412769803
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 21.35401784770918,
    "psnr_clipped": 21.361327778722064,
    "lpips": 0.32333603501319885,
@@ -4977,7 +4977,7 @@
     "very high": -3.371305190546536
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 21.484742773374364,
    "psnr_clipped": 21.505537863220834,
    "lpips": 0.27054691314697266,
@@ -5021,7 +5021,7 @@
     "mse_raw": 0.0021075295321276895,
     "lr_loss_raw": 4.807962894439697
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -5033,7 +5033,7 @@
     "mse_raw": 0.0019677842679171583,
     "lr_loss_raw": 5.108938694000244
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.3967126096463469,
      0.021886868158398964,
@@ -5092,7 +5092,7 @@
     "very high": -6.51968489975992
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 34.50016720986446,
    "psnr_clipped": 34.51636340678881,
    "lpips": 0.17961212992668152,
@@ -5105,7 +5105,7 @@
     "very high": -6.246609796963984
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 34.4146797873826,
    "psnr_clipped": 34.427603939640086,
    "lpips": 0.18879562616348267,
@@ -5149,7 +5149,7 @@
     "mse_raw": 0.03619846867547947,
     "lr_loss_raw": 191.71295166015625
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -5161,7 +5161,7 @@
     "mse_raw": 0.033790302972381815,
     "lr_loss_raw": 176.31175231933594
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.3685516632718491,
      0.33047277292949817,
@@ -5220,7 +5220,7 @@
     "very high": -2.1172452701454283
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.185743660119922,
    "psnr_clipped": 24.277234843873057,
    "lpips": 0.21686679124832153,
@@ -5233,7 +5233,7 @@
     "very high": -1.6724107095341736
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.774568656951214,
    "psnr_clipped": 23.909602955883482,
    "lpips": 0.23707307875156403,
@@ -5277,7 +5277,7 @@
     "mse_raw": 0.013377869985359718,
     "lr_loss_raw": 31.357059478759766
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -5289,7 +5289,7 @@
     "mse_raw": 0.013560007061355663,
     "lr_loss_raw": 33.434051513671875
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.31413681003944627,
      0.02052742031391341,
@@ -5348,7 +5348,7 @@
     "very high": -0.5733722744858483
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 26.207747108091052,
    "psnr_clipped": 26.221469601306573,
    "lpips": 0.28087833523750305,
@@ -5361,7 +5361,7 @@
     "very high": -1.1973831009087954
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 26.242160393939056,
    "psnr_clipped": 26.258229047790085,
    "lpips": 0.2895835041999817,
@@ -5405,7 +5405,7 @@
     "mse_raw": 0.03699802629678489,
     "lr_loss_raw": 34.28314971923828
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -5417,7 +5417,7 @@
     "mse_raw": 0.034813895669832146,
     "lr_loss_raw": 39.3551139831543
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.19808014599819823,
      0.020935040487632187,
@@ -5476,7 +5476,7 @@
     "very high": -2.4680312229592376
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 21.251902335474796,
    "psnr_clipped": 21.25480763830806,
    "lpips": 0.28318801522254944,
@@ -5489,7 +5489,7 @@
     "very high": -1.9228882065741038
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 20.831852491965183,
    "psnr_clipped": 20.835996200072387,
    "lpips": 0.296012282371521,
@@ -5533,7 +5533,7 @@
     "mse_raw": 0.03956207351962041,
     "lr_loss_raw": 107.76763916015625
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -5545,7 +5545,7 @@
     "mse_raw": 0.03429559156193038,
     "lr_loss_raw": 79.03089904785156
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.1198026716623662,
      0.7111705738579525,
@@ -5604,7 +5604,7 @@
     "very high": -2.3615284428471925
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 21.953133491853283,
    "psnr_clipped": 22.015083349247483,
    "lpips": 0.20007479190826416,
@@ -5617,7 +5617,7 @@
     "very high": -1.9720843866758422
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 21.516388447554327,
    "psnr_clipped": 21.62638403785457,
    "lpips": 0.17025652527809143,
@@ -5661,7 +5661,7 @@
     "mse_raw": 0.03418096654197106,
     "lr_loss_raw": 39.722572326660156
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -5673,7 +5673,7 @@
     "mse_raw": 0.03357146221226571,
     "lr_loss_raw": 42.180137634277344
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.4312041712693269,
      0.021512416920168687,
@@ -5732,7 +5732,7 @@
     "very high": -0.5659014133924387
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 21.57310930903875,
    "psnr_clipped": 21.582495944744515,
    "lpips": 0.25888293981552124,
@@ -5745,7 +5745,7 @@
     "very high": -0.4587629663433965
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 21.349071590032164,
    "psnr_clipped": 21.36133952857465,
    "lpips": 0.25755152106285095,
@@ -5789,7 +5789,7 @@
     "mse_raw": 0.013598120741705853,
     "lr_loss_raw": 16.584938049316406
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -5801,7 +5801,7 @@
     "mse_raw": 0.012822609102953327,
     "lr_loss_raw": 15.79316520690918
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.4286674424369875,
      0.16424516758999835,
@@ -5860,7 +5860,7 @@
     "very high": -1.8971381502636897
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 25.679594807632494,
    "psnr_clipped": 25.68728415434389,
    "lpips": 0.13051779568195343,
@@ -5873,7 +5873,7 @@
     "very high": -1.6150845899245572
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 25.29477142351718,
    "psnr_clipped": 25.304928094806915,
    "lpips": 0.14234428107738495,
@@ -5917,7 +5917,7 @@
     "mse_raw": 0.013417504726304689,
     "lr_loss_raw": 33.13113021850586
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -5929,7 +5929,7 @@
     "mse_raw": 0.012632240978204479,
     "lr_loss_raw": 29.689525604248047
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.022897939270845474,
      0.4398640823284521,
@@ -5988,7 +5988,7 @@
     "very high": -0.9148302890127971
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 26.464581038091776,
    "psnr_clipped": 26.46977481155464,
    "lpips": 0.29187822341918945,
@@ -6001,7 +6001,7 @@
     "very high": -0.8148700911439628
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 26.169880395481776,
    "psnr_clipped": 26.1771295060732,
    "lpips": 0.2948136329650879,
@@ -6045,7 +6045,7 @@
     "mse_raw": 0.00825606633353364,
     "lr_loss_raw": 23.6446533203125
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -6057,7 +6057,7 @@
     "mse_raw": 0.007902727183777587,
     "lr_loss_raw": 20.320974349975586
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.048711406901551936,
      0.3580180715016902,
@@ -6116,7 +6116,7 @@
     "very high": -1.1730931562179414
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 28.56574750159947,
    "psnr_clipped": 28.56574750159947,
    "lpips": 0.20313939452171326,
@@ -6129,7 +6129,7 @@
     "very high": -1.1147135781663629
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 28.028278295641854,
    "psnr_clipped": 28.028278295641854,
    "lpips": 0.18719029426574707,
@@ -6173,7 +6173,7 @@
     "mse_raw": 0.032050709787207386,
     "lr_loss_raw": 63.30260467529297
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -6185,7 +6185,7 @@
     "mse_raw": 0.0302731119037194,
     "lr_loss_raw": 63.05241775512695
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.3118654061880372,
      0.03995810794696079,
@@ -6244,7 +6244,7 @@
     "very high": -1.7395854288222454
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 22.342647051091312,
    "psnr_clipped": 22.352565428242634,
    "lpips": 0.24390913546085358,
@@ -6257,7 +6257,7 @@
     "very high": -1.365462689898162
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 21.864192485397204,
    "psnr_clipped": 21.883401146889113,
    "lpips": 0.2463850975036621,
@@ -6301,7 +6301,7 @@
     "mse_raw": 0.021721649854225936,
     "lr_loss_raw": 49.43461227416992
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -6313,7 +6313,7 @@
     "mse_raw": 0.021553633356097834,
     "lr_loss_raw": 40.92947006225586
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.12013419448125805,
      0.6871347858592154,
@@ -6372,7 +6372,7 @@
     "very high": -0.8410896208171532
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 23.819286844496297,
    "psnr_clipped": 23.821299090925855,
    "lpips": 0.46129080653190613,
@@ -6385,7 +6385,7 @@
     "very high": -1.239910481694749
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 20.802797327439457,
    "psnr_clipped": 20.8340567397242,
    "lpips": 0.5999546051025391,
@@ -6429,7 +6429,7 @@
     "mse_raw": 0.010236204608545034,
     "lr_loss_raw": 22.848602294921875
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -6441,7 +6441,7 @@
     "mse_raw": 0.010497733528913053,
     "lr_loss_raw": 20.86324691772461
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.2495984047439458,
      0.3281914698498046,
@@ -6500,7 +6500,7 @@
     "very high": -2.003195337036642
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 26.975855440800597,
    "psnr_clipped": 27.023234747482128,
    "lpips": 0.25847524404525757,
@@ -6513,7 +6513,7 @@
     "very high": -1.7433354990111622
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 26.37419533286272,
    "psnr_clipped": 26.43248243627148,
    "lpips": 0.2529235780239105,
@@ -6557,7 +6557,7 @@
     "mse_raw": 0.003881621654879744,
     "lr_loss_raw": 5.226341724395752
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -6569,7 +6569,7 @@
     "mse_raw": 0.0036400585652176178,
     "lr_loss_raw": 4.1892290115356445
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.08996385706301455,
      0.6637821819693386,
@@ -6628,7 +6628,7 @@
     "very high": -0.6597591785284624
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 31.118257147684382,
    "psnr_clipped": 31.123235602548096,
    "lpips": 0.15394283831119537,
@@ -6641,7 +6641,7 @@
     "very high": -0.8121008169633368
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 29.044436424865733,
    "psnr_clipped": 29.059134233285093,
    "lpips": 0.309848427772522,
@@ -6685,7 +6685,7 @@
     "mse_raw": 0.023785770570293574,
     "lr_loss_raw": 118.48970794677734
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -6697,7 +6697,7 @@
     "mse_raw": 0.0205584084400342,
     "lr_loss_raw": 92.80683898925781
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.05087262677804099,
      0.5940916000224342,
@@ -6756,7 +6756,7 @@
     "very high": -8.131204467384078
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 25.405456953132898,
    "psnr_clipped": 25.440167298113103,
    "lpips": 0.29924818873405457,
@@ -6769,7 +6769,7 @@
     "very high": -7.550519541696303
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.76955066762374,
    "psnr_clipped": 23.80254000759023,
    "lpips": 0.38312679529190063,
@@ -6813,7 +6813,7 @@
     "mse_raw": 0.00695065017355202,
     "lr_loss_raw": 29.500091552734375
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -6825,7 +6825,7 @@
     "mse_raw": 0.006956458685673478,
     "lr_loss_raw": 33.96126174926758
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.27856139160342575,
      0.02017140454291774,
@@ -6884,7 +6884,7 @@
     "very high": -2.3115499768971675
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 30.652634419503215,
    "psnr_clipped": 30.652736836916745,
    "lpips": 0.25675851106643677,
@@ -6897,7 +6897,7 @@
     "very high": -1.8655785259911504
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 30.276709193044596,
    "psnr_clipped": 30.27695706990484,
    "lpips": 0.2762066721916199,
@@ -6941,7 +6941,7 @@
     "mse_raw": 0.02716335525656094,
     "lr_loss_raw": 83.61515808105469
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -6953,7 +6953,7 @@
     "mse_raw": 0.02767687332376803,
     "lr_loss_raw": 98.29222106933594
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.29058696006548124,
      0.02028175546794734,
@@ -7012,7 +7012,7 @@
     "very high": -2.4641044410891437
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 23.932250915873006,
    "psnr_clipped": 24.058656776425863,
    "lpips": 0.15330590307712555,
@@ -7025,7 +7025,7 @@
     "very high": -1.9824438346337687
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.68835236281621,
    "psnr_clipped": 23.832289568854783,
    "lpips": 0.13379213213920593,
@@ -7069,7 +7069,7 @@
     "mse_raw": 0.00680245871970248,
     "lr_loss_raw": 23.419254302978516
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -7081,7 +7081,7 @@
     "mse_raw": 0.006293716608643065,
     "lr_loss_raw": 19.013042449951172
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.049790994852942375,
      0.7467329714484393,
@@ -7140,7 +7140,7 @@
     "very high": -0.9531810936131904
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 29.876127072004593,
    "psnr_clipped": 29.882231480412287,
    "lpips": 0.21771956980228424,
@@ -7153,7 +7153,7 @@
     "very high": -0.8875557543752235
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 28.629846483786817,
    "psnr_clipped": 28.639499297457537,
    "lpips": 0.2582792341709137,
@@ -7197,7 +7197,7 @@
     "mse_raw": 0.02094572254315219,
     "lr_loss_raw": 53.41541290283203
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -7209,7 +7209,7 @@
     "mse_raw": 0.019405205026999765,
     "lr_loss_raw": 46.00907516479492
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.07404322102891533,
      0.717229745204737,
@@ -7268,7 +7268,7 @@
     "very high": -3.598794945721258
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.578332053175316,
    "psnr_clipped": 24.671598401388565,
    "lpips": 0.2706126570701599,
@@ -7281,7 +7281,7 @@
     "very high": -3.211697476281314
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.455041698533275,
    "psnr_clipped": 23.599862300030413,
    "lpips": 0.2563523054122925,
@@ -7325,7 +7325,7 @@
     "mse_raw": 0.043148773300984274,
     "lr_loss_raw": 212.171630859375
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -7337,7 +7337,7 @@
     "mse_raw": 0.04322398045431089,
     "lr_loss_raw": 212.85549926757812
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.2595515439159315,
      0.029493892076914677,
@@ -7396,7 +7396,7 @@
     "very high": -1.270094416949705
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 22.952133753261208,
    "psnr_clipped": 23.001394664177116,
    "lpips": 0.24645709991455078,
@@ -7409,7 +7409,7 @@
     "very high": -1.2590069240797088
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 22.740328797395822,
    "psnr_clipped": 22.798839074801762,
    "lpips": 0.23078134655952454,
@@ -7453,7 +7453,7 @@
     "mse_raw": 0.06670318902617248,
     "lr_loss_raw": 134.30230712890625
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -7465,7 +7465,7 @@
     "mse_raw": 0.06412056967616811,
     "lr_loss_raw": 119.20011138916016
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.3156828937195506,
      0.4109040345021375,
@@ -7524,7 +7524,7 @@
     "very high": -0.48252489247668423
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 18.994260129891515,
    "psnr_clipped": 19.002177981403094,
    "lpips": 0.39534616470336914,
@@ -7537,7 +7537,7 @@
     "very high": -0.40677562058349165
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 18.79556708703115,
    "psnr_clipped": 18.805358484618992,
    "lpips": 0.3644307553768158,
@@ -7581,7 +7581,7 @@
     "mse_raw": 0.05638960038951652,
     "lr_loss_raw": 185.16806030273438
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -7593,7 +7593,7 @@
     "mse_raw": 0.05420632569029384,
     "lr_loss_raw": 170.35317993164062
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.0315122183195144,
      0.6737386020930125,
@@ -7652,7 +7652,7 @@
     "very high": -0.8701004377871425
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 20.58523929415399,
    "psnr_clipped": 20.604116728733217,
    "lpips": 0.3480547368526459,
@@ -7665,7 +7665,7 @@
     "very high": -0.6589209146796805
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 20.43278202327477,
    "psnr_clipped": 20.455333468513555,
    "lpips": 0.327126145362854,
@@ -7709,7 +7709,7 @@
     "mse_raw": 0.025973417238690937,
     "lr_loss_raw": 31.059751510620117
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -7721,7 +7721,7 @@
     "mse_raw": 0.027407260172289657,
     "lr_loss_raw": 45.451805114746094
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.23924753328540008,
      0.020118701102178393,
@@ -7780,7 +7780,7 @@
     "very high": -2.66447523661515
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 22.578005167873748,
    "psnr_clipped": 22.641190503743033,
    "lpips": 0.2689943015575409,
@@ -7793,7 +7793,7 @@
     "very high": -2.3466232358806245
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 22.591733537339813,
    "psnr_clipped": 22.663743461206142,
    "lpips": 0.2554454803466797,
@@ -7837,7 +7837,7 @@
     "mse_raw": 0.016459886987731095,
     "lr_loss_raw": 37.26664733886719
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -7849,7 +7849,7 @@
     "mse_raw": 0.015266992168897311,
     "lr_loss_raw": 27.701072692871094
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.05873534099208922,
      0.7471356065282315,
@@ -7908,7 +7908,7 @@
     "very high": -1.363712085983896
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 25.22069600368448,
    "psnr_clipped": 25.249383194662162,
    "lpips": 0.18637743592262268,
@@ -7921,7 +7921,7 @@
     "very high": -1.2619391444025
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.981226541562076,
    "psnr_clipped": 24.123392463097424,
    "lpips": 0.16323940455913544,
@@ -7965,7 +7965,7 @@
     "mse_raw": 0.006368481185523461,
     "lr_loss_raw": 14.491315841674805
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -7977,7 +7977,7 @@
     "mse_raw": 0.006339145571360262,
     "lr_loss_raw": 12.36611557006836
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.2932741313436748,
      0.5337712349203985,
@@ -8036,7 +8036,7 @@
     "very high": -3.255822294201669
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 29.123217988834288,
    "psnr_clipped": 29.123217988834288,
    "lpips": 0.29266348481178284,
@@ -8049,7 +8049,7 @@
     "very high": -3.158847642958932
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 26.47933548915163,
    "psnr_clipped": 26.56397672963848,
    "lpips": 0.3755510747432709,
@@ -8093,7 +8093,7 @@
     "mse_raw": 0.04649063510989263,
     "lr_loss_raw": 108.42596435546875
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -8105,7 +8105,7 @@
     "mse_raw": 0.04774755956453646,
     "lr_loss_raw": 124.35448455810547
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.2814764613532031,
      0.020440414814873194,
@@ -8164,7 +8164,7 @@
     "very high": -0.9599964956625013
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 20.74312349353975,
    "psnr_clipped": 20.77716842665093,
    "lpips": 0.3415983021259308,
@@ -8177,7 +8177,7 @@
     "very high": -0.9097057822987922
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 20.714939086366968,
    "psnr_clipped": 20.7502995256096,
    "lpips": 0.33914563059806824,
@@ -8221,7 +8221,7 @@
     "mse_raw": 0.11921463845257156,
     "lr_loss_raw": 255.01397705078125
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -8233,7 +8233,7 @@
     "mse_raw": 0.11704693486414093,
     "lr_loss_raw": 245.14073181152344
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.4344100693366785,
      0.16393588744062565,
@@ -8292,7 +8292,7 @@
     "very high": -0.6279808041851419
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 16.60444913247836,
    "psnr_clipped": 16.68529419234551,
    "lpips": 0.38077834248542786,
@@ -8305,7 +8305,7 @@
     "very high": -0.5167344852445113
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 16.413372714154868,
    "psnr_clipped": 16.511599554201496,
    "lpips": 0.3490715026855469,
@@ -8349,7 +8349,7 @@
     "mse_raw": 0.0072718059262040355,
     "lr_loss_raw": 9.628734588623047
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -8361,7 +8361,7 @@
     "mse_raw": 0.007266502390791095,
     "lr_loss_raw": 9.552593231201172
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.20127529746878725,
      0.026612488742259556,
@@ -8420,7 +8420,7 @@
     "very high": -1.4028084469943587
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 28.18040391311788,
    "psnr_clipped": 28.19783690946744,
    "lpips": 0.21934279799461365,
@@ -8433,7 +8433,7 @@
     "very high": -1.648960863839569
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 27.922996880952915,
    "psnr_clipped": 27.94760263326291,
    "lpips": 0.20568563044071198,
@@ -8477,7 +8477,7 @@
     "mse_raw": 0.020114939788178108,
     "lr_loss_raw": 22.782621383666992
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -8489,7 +8489,7 @@
     "mse_raw": 0.019372986972154352,
     "lr_loss_raw": 21.817874908447266
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.7279108464200165,
      0.06990926841851729,
@@ -8548,7 +8548,7 @@
     "very high": -1.3333906350718252
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 23.824381586754907,
    "psnr_clipped": 23.83166836855565,
    "lpips": 0.19984787702560425,
@@ -8561,7 +8561,7 @@
     "very high": -1.171483653396663
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 22.68051828458196,
    "psnr_clipped": 22.714760331233048,
    "lpips": 0.21922066807746887,
@@ -8605,7 +8605,7 @@
     "mse_raw": 0.009978977156991734,
     "lr_loss_raw": 18.601072311401367
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -8617,7 +8617,7 @@
     "mse_raw": 0.009620611771687748,
     "lr_loss_raw": 19.77332878112793
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.2462762884627706,
      0.020557822623872887,
@@ -8676,7 +8676,7 @@
     "very high": -1.786373781963189
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 27.39508210998106,
    "psnr_clipped": 27.396331858395474,
    "lpips": 0.24794244766235352,
@@ -8689,7 +8689,7 @@
     "very high": -1.586109447049715
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 27.115153784753225,
    "psnr_clipped": 27.116202014566475,
    "lpips": 0.24675799906253815,
@@ -8733,7 +8733,7 @@
     "mse_raw": 0.014047560281681436,
     "lr_loss_raw": 56.87614440917969
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -8745,7 +8745,7 @@
     "mse_raw": 0.012167096285459233,
     "lr_loss_raw": 41.57530212402344
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.05172382946661335,
      0.7436686434363379,
@@ -8804,7 +8804,7 @@
     "very high": -2.841800986488586
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 27.121133593344457,
    "psnr_clipped": 27.266982946745074,
    "lpips": 0.1337210237979889,
@@ -8817,7 +8817,7 @@
     "very high": -2.570355354864562
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 25.664162536775052,
    "psnr_clipped": 25.893512963618313,
    "lpips": 0.16533814370632172,
@@ -8861,7 +8861,7 @@
     "mse_raw": 0.014094587512966451,
     "lr_loss_raw": 16.52456283569336
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -8873,7 +8873,7 @@
     "mse_raw": 0.012361395352496028,
     "lr_loss_raw": 16.468177795410156
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.2558463110329764,
      0.022537391905464704,
@@ -8932,7 +8932,7 @@
     "very high": -3.1592054197120567
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 25.906492230722357,
    "psnr_clipped": 25.922970301117726,
    "lpips": 0.2989979386329651,
@@ -8945,7 +8945,7 @@
     "very high": -2.5184872877991165
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 24.852606726568073,
    "psnr_clipped": 24.88684720636355,
    "lpips": 0.3485770523548126,
@@ -8989,7 +8989,7 @@
     "mse_raw": 0.023103873434138528,
     "lr_loss_raw": 22.209110260009766
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -9001,7 +9001,7 @@
     "mse_raw": 0.0221945110250456,
     "lr_loss_raw": 24.044591903686523
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.3369586908224623,
      0.05749268384768352,
@@ -9060,7 +9060,7 @@
     "very high": -1.376443924724934
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 23.210171605235765,
    "psnr_clipped": 23.212527531532253,
    "lpips": 0.19757887721061707,
@@ -9073,7 +9073,7 @@
     "very high": -1.1892245578529563
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 22.64332441867718,
    "psnr_clipped": 22.64886335609389,
    "lpips": 0.20201489329338074,
@@ -9117,7 +9117,7 @@
     "mse_raw": 0.01775158737575368,
     "lr_loss_raw": 38.376129150390625
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -9129,7 +9129,7 @@
     "mse_raw": 0.01666094842257113,
     "lr_loss_raw": 32.808101654052734
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.07516012210341846,
      0.7382247846443398,
@@ -9188,7 +9188,7 @@
     "very high": -0.7100333068121129
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.94565914416887,
    "psnr_clipped": 25.037610871875614,
    "lpips": 0.22148850560188293,
@@ -9201,7 +9201,7 @@
     "very high": -0.7001343471453014
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 24.35731525628547,
    "psnr_clipped": 24.51034486187192,
    "lpips": 0.17866262793540955,
@@ -9245,7 +9245,7 @@
     "mse_raw": 0.03710228490073128,
     "lr_loss_raw": 97.61943817138672
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -9257,7 +9257,7 @@
     "mse_raw": 0.03587837226674809,
     "lr_loss_raw": 96.76948547363281
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.3209682717914589,
      0.022211811735722488,
@@ -9316,7 +9316,7 @@
     "very high": -1.831078000419948
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 22.07243783904485,
    "psnr_clipped": 22.10203632518065,
    "lpips": 0.273888498544693,
@@ -9329,7 +9329,7 @@
     "very high": -1.7297855937988458
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 21.785559920954043,
    "psnr_clipped": 21.827507830452365,
    "lpips": 0.2950834631919861,
@@ -9373,7 +9373,7 @@
     "mse_raw": 0.03196973067818131,
     "lr_loss_raw": 38.54113006591797
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -9385,7 +9385,7 @@
     "mse_raw": 0.0296538875490658,
     "lr_loss_raw": 29.97409439086914
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.05910265716164008,
      0.7505185164126145,
@@ -9444,7 +9444,7 @@
     "very high": -1.062956247863353
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 21.90208208372292,
    "psnr_clipped": 21.90862957000907,
    "lpips": 0.3234812021255493,
@@ -9457,7 +9457,7 @@
     "very high": -0.8655809806825937
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 20.92594149983576,
    "psnr_clipped": 20.95419867025006,
    "lpips": 0.27232030034065247,
@@ -9501,7 +9501,7 @@
     "mse_raw": 0.01736465480971593,
     "lr_loss_raw": 58.09667205810547
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -9513,7 +9513,7 @@
     "mse_raw": 0.01513184595775418,
     "lr_loss_raw": 42.79851531982422
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.16935988586594058,
      0.5308736159114312,
@@ -9572,7 +9572,7 @@
     "very high": -0.30295673779988674
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 25.80570573559783,
    "psnr_clipped": 25.829313376954268,
    "lpips": 0.26286137104034424,
@@ -9585,7 +9585,7 @@
     "very high": -0.18312014918242314
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 25.874565693185076,
    "psnr_clipped": 25.898889550527493,
    "lpips": 0.24581685662269592,
@@ -9629,7 +9629,7 @@
     "mse_raw": 0.021331264927154297,
     "lr_loss_raw": 44.703216552734375
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -9641,7 +9641,7 @@
     "mse_raw": 0.01865917003569652,
     "lr_loss_raw": 36.96736145019531
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.07198444511396994,
      0.7242932062601456,
@@ -9700,7 +9700,7 @@
     "very high": -3.011865796605038
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.38609207532672,
    "psnr_clipped": 24.392579589934257,
    "lpips": 0.253625750541687,
@@ -9713,7 +9713,7 @@
     "very high": -2.3800120125720046
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.939245626928617,
    "psnr_clipped": 23.960535475968253,
    "lpips": 0.2676888108253479,
@@ -9757,7 +9757,7 @@
     "mse_raw": 0.010708045757856235,
     "lr_loss_raw": 28.16788101196289
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -9769,7 +9769,7 @@
     "mse_raw": 0.010296100963495687,
     "lr_loss_raw": 26.593347549438477
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.42175220970317,
      0.22951193375047518,
@@ -9828,7 +9828,7 @@
     "very high": -0.8665312738266312
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 27.508540421000003,
    "psnr_clipped": 27.5118512046283,
    "lpips": 0.11952128261327744,
@@ -9841,7 +9841,7 @@
     "very high": -0.7444367990190486
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 27.35299011962369,
    "psnr_clipped": 27.36029316312548,
    "lpips": 0.10772138833999634,
@@ -9885,7 +9885,7 @@
     "mse_raw": 0.021032582303204376,
     "lr_loss_raw": 67.72456359863281
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -9897,7 +9897,7 @@
     "mse_raw": 0.026969210584351314,
     "lr_loss_raw": 135.92515563964844
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.25061975484839566,
      0.020276368434749968,
@@ -9956,7 +9956,7 @@
     "very high": -1.2025498197496878
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.925112030773708,
    "psnr_clipped": 24.94774098256019,
    "lpips": 0.17321646213531494,
@@ -9969,7 +9969,7 @@
     "very high": -1.4010270194120307
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 24.875585093340888,
    "psnr_clipped": 24.90328239110805,
    "lpips": 0.15364830195903778,
@@ -10013,7 +10013,7 @@
     "mse_raw": 0.02120014129307778,
     "lr_loss_raw": 40.45570755004883
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -10025,7 +10025,7 @@
     "mse_raw": 0.02162146047494504,
     "lr_loss_raw": 43.96492385864258
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.25081438708745013,
      0.020430929271382865,
@@ -10084,7 +10084,7 @@
     "very high": -0.3366707983284257
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 23.871046206830183,
    "psnr_clipped": 23.966323474115022,
    "lpips": 0.18121440708637238,
@@ -10097,7 +10097,7 @@
     "very high": -0.36376887248641626
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.887183593549768,
    "psnr_clipped": 23.983944286208075,
    "lpips": 0.18290434777736664,
@@ -10141,7 +10141,7 @@
     "mse_raw": 0.016667174476684653,
     "lr_loss_raw": 22.00507926940918
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -10153,7 +10153,7 @@
     "mse_raw": 0.01580799913623793,
     "lr_loss_raw": 19.346176147460938
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.06555561239243123,
      0.6476560476163761,
@@ -10212,7 +10212,7 @@
     "very high": -1.5403467143471485
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.764797118122925,
    "psnr_clipped": 24.773492632385757,
    "lpips": 0.26173534989356995,
@@ -10225,7 +10225,7 @@
     "very high": -1.3893657560858124
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.35887482120191,
    "psnr_clipped": 23.37868456705124,
    "lpips": 0.30426669120788574,
@@ -10269,7 +10269,7 @@
     "mse_raw": 0.07179652287212339,
     "lr_loss_raw": 42.360633850097656
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -10281,7 +10281,7 @@
     "mse_raw": 0.07022351471815062,
     "lr_loss_raw": 39.54875564575195
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.07307134442628445,
      0.6014562654437603,
@@ -10340,7 +10340,7 @@
     "very high": -0.587238516298726
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 17.88322889311436,
    "psnr_clipped": 17.893633333713723,
    "lpips": 0.3266567587852478,
@@ -10353,7 +10353,7 @@
     "very high": -0.531802337902382
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 17.41141164980268,
    "psnr_clipped": 17.446118727792125,
    "lpips": 0.28411561250686646,
@@ -10397,7 +10397,7 @@
     "mse_raw": 0.015105469929638335,
     "lr_loss_raw": 36.055755615234375
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -10409,7 +10409,7 @@
     "mse_raw": 0.015146576264369849,
     "lr_loss_raw": 34.97284698486328
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.034396381887068984,
      0.06132473780165518,
@@ -10468,7 +10468,7 @@
     "very high": -0.2509081097868577
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 25.589055553742888,
    "psnr_clipped": 25.59210958512711,
    "lpips": 0.38366204500198364,
@@ -10481,7 +10481,7 @@
     "very high": -0.2802526733870401
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 25.449769974420533,
    "psnr_clipped": 25.453558997436893,
    "lpips": 0.3571232259273529,
@@ -10525,7 +10525,7 @@
     "mse_raw": 0.023831633119216832,
     "lr_loss_raw": 64.53711700439453
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -10537,7 +10537,7 @@
     "mse_raw": 0.021666514610769298,
     "lr_loss_raw": 57.461883544921875
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.1545411143709563,
      0.5707100104172147,
@@ -10596,7 +10596,7 @@
     "very high": -2.5092461196372056
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.21145456103513,
    "psnr_clipped": 24.285692037800647,
    "lpips": 0.19233253598213196,
@@ -10609,7 +10609,7 @@
     "very high": -1.9828638543298107
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 24.16218417906675,
    "psnr_clipped": 24.24649557391222,
    "lpips": 0.18528947234153748,
@@ -10653,7 +10653,7 @@
     "mse_raw": 0.022648569513857898,
     "lr_loss_raw": 94.5158462524414
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -10665,7 +10665,7 @@
     "mse_raw": 0.01960019657003971,
     "lr_loss_raw": 71.35282135009766
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.06955192867161404,
      0.7236471440347839,
@@ -10724,7 +10724,7 @@
     "very high": -1.426323859544636
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 25.201071534015604,
    "psnr_clipped": 25.23232261843472,
    "lpips": 0.2648049294948578,
@@ -10737,7 +10737,7 @@
     "very high": -1.1277089876795214
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 25.08367920229815,
    "psnr_clipped": 25.12226459300284,
    "lpips": 0.24830588698387146,
@@ -10781,7 +10781,7 @@
     "mse_raw": 0.05716685821992449,
     "lr_loss_raw": 43.054351806640625
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -10793,7 +10793,7 @@
     "mse_raw": 0.05702148443405444,
     "lr_loss_raw": 40.96553039550781
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.45877312327529696,
      0.023099054512119098,
@@ -10852,7 +10852,7 @@
     "very high": -0.8621311665427754
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 18.915456038841757,
    "psnr_clipped": 18.928441310349722,
    "lpips": 0.31711679697036743,
@@ -10865,7 +10865,7 @@
     "very high": -1.004964377223978
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 18.73417987346923,
    "psnr_clipped": 18.754954976288676,
    "lpips": 0.34475383162498474,
@@ -10909,7 +10909,7 @@
     "mse_raw": 0.0021531917420268437,
     "lr_loss_raw": 4.404532432556152
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -10921,7 +10921,7 @@
     "mse_raw": 0.0019789892855548016,
     "lr_loss_raw": 4.0732598304748535
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.292031558167403,
      0.028863840789250656,
@@ -10980,7 +10980,7 @@
     "very high": -0.4390768782579635
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 34.15244548133211,
    "psnr_clipped": 34.1662525835174,
    "lpips": 0.1793973296880722,
@@ -10993,7 +10993,7 @@
     "very high": -0.5601394233129804
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 33.27893101704886,
    "psnr_clipped": 33.31164921213143,
    "lpips": 0.20460909605026245,
@@ -11037,7 +11037,7 @@
     "mse_raw": 0.02269647032199099,
     "lr_loss_raw": 42.53531265258789
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -11049,7 +11049,7 @@
     "mse_raw": 0.022281096370539825,
     "lr_loss_raw": 38.758296966552734
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.1865208803829368,
      0.4651400399015602,
@@ -11108,7 +11108,7 @@
     "very high": -0.4717981784006387
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 23.605474850697725,
    "psnr_clipped": 23.616532462180476,
    "lpips": 0.2432001829147339,
@@ -11121,7 +11121,7 @@
     "very high": -0.6818507576998627
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.04806880272281,
    "psnr_clipped": 23.066458921839775,
    "lpips": 0.2161789834499359,
@@ -11165,7 +11165,7 @@
     "mse_raw": 0.03568037623305975,
     "lr_loss_raw": 86.30997467041016
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -11177,7 +11177,7 @@
     "mse_raw": 0.033782095980163206,
     "lr_loss_raw": 74.42790222167969
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.03398466931777628,
      0.6562064121775801,
@@ -11236,7 +11236,7 @@
     "very high": -0.16335332744592146
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 22.012222021498907,
    "psnr_clipped": 22.020088852528573,
    "lpips": 0.3329077959060669,
@@ -11249,7 +11249,7 @@
     "very high": -0.11136873575889195
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 21.96048981822372,
    "psnr_clipped": 21.973999858100054,
    "lpips": 0.3522454500198364,
@@ -11293,7 +11293,7 @@
     "mse_raw": 0.022214348547973117,
     "lr_loss_raw": 93.93745422363281
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -11305,7 +11305,7 @@
     "mse_raw": 0.018112250296660217,
     "lr_loss_raw": 65.08158111572266
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.05047739963775696,
      0.7485584309995283,
@@ -11364,7 +11364,7 @@
     "very high": -3.6852687928599104
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 25.585135345829187,
    "psnr_clipped": 25.59290630298038,
    "lpips": 0.28543829917907715,
@@ -11377,7 +11377,7 @@
     "very high": -3.280852441252593
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.656295279426548,
    "psnr_clipped": 23.681564479558453,
    "lpips": 0.33492234349250793,
@@ -11421,7 +11421,7 @@
     "mse_raw": 0.06170207074584188,
     "lr_loss_raw": 45.32215881347656
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -11433,7 +11433,7 @@
     "mse_raw": 0.06075652749395496,
     "lr_loss_raw": 54.840293884277344
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.2457091369576453,
      0.02014334267293884,
@@ -11492,7 +11492,7 @@
     "very high": -1.3645793795718815
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 18.728235692590218,
    "psnr_clipped": 18.77292577416985,
    "lpips": 0.19535088539123535,
@@ -11505,7 +11505,7 @@
     "very high": -1.154677721706541
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 18.593678033867132,
    "psnr_clipped": 18.642665151279672,
    "lpips": 0.18954849243164062,
@@ -11549,7 +11549,7 @@
     "mse_raw": 0.035429048066582876,
     "lr_loss_raw": 50.605255126953125
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -11561,7 +11561,7 @@
     "mse_raw": 0.034098884898607566,
     "lr_loss_raw": 46.149261474609375
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.06100843124588168,
      0.6083443141038528,
@@ -11620,7 +11620,7 @@
     "very high": -0.8986054239963005
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 21.492581244723155,
    "psnr_clipped": 21.52015269342993,
    "lpips": 0.3351156413555145,
@@ -11633,7 +11633,7 @@
     "very high": -0.8785552024934867
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 20.77975621115244,
    "psnr_clipped": 20.826232302987155,
    "lpips": 0.3827296197414398,
@@ -11677,7 +11677,7 @@
     "mse_raw": 0.034989446831173124,
     "lr_loss_raw": 32.295326232910156
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -11689,7 +11689,7 @@
     "mse_raw": 0.035331291566271815,
     "lr_loss_raw": 38.189613342285156
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.20210424402578345,
      0.021273264179259156,
@@ -11748,7 +11748,7 @@
     "very high": -0.2719700677090484
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 21.24959076458338,
    "psnr_clipped": 21.24959076458338,
    "lpips": 0.3420037627220154,
@@ -11761,7 +11761,7 @@
     "very high": -0.2359866439238456
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 21.181710543680904,
    "psnr_clipped": 21.18171101854477,
    "lpips": 0.3537778854370117,
@@ -11805,7 +11805,7 @@
     "mse_raw": 0.03373612070946351,
     "lr_loss_raw": 57.298038482666016
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -11817,7 +11817,7 @@
     "mse_raw": 0.03297280707922039,
     "lr_loss_raw": 58.36857604980469
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.04944526367301895,
      0.03464149814602616,
@@ -11876,7 +11876,7 @@
     "very high": -0.9419607738054009
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 21.902519498079425,
    "psnr_clipped": 21.903119373795576,
    "lpips": 0.3418043255805969,
@@ -11889,7 +11889,7 @@
     "very high": -0.765355738721389
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 21.581867710620116,
    "psnr_clipped": 21.58284805960658,
    "lpips": 0.32431963086128235,
@@ -11933,7 +11933,7 @@
     "mse_raw": 0.03859021924594059,
     "lr_loss_raw": 35.01324462890625
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -11945,7 +11945,7 @@
     "mse_raw": 0.03815785023639244,
     "lr_loss_raw": 33.60386657714844
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.31735906830458416,
      0.06056206382675452,
@@ -12004,7 +12004,7 @@
     "very high": -0.7163546188019474
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 20.724451867241566,
    "psnr_clipped": 20.743894628948595,
    "lpips": 0.257332444190979,
@@ -12017,7 +12017,7 @@
     "very high": -0.5927748842263861
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 20.49405269990995,
    "psnr_clipped": 20.515075472501753,
    "lpips": 0.25339552760124207,
@@ -12061,7 +12061,7 @@
     "mse_raw": 0.047920387671013566,
     "lr_loss_raw": 148.32708740234375
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -12073,7 +12073,7 @@
     "mse_raw": 0.05219967918741688,
     "lr_loss_raw": 176.20838928222656
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.24454145976142785,
      0.0201169251975991,
@@ -12132,7 +12132,7 @@
     "very high": -0.9014034177464685
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 20.910369695762224,
    "psnr_clipped": 20.94990086430968,
    "lpips": 0.30087918043136597,
@@ -12145,7 +12145,7 @@
     "very high": -1.2385687879619967
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 21.18776225653076,
    "psnr_clipped": 21.225107757309033,
    "lpips": 0.29573488235473633,
@@ -12189,7 +12189,7 @@
     "mse_raw": 0.0071957214378706585,
     "lr_loss_raw": 13.805219650268555
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -12201,7 +12201,7 @@
     "mse_raw": 0.00681089109328288,
     "lr_loss_raw": 11.802475929260254
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.07179485203418942,
      0.7470652649363138,
@@ -12260,7 +12260,7 @@
     "very high": -1.6373434244477392
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 28.73768113264441,
    "psnr_clipped": 28.863278395069184,
    "lpips": 0.09162694215774536,
@@ -12273,7 +12273,7 @@
     "very high": -1.5369756414408144
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 27.441824075425792,
    "psnr_clipped": 27.723771039624264,
    "lpips": 0.07891342043876648,
@@ -12317,7 +12317,7 @@
     "mse_raw": 0.00966812265452361,
     "lr_loss_raw": 26.495513916015625
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -12329,7 +12329,7 @@
     "mse_raw": 0.0082527761176563,
     "lr_loss_raw": 18.486421585083008
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.07316157270076934,
      0.6625255407667295,
@@ -12388,7 +12388,7 @@
     "very high": -0.6526099316689299
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 27.975837332195702,
    "psnr_clipped": 28.004412868680852,
    "lpips": 0.288222074508667,
@@ -12401,7 +12401,7 @@
     "very high": -0.7715189778917955
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 27.375689807349154,
    "psnr_clipped": 27.436902530853327,
    "lpips": 0.20813335478305817,
@@ -12445,7 +12445,7 @@
     "mse_raw": 0.012759043455908158,
     "lr_loss_raw": 42.60207748413086
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -12457,7 +12457,7 @@
     "mse_raw": 0.011182612878921255,
     "lr_loss_raw": 31.90948486328125
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.133414397671089,
      0.7029920701869989,
@@ -12516,7 +12516,7 @@
     "very high": -1.98029583765619
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 27.187289054648538,
    "psnr_clipped": 27.204052967948215,
    "lpips": 0.21512506902217865,
@@ -12529,7 +12529,7 @@
     "very high": -1.6888066781514706
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 26.34772389028525,
    "psnr_clipped": 26.36852619986676,
    "lpips": 0.24356169998645782,
@@ -12573,7 +12573,7 @@
     "mse_raw": 0.026878490318312128,
     "lr_loss_raw": 69.6092300415039
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -12585,7 +12585,7 @@
     "mse_raw": 0.02462359636669204,
     "lr_loss_raw": 54.84841537475586
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.05253377400138003,
      0.7488439280675995,
@@ -12644,7 +12644,7 @@
     "very high": -0.30816193640060097
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 23.543553976067102,
    "psnr_clipped": 23.560473022629726,
    "lpips": 0.2583844065666199,
@@ -12657,7 +12657,7 @@
     "very high": -0.24841611578740863
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.303675229184208,
    "psnr_clipped": 23.326996622238,
    "lpips": 0.25737637281417847,
@@ -12701,7 +12701,7 @@
     "mse_raw": 0.02117762303532149,
     "lr_loss_raw": 42.799556732177734
    },
-   "E3: mean of 5 CSGM runs": {
+   "Ens-U: mean of 5 CSGM runs": {
     "weights": [
      0.2,
      0.2,
@@ -12713,7 +12713,7 @@
     "mse_raw": 0.020079796593650327,
     "lr_loss_raw": 38.19911193847656
    },
-   "E3w: weighted 5 CSGM runs": {
+   "Ens-W: weighted 5 CSGM runs": {
     "weights": [
      0.07383507550663494,
      0.6610993271075292,
@@ -12772,7 +12772,7 @@
     "very high": -2.317831590535878
    }
   },
-  "E3: mean of 5 CSGM runs + BP": {
+  "Ens-U: mean of 5 CSGM runs + BP": {
    "psnr": 24.182083256954844,
    "psnr_clipped": 24.1870417478963,
    "lpips": 0.29811331629753113,
@@ -12785,7 +12785,7 @@
     "very high": -1.7746699410931184
    }
   },
-  "E3w: weighted 5 CSGM runs + BP": {
+  "Ens-W: weighted 5 CSGM runs + BP": {
    "psnr": 23.30183130054083,
    "psnr_clipped": 23.30778227838033,
    "lpips": 0.34570199251174927,

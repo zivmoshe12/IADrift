@@ -4,7 +4,7 @@ Starting from the CSGM solution (theta0, eps_CSGM), jointly adapt the generator 
 
     (theta_hat, eps_hat) = argmin_{theta, eps} ||y - A G_theta(eps; z, c)||^2,     x_hat = G_theta_hat(eps_hat; z, c)
 
-Frozen test settings (docs/PROTOCOL.md §4): two Adam optimizers, theta lr 1e-5 on all 241 weight tensors (134M
+Frozen test settings (docs/PROTOCOL.md, Section 4): two Adam optimizers, theta lr 1e-5 on all 241 weight tensors (134M
 parameters) and eps lr 1e-3, 1,000 steps, outputs at the pre-declared steps 100 and 1,000 (eager path).
 Also theta-only adaptation (eps frozen), a development diagnostic.
 

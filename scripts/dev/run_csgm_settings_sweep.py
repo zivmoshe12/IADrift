@@ -1,4 +1,4 @@
-"""CSGM settings sweep (development, 100 images; the choice of the frozen CSGM settings, docs/PROTOCOL.md §3).
+"""CSGM settings sweep (development, 100 images; the choice of the frozen CSGM settings, docs/PROTOCOL.md, Section 3).
 
 Oracle-class CSGM on SR x4, minimizing over eps (frozen generator, noise labels z fixed at initialization):
 

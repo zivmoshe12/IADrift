@@ -11,7 +11,7 @@ Package layout (import order matters: call ``iadrift.runtime.setup`` before anyt
     adaptation   IADrift: joint (theta, eps) adaptation, and theta-only adaptation
     ensemble     shifted CSGM members and the (weighted) posterior-mean ensemble
     metrics      PSNR, LPIPS, blockiness, band / radial SNR, patch-grid score
-    stats        paired statistics and Holm's correction (the analysis of docs/PROTOCOL.md §6)
+    stats        paired statistics and Holm's correction (the analysis of docs/PROTOCOL.md, Section 6)
     checkpoint   resumable, hashed, locked experiment checkpoints (JSONL + .npz)
 """
 

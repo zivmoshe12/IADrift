@@ -1,6 +1,6 @@
 [
  {
-  "comparison": "E3w: weighted 5 CSGM runs + BP \u2212 CSGM, correct label + BP",
+  "comparison": "Ens-W: weighted 5 CSGM runs + BP \u2212 CSGM, correct label + BP",
   "metric": "psnr",
   "mean": 1.5716727513913546,
   "lo": 1.4010445755229244,
@@ -11,7 +11,7 @@
   "holm_p": 7.793119690191818e-18
  },
  {
-  "comparison": "E3w: weighted 5 CSGM runs + BP \u2212 CSGM, correct label + BP",
+  "comparison": "Ens-W: weighted 5 CSGM runs + BP \u2212 CSGM, correct label + BP",
   "metric": "lpips",
   "mean": -0.032130184322595595,
   "lo": -0.04040400954041938,

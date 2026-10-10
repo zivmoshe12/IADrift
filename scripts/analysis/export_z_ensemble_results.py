@@ -9,13 +9,13 @@ weighted mean, back-projection, and scores before and after BP (PSNR, LPIPS, blo
 n_eff = 1 / sum w^2 and the MMSE gain 10 log10(mean member MSE / ensemble MSE) before BP, against the prediction for
 independent posterior samples, 10 log10(2 / (1 + 1/K)). Budget iad100 is each member's CSGM solution at step 5,000
 followed by IADrift @100; it is weighted by the IADrift LR losses at step 100 ("weighted") or by the CSGM losses at
-step 5,000 ("weighted_csgm", as in the IADrift ensembles of notebook 04 §5).
+step 5,000 ("weighted_csgm", as in the IADrift ensembles of notebook 04, Section 5).
 
 Reported:
     k_curve          PSNR / LPIPS against K for every budget
     matched_compute  12 x 500 / 1000 / 2000 / 5000, 5 x 5000, 5 and 12 x (5000 + IADrift @100), against bicubic + BP
-                     (computed here) and the 5-member ensembles of notebook 04 §5 (results/ablation_metrics.json,
-                     "ensembles"; CSGM, E3, E3w, and the same for IADrift @100)
+                     (computed here) and the 5-member ensembles of notebook 04, Section 5 (results/ablation_metrics.json,
+                     "ensembles"; CSGM, Ens-U, Ens-W, and the same for IADrift @100)
     arm_c            z only (4 z), grid shifts only (1 z x 4 phases), both (2 z x 4 phases, 4 z x 4 phases), and the
                      arm-A z-only ensembles at K = 4, 8, 12 for comparison at equal K
 Per-image results are cached in IADRIFT_DATA/z_ensemble_dev_v1/analysis/img#####.json and recomputed when the member
@@ -67,7 +67,7 @@ ARM_C_STEPS = (2_000, 5_000)
 BANDS = ("low", "mid", "high", "very high")
 MATCHED = (("12 x 500", 12, 500), ("12 x 1000", 12, 1_000), ("12 x 2000", 12, 2_000), ("5 x 5000", 5, 5_000),
            ("12 x 5000", 12, 5_000), ("5 x (5000 + IADrift 100)", 5, IAD), ("12 x (5000 + IADrift 100)", 12, IAD))
-REFS = ("bicubic", "CSGM", "CSGM E3", "CSGM E3w", "IADrift @100", "IADrift @100 E3", "IADrift @100 E3w")
+REFS = ("bicubic", "CSGM", "CSGM Ens-U", "CSGM Ens-W", "IADrift @100", "IADrift @100 Ens-U", "IADrift @100 Ens-W")
 
 torch.set_num_threads(4)
 
@@ -247,9 +247,9 @@ def aggregate(per_image, abl):
                                                                   for i in imgs])) for b in BANDS}}
                          for name in REFS}
     agg["references_note"] = ("All + BP. bicubic = BP(bicubic_up(y)), computed here; the rest from "
-                              "results/ablation_metrics.json['ensembles'] (notebook 04 §5): CSGM = the better of r0, "
-                              "r1 (5,000 steps); E3 / E3w = 5 x 5,000 steps (r0, r1 and 3 shifts of r0, so 2 distinct "
-                              "z); IADrift @100 [E3, E3w] = IADrift @100 from the same members (E3w weighted by the "
+                              "results/ablation_metrics.json['ensembles'] (notebook 04, Section 5): CSGM = the better of r0, "
+                              "r1 (5,000 steps); Ens-U / Ens-W = 5 x 5,000 steps (r0, r1 and 3 shifts of r0, so 2 distinct "
+                              "z); IADrift @100 [Ens-U, Ens-W] = IADrift @100 from the same members (Ens-W weighted by the "
                               "CSGM losses)")
     agg["csgm_rule"] = {str(t): avg([r["csgm_rule"][str(t)] for r in full]) for t in budgets}
     agg["k_curve"] = {str(k): {str(t): {mode: avg([r["k_curve"][str(k)][str(t)][mode] for r in full])
@@ -303,9 +303,9 @@ def plot(agg):
     import matplotlib.pyplot as plt
 
     fig, axes = plt.subplots(1, 2, figsize=(11, 4.4), facecolor="#fcfcfb")
-    refs = (("bicubic", "bicubic + BP", "-"), ("CSGM", "CSGM + BP", ":"), ("CSGM E3", "E3 (5 members) + BP", "-."),
-            ("CSGM E3w", "E3w (5 members) + BP", "--"),
-            ("IADrift @100 E3w", "IADrift @100 E3w + BP", (0, (1, 3))))
+    refs = (("bicubic", "bicubic + BP", "-"), ("CSGM", "CSGM + BP", ":"), ("CSGM Ens-U", "Ens-U (5 members) + BP", "-."),
+            ("CSGM Ens-W", "Ens-W (5 members) + BP", "--"),
+            ("IADrift @100 Ens-W", "IADrift @100 Ens-W + BP", (0, (1, 3))))
     budgets = [t for t in BUDGETS if str(t) in agg["budgets"]]
     for ax, key, title in ((axes[0], "psnr", "PSNR after BP (dB) ↑"), (axes[1], "lpips", "LPIPS after BP ↓")):
         ax.set_facecolor("#fcfcfb")
@@ -414,7 +414,7 @@ def print_tables(agg):
     head = "PSNRraw PSNRbp  LPIPS block  SNRhi SNRvhi  n_eff"
     print(f"\nImages {agg['images']} (n = {agg['n_images']}); incomplete {agg['incomplete_images']}; "
           f"all finite {agg['all_finite']}")
-    print("\nReferences (+ BP; bicubic computed here, the rest from notebook 04 §5):  PSNR   LPIPS  block")
+    print("\nReferences (+ BP; bicubic computed here, the rest from notebook 04, Section 5):  PSNR   LPIPS  block")
     for n, m in agg["references"].items():
         print(f"  {n:32s} {m['psnr']:6.2f} {m['lpips']:6.3f} {m['blockiness']:5.2f}")
     print(f"\nSingle member, CSGM rule (the better of r0, r1 by LR loss):  {head}")
@@ -422,10 +422,10 @@ def print_tables(agg):
         print(f"  T = {t:>6s}                                     {f(m)}")
     if agg["iadrift_missing"]:
         print(f"IADrift @100 missing for images {agg['iadrift_missing']}: budget iad100 left out")
-    print(f"\nMatched compute:                              {head}  better PSNR/LPIPS vs E3w, vs CSGM, vs bicubic")
+    print(f"\nMatched compute:                              {head}  better PSNR/LPIPS vs Ens-W, vs CSGM, vs bicubic")
     for r in agg["matched_compute"]:
         print(f"  {r['ensemble']:42s} ({r['total_steps'] / 1000:4.1f}k) {f(r)}  "
-              f"{r['better_psnr_than_CSGM E3w']}/{r['better_lpips_than_CSGM E3w']}, "
+              f"{r['better_psnr_than_CSGM Ens-W']}/{r['better_lpips_than_CSGM Ens-W']}, "
               f"{r['better_psnr_than_CSGM']}/{r['better_lpips_than_CSGM']}, "
               f"vs bicubic {r['better_psnr_than_bicubic']}/{r['better_lpips_than_bicubic']} of {agg['n_images']}")
     print("\nK-curve, PSNR after BP (uniform / weighted) and MMSE gain (uniform, before BP) vs prediction:")

@@ -241,18 +241,18 @@ def export(out_dir):
         L = [lr_loss(csgm[m], y) for m in MEMBERS]
         w = weights(L, weighted=True)
         kept = min(("r0", "r1"), key=lambda m: (L[list(MEMBERS).index(m)], m))
-        outs = {"CSGM": csgm[kept], "CSGM E3": np.mean(list(csgm.values()), axis=0),
-                "CSGM E3w": sum(wk * csgm[m] for wk, m in zip(w, MEMBERS))}
+        outs = {"CSGM": csgm[kept], "CSGM Ens-U": np.mean(list(csgm.values()), axis=0),
+                "CSGM Ens-W": sum(wk * csgm[m] for wk, m in zip(w, MEMBERS))}
         for ck in (100, 1000):
             outs[f"IADrift @{ck}"] = iad[ck][kept]
-            outs[f"IADrift @{ck} E3"] = np.mean(list(iad[ck].values()), axis=0)
-            outs[f"IADrift @{ck} E3w"] = sum(wk * iad[ck][m] for wk, m in zip(w, MEMBERS))
+            outs[f"IADrift @{ck} Ens-U"] = np.mean(list(iad[ck].values()), axis=0)
+            outs[f"IADrift @{ck} Ens-W"] = sum(wk * iad[ck][m] for wk, m in zip(w, MEMBERS))
         bp = {n: backproject(x, y) for n, x in outs.items()}
         sec[str(i)] = {"weights": dict(zip(MEMBERS, w.tolist())), "kept": kept, "L": dict(zip(MEMBERS, L)),
                        **{n: evaluate(x, hr, y) for n, x in bp.items()}}
         if i == 403:
             keep("ens|403|HR", hr)
-            for n in ("CSGM", "CSGM E3", "IADrift @1000", "IADrift @1000 E3", "IADrift @100 E3"):
+            for n in ("CSGM", "CSGM Ens-U", "IADrift @1000", "IADrift @1000 Ens-U", "IADrift @100 Ens-U"):
                 keep(f"ens|403|{n} + BP", bp[n])
             members_403, w_403 = (csgm, iad), w
         print(f"5: image {i} done", flush=True)

@@ -3,7 +3,7 @@
     eps_hat = argmin_eps ||y - A G_theta0(eps; z, c)||^2,     x_hat = G_theta0(eps_hat; z, c)
 
 z (32 discrete noise labels) cannot be optimized by gradients; it is drawn with eps at initialization and kept.
-Frozen benchmark settings (docs/PROTOCOL.md §3): Adam lr 0.02, 5,000 steps, 2 restarts, no regularizer; the restart
+Frozen benchmark settings (docs/PROTOCOL.md, Section 3): Adam lr 0.02, 5,000 steps, 2 restarts, no regularizer; the restart
 with the lowest final LR loss is kept (never chosen with HR).
 
 Two loops, both reproducing the saved runs bit-exactly:

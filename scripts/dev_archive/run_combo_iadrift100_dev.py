@@ -3,7 +3,7 @@
 Pipeline tested:  start (CSGM / noise-label search / early swaps)  ->  IADrift 100 steps  ->  (BP, in the notebook).
 IADrift exactly as frozen in docs/PROTOCOL.md (joint theta + eps, Adam, theta lr 1e-5 on all leaves, eps lr 1e-3,
 make_joint_step), but only the 100-step checkpoint. Post-hoc: "step 100" was found better than step 1,000 on the
-TEST set (PROTOCOL §9); this check is development-only and is reported as such.
+TEST set (protocol Section 9); this check is development-only and is reported as such.
 
 Starts (all cached; for each image and start type the restart with the lowest final LR loss):
   CSGM           saved CSGM (csgm_dev_5000steps_lr0.02/) for 8117, 3939, 403, 347; confirm/csgm for 9780, 8405

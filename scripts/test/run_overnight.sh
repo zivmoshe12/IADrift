@@ -6,7 +6,7 @@
 #   bash scripts/test/run_overnight.sh ensemble [num_images]   # scripts/test/run_ensemble_test.py, 300 runs, ~5.5 h
 #
 # Calls the runner in chunks of MAX_RUNS_PER_CHUNK runs (short-lived processes: one 32-run IADrift chunk segfaulted
-# after 16 runs, PROTOCOL §8) until a chunk prints "ALL RUNS COMPLETE". Every finished run is saved atomically, so a
+# after 16 runs, protocol Section 8) until a chunk prints "ALL RUNS COMPLETE". Every finished run is saved atomically, so a
 # chunk that crashes is simply retried and resumes from the checkpoint. A chunk counts as failed only if it saved no
 # new run (measured with the runner's --dry-run, which runs and writes nothing); after MAX_FAILURES consecutive
 # failed chunks the loop stops, so a persistent error does not spin all night. Run it inside tmux.

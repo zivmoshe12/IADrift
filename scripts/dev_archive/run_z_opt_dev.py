@@ -10,12 +10,12 @@ so z can be optimized through a differentiable relaxation, with the generator fr
 
 Experiments (correct label; 4 development images; HR never used for any choice):
   Fine-tune from the CSGM solution (best saved restart by LR loss), +2,000 steps, same Adam lr 0.02 on eps:
-    F0  eps only                      (compute control: just more CSGM steps)
-    F1  soft z only (eps frozen)      (is z optimization possible at all?)
-    F2  eps + soft z
-    F3  eps + free cond offset
+    eps only                      (compute control: just more CSGM steps)
+    soft z only (eps frozen)      (is z optimization possible at all?)
+    eps + soft z
+    eps + free cond offset
   From scratch, compute-matched with the CSGM baseline (same init, 5,000 steps, 2 restarts, lowest final LR loss):
-    S2  eps + soft z from initialize(image, restart)
+    eps + soft z from initialize(image, restart)
 
 Soft-z runs also report the rounded code (argmax per coordinate), evaluated with the final eps.
 Outputs: ~/work/datasets/ImageNetV2/z_opt_dev_v1/ (one .npz per run + summary.json); analysis in notebook 04, Check 9.

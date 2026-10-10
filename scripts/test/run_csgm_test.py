@@ -1,4 +1,4 @@
-"""CSGM test benchmark (docs/PROTOCOL.md §3, method M1): 100 test images x {correct, wrong label} x 2 restarts.
+"""CSGM test benchmark (docs/PROTOCOL.md, Section 3): 100 test images x {correct, wrong label} x 2 restarts.
 
 Method: frozen CSGM (iadrift.csgm.FROZEN_CONFIG: Adam lr 0.02, 5,000 steps, 2 restarts, no regularizer), the winner of
 the development sweep (scripts/dev/run_csgm_settings_sweep.py) with the steps raised from 3,000 to 5,000.
