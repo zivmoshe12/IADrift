@@ -1,15 +1,13 @@
-"""CSGM (Bora et al., 2017) with the drift generator: freeze the weights, optimize the noise input.
+"""CSGM (Bora et al., 2017) with the drifting generator: keep the weights fixed and optimize the noise input.
 
     eps_hat = argmin_eps ||y - A G_theta0(eps; z, c)||^2,     x_hat = G_theta0(eps_hat; z, c)
 
-z (32 discrete noise labels) cannot be optimized by gradients; it is drawn with eps at initialization and kept.
-Frozen benchmark settings (docs/PROTOCOL.md, Section 3): Adam lr 0.02, 5,000 steps, 2 restarts, no regularizer; the restart
-with the lowest final LR loss is kept (never chosen with HR).
+z (the 32 discrete style labels) has no gradient, so it is drawn together with eps at initialization and kept fixed.
+Test settings (docs/PROTOCOL.md, Section 3): Adam lr 0.02, 5,000 steps, 2 restarts, no regularizer; of the two restarts
+we keep the one with the lower final LR loss.
 
-Two loops, both reproducing the saved runs bit-exactly:
-    CSGM.reconstruct   the frozen benchmark loop (test runs, ensemble members)
-    CSGM.run           a generic loop with any loss (e.g. A = identity) and an optional projection of eps after each
-                       Adam step (development experiments)
+CSGM.reconstruct is the loop used for the test runs and the ensemble members. CSGM.run is the same loop with any loss
+(e.g. A = identity) and an optional projection of eps after each step, used in development experiments.
 """
 
 from time import perf_counter
@@ -23,9 +21,9 @@ from .metrics import psnr
 from .operators import A_sr4
 
 FROZEN_CONFIG = {
-    "dev_config_id": 4,       # the winner of the 100-image development sweep (scripts/dev/run_csgm_settings_sweep.py)
+    "dev_config_id": 4,       # best setting of the development sweep (scripts/dev/run_csgm_settings_sweep.py)
     "learning_rate": 0.02,
-    "num_steps": 5_000,       # the sweep tested 3,000; raised to 5,000 before any test result existed
+    "num_steps": 5_000,       # the sweep used 3,000; raised to 5,000 before any test run
     "num_restarts": 2,
     "reg_type": "none",
     "reg_weight": 0.0,
@@ -43,7 +41,7 @@ def project_global_sphere(eps):
 
 
 def project_patch_sphere(eps):
-    """Rescale every 16x16x3 patch of eps (one generator token) to norm sqrt(768) (PULSE-like)."""
+    """Rescale each 16x16x3 patch of eps (one generator token) to norm sqrt(768), as in PULSE."""
     b = eps.reshape(1, 16, 16, 16, 16, 3)  # (batch, grid row, pixel row, grid col, pixel col, channel)
     return (b * jnp.sqrt(768.0) / jnp.sqrt(jnp.sum(b ** 2, axis=(2, 4, 5), keepdims=True))).reshape(eps.shape)
 
@@ -54,7 +52,7 @@ class CSGM:
         generate = gen.generate
 
         def measurement_loss(eps, y, label, noise_labels):
-            """||y - A G(eps)||^2 (sum of squares over the 64x64x3 measurement)."""
+            """||y - A G(eps)||^2, summed over the 64x64x3 measurement."""
             x_hat = generate(eps, label, noise_labels)
             return jnp.sum((A_sr4(x_hat.astype(jnp.float32)) - y) ** 2)
 
@@ -73,15 +71,15 @@ class CSGM:
         return self.gen.initialize(image_index, restart)
 
     def output(self, eps, label, noise_labels):
-        """G(eps) through the eager path, as float32 [256, 256, 3]."""
+        """G(eps) without jit, float32 [256, 256, 3]."""
         return np.asarray(jax.device_get(self.gen.generate(eps, label, noise_labels)), dtype=np.float32)[0]
 
-    # ------------------------------------------------------------ the frozen benchmark loop
+    # ------------------------------------------------------------ test loop
     def reconstruct(self, image_index, restart, label, y_lr, hr, num_steps=None, start=None):
-        """One frozen CSGM run on y_lr [64, 64, 3]. start: optional (eps, noise_labels) instead of initialize().
+        """One CSGM run on y_lr [64, 64, 3]. start: optional (eps, noise_labels) to use instead of initialize().
 
-        Returns (metrics, arrays) with arrays eps, noise_labels, x_hat, trace_steps, trace_loss (loss every 50 steps,
-        evaluated before the update of that step).
+        Returns (metrics, arrays); arrays holds eps, noise_labels, x_hat and the loss trace (every TRACE_EVERY steps,
+        measured before that step's update).
         """
         num_steps = num_steps or self.num_steps
         y = jnp.asarray(np.asarray(y_lr)[None], dtype=jnp.float32)
@@ -94,7 +92,7 @@ class CSGM:
         for step in range(1, num_steps + 1):
             eps, opt_state, loss_before = self.train_step(eps, opt_state, y, label, noise_labels)
             if step % TRACE_EVERY == 0:
-                trace_steps.append(step - 1)  # loss_before is evaluated before update `step`
+                trace_steps.append(step - 1)  # the step returns the loss before its update
                 trace_loss.append(float(loss_before))
         eps.block_until_ready()
         elapsed = perf_counter() - t0
@@ -120,9 +118,9 @@ class CSGM:
         }
         return metrics, arrays
 
-    # ------------------------------------------------------------ the generic development loop
+    # ------------------------------------------------------------ development loop
     def step_fn(self, loss_fn, project):
-        """A jitted Adam step for loss_fn(eps, target, label, noise_labels), followed by project(eps)."""
+        """Jitted Adam step on loss_fn(eps, target, label, noise_labels) followed by project; cached per pair."""
         if (loss_fn, project) not in self._compiled:
             opt = optax.adam(self.learning_rate)
 
@@ -136,7 +134,7 @@ class CSGM:
         return self._compiled[(loss_fn, project)]
 
     def run(self, loss_fn, project, target, label, eps0, noise_labels, num_steps=None):
-        """Generic CSGM run (same loop as reconstruct, any loss and projection). Returns (metrics, arrays)."""
+        """CSGM run with any loss and projection. Returns (metrics, arrays) as in reconstruct."""
         num_steps = num_steps or self.num_steps
         opt, step = self.step_fn(loss_fn, project)
         eps = project(eps0)
@@ -158,6 +156,6 @@ class CSGM:
 
 
 def best_restart(runs):
-    """runs: {restart: (metrics, arrays)} -> (restart, metrics, arrays) with the lowest final loss (never HR)."""
+    """runs: {restart: (metrics, arrays)} -> (restart, metrics, arrays) of the run with the lowest final LR loss."""
     r = min(runs, key=lambda r: (runs[r][0]["final_loss"], r))
     return (r, *runs[r])

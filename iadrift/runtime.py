@@ -4,12 +4,13 @@ Every runner starts with
 
     from iadrift.runtime import setup
     setup(theta_gradients=False)   # CSGM-type runs
-    setup(theta_gradients=True)    # runs that differentiate w.r.t. the generator weights (IADrift, theta-only)
+    setup(theta_gradients=True)    # runs with gradients w.r.t. the generator weights (IADrift, theta-only)
 
-Why two modes (see README, "Numerics"): the generator computes in bf16 and the CSGM trajectories are chaotic, so
-results reproduce bit-exactly only with the same XLA allocator. CSGM runs reproduce the saved runs only with JAX's
-default GPU allocator; gradients w.r.t. all 134M weights need XLA_PYTHON_CLIENT_ALLOCATOR=platform (the default
-allocator hangs under WSL2). Keep the two kinds of run in separate processes.
+Two modes because of reproducibility (README, "Numerics and verification"). The generator computes in bf16 and CSGM
+trajectories are chaotic, so a run is bit-exactly reproducible only under the same XLA allocator: CSGM runs match the
+saved runs with JAX's default GPU allocator, while gradients w.r.t. all 134M weights need
+XLA_PYTHON_CLIENT_ALLOCATOR=platform because the default allocator hangs under WSL2. Keep the two kinds of run in
+separate processes.
 """
 
 import os
@@ -25,8 +26,8 @@ def setup(theta_gradients=False, require_gpu=True):
     os.environ["XLA_PYTHON_CLIENT_PREALLOCATE"] = "false"
     if theta_gradients:
         os.environ["XLA_PYTHON_CLIENT_ALLOCATOR"] = "platform"
-        # Without this flag, the weight-gradient programs pick between GPU kernels per process, and two identical
-        # runs can differ (e.g. IADrift step-100 LR loss 49.49 vs 48.18). With it, reruns match the saved runs.
+        # Otherwise the weight-gradient programs choose GPU kernels per process and identical runs can differ
+        # (IADrift step-100 LR loss 49.49 vs 48.18 in one case).
         flag = "--xla_gpu_deterministic_ops=true"
         if flag not in os.environ.get("XLA_FLAGS", ""):
             os.environ["XLA_FLAGS"] = (os.environ.get("XLA_FLAGS", "") + " " + flag).strip()
@@ -41,5 +42,5 @@ def setup(theta_gradients=False, require_gpu=True):
 
 
 def setup_cpu():
-    """For analysis scripts that never need a GPU (metrics, back-projection, statistics)."""
+    """Force JAX onto the CPU, for analysis scripts (metrics, back-projection, statistics)."""
     os.environ.setdefault("JAX_PLATFORMS", "cpu")

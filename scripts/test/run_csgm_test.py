@@ -1,10 +1,12 @@
-"""CSGM test benchmark (docs/PROTOCOL.md, Section 3): 100 test images x {correct, wrong label} x 2 restarts.
+"""CSGM test run (docs/PROTOCOL.md, Section 3): 100 test images x {correct, wrong label} x 2 restarts.
 
-Method: frozen CSGM (iadrift.csgm.FROZEN_CONFIG: Adam lr 0.02, 5,000 steps, 2 restarts, no regularizer), the winner of
-the development sweep (scripts/dev/run_csgm_settings_sweep.py) with the steps raised from 3,000 to 5,000.
-Conditions per image, with identical (eps, z) initialization: "oracle" (the true class) and "wrong" (one random other
-class, fixed per image by WRONG_LABEL_SEED). The restart with the lowest final LR loss is selected later, in the
-analysis (scripts/analysis/evaluate_test.py); nothing here uses the HR image except for logging PSNR.
+Uses the frozen CSGM settings in iadrift.csgm.FROZEN_CONFIG: Adam, lr 0.02, 5,000 steps, 2 restarts, no regularizer.
+These are the best settings from the development sweep (scripts/dev/run_csgm_settings_sweep.py), with the step count
+raised from 3,000 to 5,000.
+
+Each image is run under two label conditions with the same (eps, z) initialization: "oracle" uses the true class,
+"wrong" uses one other class drawn per image with WRONG_LABEL_SEED. The restart with the lowest final LR loss is
+picked later, in scripts/analysis/evaluate_test.py. The HR image is only used to log PSNR.
 
 Usage:
     python scripts/test/run_csgm_test.py --dry-run               # validate the plan; run and write nothing
@@ -12,19 +14,21 @@ Usage:
     python scripts/test/run_csgm_test.py --num-images 1          # smoke test: the first image of the sample
     python scripts/test/run_csgm_test.py --max-runs 10           # resumable; or: bash scripts/test/run_overnight.sh csgm
 
-Outputs (IADRIFT_DATA): phase1_sr4_csgm_label_test_v2_n<N>_<hash>.{jsonl,manifest.json} and ..._arrays/
-img#####_{oracle,wrong}_r{0,1}.npz (eps, noise_labels, x_hat, loss trace). For N = 100 the hash is 9e24c78a47ab.
-~65 s per run on an RTX A4000 (400 runs ~7.5 h).
+Outputs (in IADRIFT_DATA):
+    phase1_sr4_csgm_label_test_v2_n<N>_<hash>.{jsonl,manifest.json}
+    phase1_sr4_csgm_label_test_v2_n<N>_<hash>_arrays/img#####_{oracle,wrong}_r{0,1}.npz
+        eps, noise_labels, x_hat, loss trace
+For N = 100 the hash is 9e24c78a47ab. About 65 s per run on an RTX A4000, so 400 runs take ~7.5 h.
 """
 
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repository root, so `iadrift` imports without install
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repo root, so `iadrift` imports without install
 
 from iadrift.runtime import setup
 
-setup(theta_gradients=False)  # default allocator: CSGM reproduces the saved runs bit-exactly only with it
+setup(theta_gradients=False)  # saved CSGM runs reproduce bit-exactly only with the default allocator
 
 import argparse
 import io
@@ -98,7 +102,7 @@ def main():
     sample = data.get_test_sample(labels, test_indices)[: args.num_images]
     run_plan = build_run_plan(sample, labels)
 
-    # The spec pins everything that defines the experiment; its hash names the files, so runs never mix.
+    # The spec hash names the output files, so runs with different settings never mix.
     spec = {
         "version": EXPERIMENT_VERSION, "model": "hf://pixel_B_sota", "operator": "A_sr4",
         "conditions": list(CONDITIONS), "sweep_seed": data.SWEEP_SEED, "test_sample_path": paths.TEST_SAMPLE_NPZ,

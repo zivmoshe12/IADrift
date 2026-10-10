@@ -1,23 +1,20 @@
-"""Shifted CSGM members of the development posterior-mean ensemble (development, 6 images; notebook 04, Section 5).
+"""Shifted CSGM members of the development posterior-mean ensemble (6 development images).
 
-Members per image (correct label; iadrift.ensemble): the 2 CSGM restarts r0, r1 (saved elsewhere, see below) and
-3 CSGM runs on the measurement circularly shifted by s in {(0, 1), (1, 0), (1, 1)} LR pixels, all from the r0 start
-initialize(i, 0), later shifted back by 4s HR pixels:
+Members per image, correct label (iadrift.ensemble): the 2 CSGM restarts r0, r1, made by other runners, and 3 CSGM
+runs on the measurement circularly shifted by s in {(0, 1), (1, 0), (1, 1)} LR pixels. The shifted runs all start
+from initialize(i, 0) and are later shifted back by 4s HR pixels:
+
     x_s = S_{-4s} CSGM(S_s y),   S_s y = jnp.roll(y, s, axis=(1, 2))
-CSGM is frozen (Adam lr 0.02, 5,000 steps, ||S_s y - A G(eps)||^2), run with the generic loop CSGM.run with the
-identity projection (= notebook 04 cell 37 run_csgm; it reproduces the frozen loop bit for bit, see
-run_eps_projection_dev.py). This runner makes the shifted members only; averaging, weighting
-(w_k ~ exp(-(L_k - L_min) / std L), L_k = LR loss, never HR), back-projection and scoring are done by
-scripts/analysis/export_ablation_results.py.
 
-Images: 8117, 3939, 403, 347, 9780, 8405. Image 403's shifted runs were made first, in the one-image demo
-(notebook 04 Check 12 D, cell 73), and are reused (one_image_demos_v1/D_shift##_r0.npz); the other images' in Check 13
-(cell 79, ensemble_dev_v1/). The restart members are csgm_dev_5000steps_lr0.02/img#####_oracle_r{0,1}.npz (4 images,
-scripts/dev/run_csgm_dev.py) and z_swap_dev_v1/confirm/img#####_csgm_r{0,1}.npz (9780, 8405,
-run_z_swap_confirm_dev.py). Check 12's other demos (seam penalty C, C + D) are not used by any reported result and are
-not part of the release.
+CSGM is frozen (Adam lr 0.02, 5,000 steps, loss ||S_s y - A G(eps)||^2), run through CSGM.run with the identity
+projection, which reproduces the frozen loop bit for bit (see run_eps_projection_dev.py). This script only makes the
+shifted members. Averaging, weighting (w_k ~ exp(-(L_k - L_min) / std L), L_k the LR loss), back-projection and
+scoring are in scripts/analysis/export_ablation_results.py.
 
-Ported from notebooks/04_postproc_controls_dev.ipynb cells 73 (Check 12 D) and 79 (Check 13).
+Images: 8117, 3939, 403, 347, 9780, 8405. The shifted runs of image 403 were made first, as a one-image demo, and
+live in one_image_demos_v1/; the other images' runs are in ensemble_dev_v1/.
+Restart members: csgm_dev_5000steps_lr0.02/img#####_oracle_r{0,1}.npz for the first 4 images (run_csgm_dev.py) and
+z_swap_dev_v1/confirm/img#####_csgm_r{0,1}.npz for 9780 and 8405 (run_z_swap_confirm_dev.py).
 
 Usage:
     python scripts/dev/run_ensemble_dev.py --dry-run   # plan and cache status (incl. restart members); writes nothing
@@ -26,6 +23,7 @@ Usage:
 
 Outputs (IADRIFT_DATA): ensemble_dev_v1/img#####_shift##_r0.npz and one_image_demos_v1/D_shift##_r0.npz (image 403);
 metrics_json {final_loss, seconds}; eps, noise_labels, x_hat (in the shifted frame), trace_steps, trace_loss.
+Read by scripts/analysis/export_ablation_results.py (section 5, ensembles).
 """
 
 import os

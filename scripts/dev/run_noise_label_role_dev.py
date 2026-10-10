@@ -1,19 +1,16 @@
-"""What do the noise labels z control, and what does eps control? (development, generator only; notebook 04, Section 1).
+"""What do the style labels z control, and what does eps control? Generator samples for 8 classes.
 
-No optimization, no HR, no test images: forward passes of the frozen generator (CFG 1.0, eager path) for 8 classes,
-the classes of the 4 development images (8117, 3939, 403, 347) plus 4 more drawn with numpy seed 2034.
+Forward passes of the frozen generator only (CFG 1.0, eager path); no optimization, no HR, no test images. Classes:
+those of the 4 development images (8117, 3939, 403, 347) plus 4 more drawn with numpy seed 2034.
 
-A. Factorial grid: per class 8 noise-label codes z_k (key fold(fold(PRNGKey(2035), c), k)) x 8 noise inputs eps_j
-   (fold(fold(PRNGKey(2036), c), j)), 64 samples cached as float16. For five image descriptors (colour mean/std, pooled
-   AlexNet features of the LPIPS network, log radial power spectrum, 16x16 thumbnail, 32x32 edge layout), each
-   dimension standardized over the 64 samples, a two-way ANOVA without replication splits the total sum of squares
-   into z, eps and interaction shares (summed over dimensions).
-B. Locality: from the base sample (z_0, eps_0), 12 single-patch eps resamples and 12 single-coordinate z changes
-   (numpy seed [2037, c]); change energy |dx|^2 per 16x16 tile -> share in the perturbed tile / its 3x3 neighbourhood,
-   normalized entropy of the tile map (1 = uniform), RMS change.
-(Part C of the notebook, the per-tile R3 error maps, only re-reads representation_error_dev_v1/ and caches nothing.)
-
-Ported from notebooks/06_noise_label_role_dev.ipynb (cells 2, 4, 6, 10).
+A. Factorial grid. Per class 8 label codes z_k (key fold(fold(PRNGKey(2035), c), k)) x 8 noise inputs eps_j
+   (fold(fold(PRNGKey(2036), c), j)), 64 samples cached as float16. Five image descriptors: colour mean/std, pooled
+   AlexNet features of the LPIPS network, log radial power spectrum, 16x16 thumbnail, 32x32 edge layout. Each
+   dimension is standardized over the 64 samples, and a two-way ANOVA without replication splits the total sum of
+   squares into z, eps and interaction shares, summed over dimensions.
+B. Locality. From the base sample (z_0, eps_0): 12 single-patch eps resamples and 12 single-coordinate z changes
+   (numpy seed [2037, c]). For each, the change energy |dx|^2 per 16x16 tile gives the share in the perturbed tile and
+   in its 3x3 neighbourhood, the normalized entropy of the tile map (1 = uniform) and the RMS change.
 
 Usage:
     python scripts/dev/run_noise_label_role_dev.py --dry-run   # plan and cache status; runs and writes nothing (CPU)
@@ -24,6 +21,7 @@ Usage:
 Outputs (IADRIFT_DATA/noise_label_role_dev_v1/): grid_class###.npz (x: float16 [8 z, 8 eps, 256, 256, 3]),
 locality_class###.json (per perturbation: tile, shares, entropy, RMS change, 16x16 tile-energy map), summary.json
 (classes, ANOVA shares per class and descriptor, locality means).
+Used in the full report, Development ablations ("Roles of s and eps").
 """
 
 import os

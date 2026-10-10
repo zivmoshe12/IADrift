@@ -1,13 +1,14 @@
-"""Feeding an image instead of noise eps (development, 3 images; forward passes only; notebook 04, Section 2).
+"""Feeding an image instead of noise as eps (3 development images, forward passes only).
 
-For development images 403, 3939, 8405 (correct label, the noise labels z of CSGM restart 0 = initialize(i, 0)[1],
-CFG 1.0), the generator's output x = G(eps_in; z, c) for
+For images 403, 3939, 8405 (correct label, the z of CSGM restart 0 = initialize(i, 0)[1], CFG 1.0), compute the
+generator output x = G(eps_in; z, c) for
+
     eps_in = alpha s + sqrt(1 - alpha^2) n,   alpha in {0, 0.25, 0.5, 0.75, 1},
-with s the per-channel standardized input image (bicubic(y), or the HR photo as an oracle diagnostic) and one fixed
-noise draw n = normal(PRNGKey(2040 + i), (256, 256, 3)); plus the raw (unstandardized) image as eps. No optimization;
-nothing is chosen. The regenerated PSNRs are checked against the table printed in notebook 04 (cell 85, 1 decimal).
 
-Ported from scripts/regen_dev_image_in_eps.py (= notebooks/04_postproc_controls_dev.ipynb cell 85, Check 15).
+where s is the per-channel standardized input image (bicubic(y), or HR as an oracle diagnostic) and n one fixed noise
+draw normal(PRNGKey(2040 + i), (256, 256, 3)); plus the raw, unstandardized image as eps. Nothing is optimized or
+chosen. Before saving, the PSNRs are checked against the values recorded when the experiment was first run (SAVED_PSNR,
+1 decimal).
 
 Usage:
     python scripts/dev/run_image_in_eps_dev.py --dry-run   # plan and cache status; runs and writes nothing (CPU)
@@ -15,6 +16,7 @@ Usage:
     python scripts/dev/run_image_in_eps_dev.py             # regenerate all 36 outputs if the file is missing
 
 Outputs (IADRIFT_DATA/image_in_eps_dev_v1.npz): 36 float32 [256, 256, 3] arrays "<image>|<input>|<a0..a1 or raw>".
+Used in the full report, Development ablations.
 """
 
 import os
@@ -42,8 +44,8 @@ OUT_PATH = paths.DATA_DIR / "image_in_eps_dev_v1.npz"
 IMAGES, ALPHAS = [403, 3939, 8405], [0.0, 0.25, 0.5, 0.75, 1.0]
 SOURCES = ("bicubic(y)", "HR (oracle)")
 NOISE_SEED = 2040  # + image index
-# Notebook 04 cell 85 output, PSNR (dB, 1 decimal): {image: {input: [alpha 0, .25, .5, .75, 1, raw]}}
-NB04_PSNR = {403: {"bicubic(y)": [8.5, 8.5, 7.9, 9.2, 11.2, 10.3], "HR (oracle)": [8.5, 8.0, 9.0, 8.7, 7.2, 10.2]},
+# PSNR recorded when the experiment was first run (dB, 1 decimal): {image: {input: [alpha 0, .25, .5, .75, 1, raw]}}
+SAVED_PSNR = {403: {"bicubic(y)": [8.5, 8.5, 7.9, 9.2, 11.2, 10.3], "HR (oracle)": [8.5, 8.0, 9.0, 8.7, 7.2, 10.2]},
              3939: {"bicubic(y)": [7.2, 7.1, 7.2, 7.4, 7.3, 7.5], "HR (oracle)": [7.2, 7.3, 7.0, 7.6, 7.5, 7.5]},
              8405: {"bicubic(y)": [6.9, 6.4, 5.7, 5.5, 4.1, 4.1], "HR (oracle)": [6.9, 6.4, 5.6, 5.5, 4.5, 4.0]}}
 SMOKE_KEY = "403|bicubic(y)|a0.5"
@@ -59,7 +61,7 @@ def std_img(x):
 
 
 def generate_all(gen, index_rows, lr_all, only=None):
-    """{key: output}, exactly the calls of the original script (only: restrict to one key)."""
+    """{key: output} and the worst PSNR deviation from SAVED_PSNR; `only` restricts to one key."""
     import jax
     import jax.numpy as jnp
     from iadrift.metrics import psnr
@@ -83,7 +85,7 @@ def generate_all(gen, index_rows, lr_all, only=None):
                     continue
                 x = np.asarray(gen.generate(jnp.asarray(e)[None], label, z0).astype(jnp.float32))[0]
                 out[f"{i}|{src}|{tag}"] = x
-                worst = max(worst, abs(round(psnr(hr, x), 1) - NB04_PSNR[i][src][k]))
+                worst = max(worst, abs(round(psnr(hr, x), 1) - SAVED_PSNR[i][src][k]))
     return out, worst
 
 
@@ -124,8 +126,8 @@ def main():
         print(f"{OUT_PATH} exists; nothing to do.\nALL RUNS COMPLETE")
         return
     out, worst = generate_all(gen, index_rows, lr_all)
-    print(f"Check: max |PSNR (1 decimal) - notebook 04| = {worst:.2f} dB")
-    assert worst < 0.11, "regenerated outputs differ from notebook 04's"
+    print(f"Check: max |PSNR (1 decimal) - recorded| = {worst:.2f} dB")
+    assert worst < 0.11, "regenerated outputs differ from the saved ones"
     buffer = io.BytesIO()
     np.savez_compressed(buffer, **out)
     atomic_write_bytes(OUT_PATH, buffer.getvalue())

@@ -1,17 +1,13 @@
-"""Generator samples and in-range targets (development, 4 classes; notebook 02, the random-sample and in-range figures).
+"""Generator samples and in-range targets for the 4 development classes.
 
-Forward passes only, no optimization:
-1. The generator's own random samples x = G(eps; z, c, cfg) for the classes of the 4 development images (8117, 3939,
-   403, 347): 2 draws per class, (eps, z) from key fold_in(fold_in(2031, class), draw), each draw at classifier-free
-   guidance 1.0, 1.5 and 2.5 (the same eps and z for every guidance value). They show that the 16-pixel patch grid
-   is in the generator itself, not caused by the inversion.
-2. The in-range SR targets x* = G(eps*; z*, c) of scripts/dev/run_representation_dev.py (R3; key fold_in(2032,
-   image), guidance 1.0), which notebook 04 never saved as arrays.
-Check before saving: the saved R3 CSGM outputs, rescored against the regenerated x*, must give the PSNR stored in
-representation_error_dev_v1/summary.json.
-
-Ported from scripts/regen_dev_generator_samples.py (same seeds and calls as notebooks/04_postproc_controls_dev.ipynb
-cells 30 and 44). Default allocator, as the original.
+Forward passes only:
+1. Random samples x = G(eps; z, c, cfg) for the classes of images 8117, 3939, 403, 347. Two draws per class, (eps, z)
+   from key fold_in(fold_in(2031, class), draw), each at classifier-free guidance 1.0, 1.5 and 2.5 with the same eps
+   and z. They show that the 16-pixel patch grid comes from the generator itself, not from the inversion.
+2. The in-range SR targets x* = G(eps*; z*, c) of run_representation_dev.py (R3; key fold_in(2032, image), guidance
+   1.0). That runner does not save x*.
+Before saving, the saved R3 CSGM outputs are rescored against the regenerated x* and must give the PSNR stored in
+representation_error_dev_v1/summary.json, so run_representation_dev.py has to run first.
 
 Usage:
     python scripts/dev/run_generator_samples_dev.py --dry-run   # cache status; runs and writes nothing (CPU)
@@ -19,7 +15,7 @@ Usage:
     python scripts/dev/run_generator_samples_dev.py             # create the file if it is missing
 
 Output (IADRIFT_DATA/generator_samples_dev_v1.npz): sample_img<i>_draw<d>_cfg<1|1.5|2.5> and xstar_img<i>, float32
-[256, 256, 3] (28 arrays).
+[256, 256, 3] (28 arrays). Read by scripts/analysis/export_dev_results.py.
 """
 
 import sys
@@ -145,7 +141,7 @@ def main():
     out = generate_all(gen, labels)
     worst = check_against_r3(out)
     print(f"Check: max |PSNR(saved R3 CSGM output, regenerated x*) - stored| = {worst:.2e} dB")
-    assert worst < 1e-6, "regenerated targets differ from notebook 04's"
+    assert worst < 1e-6, "regenerated targets differ from the saved ones"
     buffer = io.BytesIO()
     np.savez_compressed(buffer, **out)
     atomic_write_bytes(OUT_PATH, buffer.getvalue())

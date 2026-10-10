@@ -1,28 +1,27 @@
-"""Export the development ablations behind notebook 04 ("development ablations") into results/ (CPU).
+"""Export the development ablations to results/, where scripts/report/ reads them. CPU only.
 
-Development images only (never test images), correct label. Reads cached development outputs and recomputes every
-metric on the CPU (iadrift.metrics, iadrift.operators):
+Development images only, correct label. Reads cached development outputs and recomputes all metrics on the CPU with
+iadrift.metrics and iadrift.operators:
 
-    results/ablation_metrics.json   per section: per-image metrics (PSNR, LPIPS, LR loss, band SNR, blockiness), and the
-                                    section-specific numbers (variance shares, eps statistics, screening runs, weights)
-    results/ablation_examples.npz   images for the figures (float16; the z x eps grid as uint8 at 128x128)
+    results/ablation_metrics.json   per section: per-image metrics (PSNR, LPIPS, LR loss, band SNR, blockiness) and the
+                                    section's own numbers (variance shares, eps statistics, screening runs, weights)
+    results/ablation_examples.npz   images for the figures, float16; the z x eps grid as uint8 at 128x128
 
-Sections and sources (IADRIFT_DATA), with the runners that made them:
+Sections and their sources in IADRIFT_DATA, with the runners that wrote them:
     1 z vs eps            noise_label_role_dev_v1/        scripts/dev/run_noise_label_role_dev.py
     2 image in eps        image_in_eps_dev_v1.npz         scripts/dev/run_image_in_eps_dev.py
     3 eps on the sphere   csgm_dev_5000steps_lr0.02/      scripts/dev/run_csgm_dev.py
                           csgm_eps_projection_dev_v1/     scripts/dev/run_eps_projection_dev.py
     4 noise-label search  noise_label_search_dev_v1/      scripts/dev/run_noise_label_search_dev.py
-    5 ensembles           csgm_dev_5000steps_lr0.02/, z_swap_dev_v1/confirm/ (run_z_swap_confirm_dev.py),
-                          ensemble_dev_v1/ and one_image_demos_v1/D_shift##_r0.npz (run_ensemble_dev.py),
-                          iadrift_ensemble_dev_v1/ (run_iadrift_ensemble_dev.py)
-    6 colour penalty and frequency anchor   hf_constraints_dev_v1/ (run_hf_constraints_dev.py) + the section-5
-                          members of image 403
-Ensemble weights: w_k ~ exp(-(L_k - L_min) / std L) from the CSGM members' LR losses (iadrift.ensemble.weights; never
-HR); the CSGM restart kept by the usual rule = the lower LR loss of r0, r1.
-
-Ported from our working copy of export_ablation_results.py (helpers from export_dev_results.py / freq_metrics.py, now
-iadrift.metrics and iadrift.operators).
+    5 ensembles           csgm_dev_5000steps_lr0.02/
+                          z_swap_dev_v1/confirm/          scripts/dev/run_z_swap_confirm_dev.py
+                          ensemble_dev_v1/, one_image_demos_v1/D_shift##_r0.npz   scripts/dev/run_ensemble_dev.py
+                          iadrift_ensemble_dev_v1/        scripts/dev/run_iadrift_ensemble_dev.py
+    6 colour penalty and frequency anchor
+                          hf_constraints_dev_v1/          scripts/dev/run_hf_constraints_dev.py
+                          and the section-5 members of image 403
+Ensemble weights are w_k ~ exp(-(L_k - L_min) / std L) from the CSGM members' LR losses (iadrift.ensemble.weights),
+never from HR. The kept CSGM restart is the one of r0, r1 with the lower LR loss.
 
 Usage:
     python scripts/analysis/export_ablation_results.py            # write results/ablation_{metrics.json,examples.npz}
@@ -32,7 +31,7 @@ Usage:
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repository root, so `iadrift` imports without install
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repo root, so `iadrift` imports without install
 
 from iadrift.runtime import setup_cpu
 
@@ -60,11 +59,11 @@ MEMBERS = {"r0": (0, 0), "r1": (0, 0), "shift01": (0, 1), "shift10": (1, 0), "sh
 FILES = ("ablation_metrics.json", "ablation_examples.npz")
 EX = {}
 
-torch.set_num_threads(4)  # as in the original export (LPIPS on the CPU)
+torch.set_num_threads(4)  # LPIPS on the CPU; results/ was written with 4 threads
 
 
 def lr_loss(x, y):
-    """||y - A x||^2 for x [256, 256, 3], y [64, 64, 3] (the export's own form: [0] before the subtraction)."""
+    """||y - A x||^2 for x [256, 256, 3], y [64, 64, 3]. Indexes [0] before subtracting, unlike operators.lr_loss."""
     return float(jnp.sum((A_sr4(jnp.asarray(x, jnp.float32)[None])[0] - jnp.asarray(y, jnp.float32)) ** 2))
 
 
@@ -92,7 +91,7 @@ def unshift(x, m):
 
 
 def init_eps(i, r):
-    """The CSGM start eps of image i, restart r (= Generator.initialize, eps part only; no model needed)."""
+    """Starting eps of CSGM image i, restart r. Same as the eps from Generator.initialize, without loading the model."""
     key = jax.random.fold_in(jax.random.fold_in(jax.random.PRNGKey(data.SWEEP_SEED), i), r)
     return np.asarray(jax.random.normal(jax.random.split(key)[0], (1, 256, 256, 3), dtype=jnp.float32))
 
@@ -310,9 +309,12 @@ def max_rel_diff(a, b, path=""):
 
 
 def check(fresh_dir, ref_dir=paths.RESULTS_DIR):
-    """Compare a fresh export with results/. The saved files reproduce bit for bit only on the platform they were made
-    on: on the CPU even the original export's bicubic_up differs from the saved image by one float16 step, so the
-    comparison uses tolerances (relative 1e-4 for the metrics, 2e-3 for the float16 images) plus the exact choices."""
+    """Compare a fresh export with results/.
+
+    The saved files are bit-exact only on the platform that wrote them; on the CPU even bicubic_up differs from the
+    saved image by one float16 step. So metrics are compared to a relative 1e-4, float16 images to 2e-3, and the
+    kept restart and best search key must match exactly.
+    """
     fresh = json.loads((fresh_dir / FILES[0]).read_text())
     ref = json.loads((ref_dir / FILES[0]).read_text())
     diff, where = max_rel_diff(fresh, ref)

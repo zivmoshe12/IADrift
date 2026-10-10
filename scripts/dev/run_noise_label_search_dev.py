@@ -1,15 +1,14 @@
-"""Noise-label search for CSGM (development, 4 images; notebook 04, Section 4; selection by LR loss only).
+"""Style-label search for CSGM (4 development images; choices by LR loss only).
 
-z selects most of the scene (notebook 04, Section 1), but CSGM keeps the z drawn at initialization. Here each development image
-(8117, 3939, 403, 347; correct label) gets 16 candidates: the 2 baseline eps starts initialize(i, r), r in {0, 1}, x
-8 noise-label sets per start (k = 0: the baseline's own z; k = 1..7: randint(fold(fold(fold(PRNGKey(2033), i), r), k))).
-Every candidate gets a 500-step CSGM screening run; the 2 with the lowest screening LR loss are run to the full 5,000
-steps, and the one with the lowest final LR loss is the search result. HR is never used for a choice.
+z sets most of the scene (run_noise_label_role_dev.py), but CSGM keeps the z drawn at initialization. Here each
+image (8117, 3939, 403, 347; correct label) gets 16 candidates: the 2 baseline eps starts initialize(i, r), r in
+{0, 1}, x 8 label sets per start (k = 0: the baseline's own z; k = 1..7: randint(fold(fold(fold(PRNGKey(2033), i),
+r), k))). Every candidate gets a 500-step CSGM screening run. The 2 with the lowest screening LR loss are run to the
+full 5,000 steps, and the one with the lower final LR loss is the search result. HR is never used for a choice.
 
 The runs use the frozen CSGM loop (CSGM.reconstruct with start = (eps, z)), so candidate k = 0 at full length is the
-saved baseline run: asserted on image 8117, restart 1 before the search starts (in the dry run: on the cached files).
-
-Ported from scripts/run_noise_label_search_dev.py (Check 7).
+baseline run of run_csgm_dev.py. This is asserted on image 8117, restart 1 before the search starts (in the dry run,
+on the cached files).
 
 Usage:
     python scripts/dev/run_noise_label_search_dev.py --dry-run   # plan, cache status, cached-repro check (CPU)
@@ -19,7 +18,7 @@ Usage:
 Outputs (IADRIFT_DATA/noise_label_search_dev_v1/): screen_img#####_r#_nl#.npz (500 steps, 64 runs),
 final_img#####_r#_nl#.npz (5,000 steps, 2 per image); metrics_json {image_index, restart, label_set, steps, class_label,
 final_loss, seconds} + eps, noise_labels, x_hat, trace_steps, trace_loss; summary.json {image: screen, top, final,
-best}.
+best}. Used in the full report, Development ablations ("Searching the style labels").
 """
 
 import os
@@ -98,7 +97,7 @@ class Search:
         return metrics, a
 
     def run(self, path, i, r, k, label, steps):
-        """Cached run (the original file format)."""
+        """Load the run from `path`, or compute and save it."""
         if path.exists():
             return load_npz(path)
         metrics, arrays = self.compute(i, r, k, label, steps)

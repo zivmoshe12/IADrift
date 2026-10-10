@@ -1,18 +1,17 @@
 #!/usr/bin/env bash
-# Resumable overnight driver for the test runs (GPU):
+# Resumable overnight driver for the GPU test runs:
 #
 #   bash scripts/test/run_overnight.sh csgm     [num_images]   # scripts/test/run_csgm_test.py,     400 runs, ~7.5 h
 #   bash scripts/test/run_overnight.sh iadrift  [num_images]   # scripts/test/run_iadrift_test.py,  200 runs, ~3.5 h
 #   bash scripts/test/run_overnight.sh ensemble [num_images]   # scripts/test/run_ensemble_test.py, 300 runs, ~5.5 h
 #
-# Calls the runner in chunks of MAX_RUNS_PER_CHUNK runs (short-lived processes: one 32-run IADrift chunk segfaulted
-# after 16 runs, protocol Section 8) until a chunk prints "ALL RUNS COMPLETE". Every finished run is saved atomically, so a
-# chunk that crashes is simply retried and resumes from the checkpoint. A chunk counts as failed only if it saved no
-# new run (measured with the runner's --dry-run, which runs and writes nothing); after MAX_FAILURES consecutive
-# failed chunks the loop stops, so a persistent error does not spin all night. Run it inside tmux.
+# Runs the test script in chunks of MAX_RUNS_PER_CHUNK runs until a chunk prints "ALL RUNS COMPLETE". Short-lived
+# processes are deliberate: one 32-run IADrift chunk segfaulted after 16 runs (protocol Section 8). Each finished run
+# is saved atomically, so a crashed chunk is retried and resumes from the checkpoint. A chunk counts as failed only if
+# it saved no new run (checked with the runner's --dry-run); after MAX_FAILURES failed chunks in a row the loop stops.
+# Run it inside tmux.
 #
 # Log: <repo>/logs/<name>_test.log. Python: $PYTHON, else <repo>/.venv/bin/python, else python3.
-# Ported from scripts/run_overnight_{csgm,iadrift,ensemble}_test.sh of the working repository.
 set -u
 
 NAME="${1:-}"
@@ -31,7 +30,7 @@ LOG="$REPO/logs/${NAME}_test.log"
 MAX_RUNS_PER_CHUNK=10
 MAX_FAILURES=3
 
-# CSGM-type runs reproduce the saved runs only with the default allocator (the runners refuse 'platform');
+# CSGM runs reproduce the saved runs only with the default allocator (the runners refuse 'platform');
 # run_iadrift_test.py sets XLA_PYTHON_CLIENT_ALLOCATOR=platform itself.
 unset XLA_PYTHON_CLIENT_ALLOCATOR
 mkdir -p "$REPO/logs"

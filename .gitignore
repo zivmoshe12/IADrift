@@ -6,7 +6,7 @@ __pycache__/
 logs/
 *.lock
 # Data, experiment caches (~1 GB per run family), model weights and the upstream code stay outside the repository;
-# results/ holds the compact files the notebooks read (scripts/analysis/export_*.py).
+# results/ holds the compact files written by scripts/analysis/export_*.py and read by scripts/report/.
 # Anchored to the repository root: an unanchored "data/" also matched scripts/data/ (prepare_data.py).
 /data/
 /hf_cache/

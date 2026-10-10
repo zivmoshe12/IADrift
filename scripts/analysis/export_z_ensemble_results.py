@@ -1,31 +1,29 @@
-"""Analysis of the larger z-ensembles (scripts/dev/run_z_ensemble_dev.py) -> results/ and figures/ (CPU).
+"""Analysis of the larger z-ensembles of scripts/dev/run_z_ensemble_dev.py (CPU, development images only).
 
-Development only (6 images, correct label), post-hoc; never run on the test set. HR is used only for scoring; ensemble
+Six development images, correct label, run after the test set was evaluated. HR is used only for scoring. Ensemble
 weights come from the members' LR losses at the same step budget T (iadrift.ensemble.weights).
 
-For each image, budget T in {500, 1000, 2000, 5000, iad100} and K in {1, 2, 4, 5, 8, 12}: N_SUBSETS random K-subsets
-of the 12 arm-A members r0..11 (fixed seed, the same subsets for every T and image, 1 subset at K = 12), uniform and
-weighted mean, back-projection, and scores before and after BP (PSNR, LPIPS, blockiness, band SNR). Also
-n_eff = 1 / sum w^2 and the MMSE gain 10 log10(mean member MSE / ensemble MSE) before BP, against the prediction for
-independent posterior samples, 10 log10(2 / (1 + 1/K)). Budget iad100 is each member's CSGM solution at step 5,000
-followed by IADrift @100; it is weighted by the IADrift LR losses at step 100 ("weighted") or by the CSGM losses at
-step 5,000 ("weighted_csgm", as in the IADrift ensembles of notebook 04, Section 5).
+For each image, budget T in {500, 1000, 2000, 5000, iad100} and K in {1, 2, 4, 5, 8, 12} we average N_SUBSETS random
+K-subsets of the 12 members r0..11 (fixed seed; one subset at K = 12), uniformly and weighted, back-project, and score
+before and after BP. We also record n_eff = 1 / sum w^2 and the averaging gain before BP,
 
-Reported:
-    k_curve          PSNR / LPIPS against K for every budget
-    matched_compute  12 x 500 / 1000 / 2000 / 5000, 5 x 5000, 5 and 12 x (5000 + IADrift @100), against bicubic + BP
-                     (computed here) and the 5-member ensembles of notebook 04, Section 5 (results/ablation_metrics.json,
-                     "ensembles"; CSGM, Ens-U, Ens-W, and the same for IADrift @100)
-    arm_c            z only (4 z), grid shifts only (1 z x 4 phases), both (2 z x 4 phases, 4 z x 4 phases), and the
-                     arm-A z-only ensembles at K = 4, 8, 12 for comparison at equal K
-Per-image results are cached in IADRIFT_DATA/z_ensemble_dev_v1/analysis/img#####.json and recomputed when the member
-files change.
+    gain = 10 log10(mean member MSE / ensemble MSE),     predicted 10 log10(2 / (1 + 1/K)) for posterior samples.
+
+Budget iad100 is each 5,000-step member continued with IADrift @100. It is weighted by the IADrift LR losses at step
+100 ("weighted") or by the CSGM losses at step 5,000 ("weighted_csgm").
+
+Reported in results/z_ensemble_dev.json (report Appendix A, Table 3 and Fig. 3):
+    k_curve          PSNR, LPIPS and gain against K for every budget
+    matched_compute  12 x 500 / 1000 / 2000 / 5000, 5 x 5000, 5 and 12 x (5000 + IADrift @100), next to bicubic + BP
+                     and the 5-member ensembles of results/ablation_metrics.json ("ensembles")
+    arm_c            ensembles over z only, over grid shifts only, and over both
+Per-image results are cached in IADRIFT_DATA/z_ensemble_dev_v1/analysis/ and recomputed when the member files change.
 
 Usage:
-    python scripts/analysis/export_z_ensemble_results.py                   # every image with arm-A runs
+    python scripts/analysis/export_z_ensemble_results.py                   # every image with runs
     python scripts/analysis/export_z_ensemble_results.py --images 403      # a subset
-Outputs: results/z_ensemble_dev.json, figures/z_ensemble_dev.png (PSNR and LPIPS against K),
-         figures/z_ensemble_dev_examples.png (reconstructions vs bicubic, full images and zoomed crops)
+Outputs: results/z_ensemble_dev.json, results/z_ensemble_examples.npz (example reconstructions for
+         scripts/report/make_figures.py), figures/z_ensemble_dev.png (PSNR and LPIPS against K)
 """
 
 import sys
@@ -38,6 +36,7 @@ from iadrift.runtime import setup_cpu
 setup_cpu()
 
 import argparse
+import io
 import itertools
 import json
 
@@ -54,7 +53,7 @@ RUN_DIR = paths.DATA_DIR / "z_ensemble_dev_v1"
 CACHE_DIR = RUN_DIR / "analysis"
 OUT_JSON = paths.RESULTS_DIR / "z_ensemble_dev.json"
 OUT_PNG = paths.FIGURES_DIR / "z_ensemble_dev.png"
-OUT_EXAMPLES = paths.FIGURES_DIR / "z_ensemble_dev_examples.png"
+OUT_EXAMPLES = paths.RESULTS_DIR / "z_ensemble_examples.npz"
 IMAGES = list(data.DEV_IMAGES_6)
 STEPS = (500, 1_000, 2_000, 5_000)
 IAD = "iad100"  # budget key: CSGM 5,000 steps + IADrift @100
@@ -247,7 +246,7 @@ def aggregate(per_image, abl):
                                                                   for i in imgs])) for b in BANDS}}
                          for name in REFS}
     agg["references_note"] = ("All + BP. bicubic = BP(bicubic_up(y)), computed here; the rest from "
-                              "results/ablation_metrics.json['ensembles'] (notebook 04, Section 5): CSGM = the better of r0, "
+                              "results/ablation_metrics.json['ensembles']: CSGM = the better of r0, "
                               "r1 (5,000 steps); Ens-U / Ens-W = 5 x 5,000 steps (r0, r1 and 3 shifts of r0, so 2 distinct "
                               "z); IADrift @100 [Ens-U, Ens-W] = IADrift @100 from the same members (Ens-W weighted by the "
                               "CSGM losses)")
@@ -350,57 +349,34 @@ def plot(agg):
     print(f"wrote {OUT_PNG}", flush=True)
 
 
-# (name, K, T, weighted); the K members are r0..K-1 (fixed, never chosen with HR)
-EXAMPLES = (("12 x 500 uniform", 12, 500, False), ("5 x 5000 uniform", 5, 5_000, False),
-            ("12 x 5000 uniform", 12, 5_000, False), ("12 x (5000 + IADrift 100) uniform", 12, IAD, False))
-CROP = (88, 88, 80)  # top, left, size of the zoomed centre crop (fixed, never chosen with HR)
+# (name, K, T, weighted); the K members are r0..K-1, fixed in advance
+EXAMPLES = (("12 x 500", 12, 500, False), ("5 x 5000", 5, 5_000, False), ("12 x 5000", 12, 5_000, False),
+            ("12 x (5000 + IADrift 100)", 12, IAD, False))
+EXAMPLE_IMAGES = IMAGES[:3]
 
 
-def plot_examples(agg, index_rows, lr_all):
-    """Per image: HR, bicubic + BP, CSGM + BP and the EXAMPLES ensembles + BP; full images and a zoomed crop."""
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-    from matplotlib.patches import Rectangle
+def export_examples(agg, index_rows, lr_all):
+    """Save the example reconstructions (all + BP, float16) with their PSNR / LPIPS for scripts/report/make_figures.py.
 
-    imgs = agg["images"]
-    examples = [e for e in EXAMPLES if str(e[2]) in agg["budgets"]]
-    cols = ["HR", "bicubic + BP", "CSGM + BP"] + [f"{n} + BP" for n, _, _, _ in examples]
-    fig, axes = plt.subplots(2 * len(imgs), len(cols), figsize=(2.3 * len(cols), 4.75 * len(imgs)),
-                             facecolor="#fcfcfb", squeeze=False)
-    top, left, size = CROP
-
-    def show(x):
-        return np.clip((np.asarray(x, np.float64) + 1) / 2, 0, 1)
-
-    for row, i in enumerate(imgs):
+    Per image i: "i|hr", "i|bicubic + BP", "i|CSGM + BP" (the CSGM rule at 5,000 steps) and "i|<name>" for EXAMPLES,
+    each with "i|<key>|metrics" = [PSNR, LPIPS].
+    """
+    out = {"image_index": np.asarray([i for i in EXAMPLE_IMAGES if i in agg["images"]])}
+    for i in out["image_index"].tolist():
         hr, y = data.hr_image(index_rows, i), np.asarray(lr_all[i], np.float32)
         xa, la = load_members([RUN_DIR / f"img{i:05d}_r{r:02d}.npz" for r in range(N_MEMBERS)], iadrift=True)
         r_kept = int(np.argmin(la[5_000][:2]))
-        outs = [hr, backproject(bicubic_up(y), y), backproject(xa[5_000][r_kept], y)]
-        for _, k, t, weighted in examples:
-            outs.append(backproject(np.tensordot(weights(la[t][:k], weighted), xa[t][:k], axes=1), y))
-        for c, (name, x) in enumerate(zip(cols, outs)):
-            full, zoom = axes[2 * row, c], axes[2 * row + 1, c]
-            full.imshow(show(x))
-            zoom.imshow(show(x)[top:top + size, left:left + size], interpolation="nearest")
-            full.add_patch(Rectangle((left, top), size, size, fill=False, ec="#eb6834", lw=1))
-            if c == 0:
-                title = f"{i}: {name}"
-            else:
-                title = f"{name.replace(' uniform', '')}\n{psnr(hr, x):.2f} dB, LPIPS {lpips_dist(x, hr):.3f}"
-            full.set_title(title, fontsize=7.5, color=INK)
-            for ax in (full, zoom):
-                ax.set_xticks([])
-                ax.set_yticks([])
-                for sp in ax.spines.values():
-                    sp.set_color(GRID)
-    fig.suptitle("Reconstructions vs bicubic, all + BP (development images, not the test set). Second row: zoomed "
-                 "centre crop (orange box). Uniform means of members r0..rK-1", fontsize=9, color=INK, x=0.01,
-                 ha="left")
-    fig.tight_layout(rect=(0, 0, 1, 0.99))
-    fig.savefig(OUT_EXAMPLES, dpi=110, facecolor=fig.get_facecolor())
-    plt.close(fig)
+        images = {"hr": hr, "bicubic + BP": backproject(bicubic_up(y), y), "CSGM + BP": backproject(xa[5_000][r_kept], y)}
+        for name, k, t, weighted in EXAMPLES:
+            if t in xa:
+                images[name] = backproject(np.tensordot(weights(la[t][:k], weighted), xa[t][:k], axes=1), y)
+        for name, x in images.items():
+            out[f"{i}|{name}"] = np.asarray(x, np.float16)
+            if name != "hr":
+                out[f"{i}|{name}|metrics"] = np.asarray([psnr(hr, x), lpips_dist(x, hr)])
+    buf = io.BytesIO()
+    np.savez_compressed(buf, **out)
+    atomic_write_bytes(OUT_EXAMPLES, buf.getvalue())
     print(f"wrote {OUT_EXAMPLES}", flush=True)
 
 
@@ -414,7 +390,7 @@ def print_tables(agg):
     head = "PSNRraw PSNRbp  LPIPS block  SNRhi SNRvhi  n_eff"
     print(f"\nImages {agg['images']} (n = {agg['n_images']}); incomplete {agg['incomplete_images']}; "
           f"all finite {agg['all_finite']}")
-    print("\nReferences (+ BP; bicubic computed here, the rest from notebook 04, Section 5):  PSNR   LPIPS  block")
+    print("\nReferences (+ BP; bicubic computed here, the rest from ablation_metrics.json):  PSNR   LPIPS  block")
     for n, m in agg["references"].items():
         print(f"  {n:32s} {m['psnr']:6.2f} {m['lpips']:6.3f} {m['blockiness']:5.2f}")
     print(f"\nSingle member, CSGM rule (the better of r0, r1 by LR loss):  {head}")
@@ -472,7 +448,7 @@ def main():
     if agg["n_images"]:
         print_tables(agg)
         plot(agg)
-        plot_examples(agg, index_rows, lr_all)
+        export_examples(agg, index_rows, lr_all)
     atomic_write_bytes(OUT_JSON, (json.dumps(agg, indent=1) + "\n").encode())
     print(f"wrote {OUT_JSON}", flush=True)
 

@@ -1,21 +1,21 @@
-"""CSGM settings sweep (development, 100 images; the choice of the frozen CSGM settings, docs/PROTOCOL.md, Section 3).
+"""CSGM settings sweep on 100 development images; it chose the frozen CSGM settings (docs/PROTOCOL.md, Section 3).
 
-Oracle-class CSGM on SR x4, minimizing over eps (frozen generator, noise labels z fixed at initialization):
+Correct-class CSGM on SR x4 over eps, with the generator frozen and z fixed at initialization:
 
     J(eps) = ||y - A G(eps; z, c)||^2 + w * |y| * R(eps),     |y| = 64*64*3 = 12,288
 
-with R = 0 ("none") or the moments penalty R = skew(eps)^2 + 0.25 * excess_kurtosis(eps)^2 (eps standardized over
-all 196,608 values). Grid: Adam lr {0.005, 0.02} x regularizer {none, moments w = 1, 10, 100} = 8 configurations
-(config_id 0-7), 3,000 steps, 2 restarts each, on 100 development images (one from each of 100 classes, seed 2027,
-excluding the classes of the first 4 images of the shuffled development split) = 1,600 runs. Initialization
-key(2026, image, restart), identical for every configuration. The restart is chosen by the lowest final LR loss and
-configurations are ranked by mean LR loss (--analyze); HR PSNR is reported but chose nothing. The winner, config 4
-(lr 0.02, no regularizer), became iadrift.csgm.FROZEN_CONFIG, with the steps then raised to 5,000.
+R = 0 ("none") or the moments penalty R = skew(eps)^2 + 0.25 * excess_kurtosis(eps)^2, with eps standardized over
+all 196,608 values.
 
-Ported from scripts/run_sr4_moments_dev_chunked.py (an exported notebook; cells 17, 18, 27, 28, 32, 33: the
-regularizer, loss, step, initialization, run plan and checkpoint) and scripts/analyze_sr4_moments_dev.py (--analyze).
-The loss and step are copied verbatim: they differ from the frozen test CSGM (iadrift.csgm) in form (a generic
-loss_per_image with the operator and a regularizer as arguments), so they compile to a different program.
+Grid: Adam lr {0.005, 0.02} x regularizer {none, moments w = 1, 10, 100} = 8 configurations (config_id 0-7),
+3,000 steps, 2 restarts each, 1,600 runs in total. Images: one from each of 100 classes (seed 2027), excluding the
+classes of the first 4 images of the shuffled development split. Every configuration starts from the same
+key(2026, image, restart). Per image the restart with the lower final LR loss is kept, and --analyze ranks the
+configurations by mean LR loss. HR PSNR is reported but chose nothing. The winner, config 4 (lr 0.02, no
+regularizer), became iadrift.csgm.FROZEN_CONFIG, with the step count raised to 5,000.
+
+The loss and step here are the sweep's own (a generic loss_per_image that takes the operator and regularizer as
+arguments). They compile to a different program than iadrift.csgm, so the package version is not used.
 
 Usage:
     python scripts/dev/run_csgm_settings_sweep.py --dry-run     # plan, hash and cache status; runs and writes nothing
@@ -23,10 +23,11 @@ Usage:
     python scripts/dev/run_csgm_settings_sweep.py --smoke       # rerun 2 saved runs (config 4 and 5), compare exactly
     python scripts/dev/run_csgm_settings_sweep.py --max-runs 32 # run what is missing (resumable)
 
-Outputs (IADRIFT_DATA): phase1_sr4_oracle_moments_dev_v1_6b22675bd557.{jsonl,manifest.json}: one JSON row per run
-(the run's settings, initial/final LR loss, penalty and objective, HR PSNR, eps statistics, seconds). No arrays.
-(phase1_sr4_oracle_moments_dev_v1_795139bf9252.* is an abandoned 2,000-step version of the same plan, 2 runs.)
-~50 s per run on an RTX A4000 (1,600 runs ~22 h).
+Outputs (IADRIFT_DATA): phase1_sr4_oracle_moments_dev_v1_6b22675bd557.{jsonl,manifest.json}, one JSON row per run
+(settings, initial/final LR loss, penalty and objective, HR PSNR, eps statistics, seconds); no arrays. The 100-image
+pool in this file is also where run_csgm_dev.py and run_z_swap_confirm_dev.py draw the development images from.
+phase1_sr4_oracle_moments_dev_v1_795139bf9252.* is an abandoned 2,000-step version of the same plan (2 runs).
+About 50 s per run on an RTX A4000, so ~22 h for the whole sweep.
 """
 
 import sys
@@ -101,7 +102,7 @@ def run_key(run):
     return (int(run["config_id"]), int(run["image_index"]), int(run["restart"]))
 
 
-# ---------------------------------------------------------------- analysis (port of analyze_sr4_moments_dev.py)
+# ---------------------------------------------------------------- analysis
 def analyze(results_path, manifest_path):
     """Per image and configuration keep the restart with the lowest final LR loss; rank configurations."""
     planned = {run_key(r): r for r in json.loads(manifest_path.read_text())["run_plan"]}
@@ -160,7 +161,7 @@ def print_analysis(ckpt):
 
 # ---------------------------------------------------------------- the sweep's CSGM (GPU)
 class Sweep:
-    """The sweep's objective, step and run, verbatim from the original notebook cells 8, 17, 18, 27, 28 and 32."""
+    """The sweep's objective, step and run, kept as they were when the sweep ran."""
 
     def __init__(self, gen, index_rows, lr_all):
         import jax

@@ -1,15 +1,13 @@
-"""Shifted CSGM ensemble members on the test set (docs/PROTOCOL.md, Section 11, Addendum A; post-hoc test, 100 images).
+"""Shifted CSGM ensemble members on the test set (docs/PROTOCOL.md, Section 11, Addendum A; post-hoc, 100 images).
 
-Per test image (correct label only), three new frozen-CSGM runs (iadrift.csgm.FROZEN_CONFIG: Adam lr 0.02, 5,000 steps,
-no regularizer) on the LR measurement circularly shifted by (sy, sx) LR pixels,
-    y_s = roll(y, (sy, sx)),   (sy, sx) in {(0, 1), (1, 0), (1, 1)},
-all started from initialize(image, 0), i.e. the same eps and noise labels as the saved test restart r0. The saved x_hat
-is in the shifted frame; the analysis shifts it back by -4 (sy, sx) HR pixels (iadrift.ensemble.unshift_x). The two
-unshifted members (restarts r0, r1) are the saved CSGM test runs. The ensembles E1-Ens-W (+ BP) and the 2 primary tests
-are computed by scripts/analysis/evaluate_test.py --part ensemble (notebook dev_archive/07 Part 1). Method identical to
-development Check 13 (notebook dev_archive/04 cells 79-81). Nothing is chosen with HR.
-
-Ported from scripts/run_sr4_ensemble_test.py.
+For each test image, correct label only, three new frozen-CSGM runs (iadrift.csgm.FROZEN_CONFIG: Adam lr 0.02, 5,000
+steps, no regularizer) on the LR measurement circularly shifted by (sy, sx) LR pixels:
+    y_s = roll(y, (sy, sx)),   (sy, sx) in {(0, 1), (1, 0), (1, 1)}
+All three start from initialize(image, 0), the same eps and z as the saved test restart r0. The saved x_hat is in the
+shifted frame; the analysis shifts it back by -4 (sy, sx) HR pixels (iadrift.ensemble.unshift_x). The two unshifted
+members are the saved CSGM test restarts r0 and r1. The ensembles (E1, E2, Ens-U, Ens-W, each + BP) and the two
+primary tests are computed by scripts/analysis/evaluate_test.py --part ensemble. The method is the same as in
+development Check 13. Nothing is chosen with HR.
 
 Usage:
     python scripts/test/run_ensemble_test.py --dry-run          # plan and cache status; runs and writes nothing (CPU)
@@ -17,27 +15,29 @@ Usage:
     python scripts/test/run_ensemble_test.py --max-runs 10      # resumable chunk of 10 runs
     bash scripts/test/run_overnight.sh ensemble                 # all runs, resumable, chunked
 
---smoke (alias --repro-check) reruns (1) saved CSGM test run 1704/oracle/r0 (unshifted) and (2) development image 9780,
-shift (0, 1), against the Check 13 cache ensemble_dev_v1/, and requires identical final loss, eps, noise labels, x_hat
-and loss trace (~2 x 65 s).
+--smoke (alias --repro-check) reruns saved CSGM test run 1704/oracle/r0 (unshifted) and development image 9780 at
+shift (0, 1) from the Check 13 cache ensemble_dev_v1/. Both must match the saved final loss, eps, noise labels, x_hat
+and loss trace exactly. Takes about 2 x 65 s.
 
-Outputs (IADRIFT_DATA/csgm_test_ensemble_v1/, or ..._n<N>/ for N < 100): manifest.json ({"hash", **spec}),
-results_<hash>.jsonl (one row per run), img#####_shift{sy}{sx}_r0.npz (metrics_json, eps, noise_labels, x_hat in the
-shifted frame, trace_steps, trace_loss). For N = 100 the hash is ca2d0ec5e6ff. ~65 s per run (300 runs ~5.5 h).
+Outputs (in IADRIFT_DATA/csgm_test_ensemble_v1/, or ..._n<N>/ for N < 100):
+    manifest.json                    {"hash", **spec}
+    results_<hash>.jsonl             one row per run
+    img#####_shift{sy}{sx}_r0.npz    metrics_json, eps, noise_labels, x_hat (shifted frame), trace_steps, trace_loss
+For N = 100 the hash is ca2d0ec5e6ff. About 65 s per run (300 runs, ~5.5 h).
 """
 
 import os
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repository root, so `iadrift` imports without install
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repo root, so `iadrift` imports without install
 
 if "--dry-run" in sys.argv:
-    os.environ.setdefault("JAX_PLATFORMS", "cpu")  # the dry run never imports JAX; this is only a safeguard
+    os.environ.setdefault("JAX_PLATFORMS", "cpu")  # the dry run never imports JAX; just in case
 
 from iadrift.runtime import setup
 
-setup(theta_gradients=False)  # default allocator: CSGM reproduces the saved runs bit-exactly only with it
+setup(theta_gradients=False)  # saved CSGM runs reproduce bit-exactly only with the default allocator
 
 import argparse
 import fcntl
@@ -94,7 +94,7 @@ def smoke(csgm, index_rows, labels, lr_all):
           f"vs saved {saved_row['final_loss']!r}; eps/x_hat/trace identical: {exact} ({m['elapsed_seconds']:.0f}s)")
     ok &= exact
 
-    # 2. Shift path: development image 9780, shift (0, 1), vs the notebook 04 Check 13 cache.
+    # 2. Shift path: development image 9780, shift (0, 1), vs the Check 13 cache.
     i, (sy, sx) = 9780, (0, 1)
     hr = data.hr_image(index_rows, i)
     m, a = run_member(csgm, i, sy, sx, int(labels[i]), lr_all[i], hr)
@@ -192,8 +192,8 @@ def main():
         except BlockingIOError as error:
             raise RuntimeError("Checkpoint is locked by another process.") from error
 
-        # This layout (manifest.json with the hash inside, results_<hash>.jsonl) differs from iadrift.checkpoint's;
-        # it is kept so the existing cache is recognised.
+        # Own layout (hash inside manifest.json, results_<hash>.jsonl) rather than iadrift.checkpoint's, so the
+        # existing cache is still recognised.
         if manifest_path.exists():
             if json.loads(manifest_path.read_text())["hash"] != plan_hash:
                 raise RuntimeError("Manifest does not match the current run plan.")

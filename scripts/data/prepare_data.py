@@ -1,18 +1,18 @@
 """Prepare the data: ImageNet-V2 MatchedFrequency, the measurements y = A_sr4(HR), the 80/20 split and the test sample.
 
-Steps (each is skipped if its output exists; nothing is ever overwritten):
-    1. download   imagenetv2-matched-frequency.tar.gz from the Hugging Face dataset vaishaal/ImageNetV2 and extract it
-                  (10,000 images, 10 per class; the folder name is the class label)
-    2. classes    imagenet_class_index.json (Keras class index; only used for readable class names)
-    3. measure    imageNet_x4.npy: y = A_sr4(HR) for all 10,000 images (float32 [10000, 64, 64, 3]), and
-                  imageNet_x4_index.csv (index, relative_path, label; images in sorted path order). HR = EXIF
-                  orientation -> RGB -> bicubic short-side resize to 256 -> centre crop -> [-1, 1]
-                  (iadrift.data.load_hr256); A_sr4 = antialiased bicubic 256 -> 64 (iadrift.operators.A_sr4)
-    4. split      imageNetV2_split_80_20_seed2026.npz: per class 8 development + 2 test images (seed 2026)
-    5. sample     sr4_test_sample_100_seed2028.npz: the 100 test images from 100 distinct classes (seed 2028)
+Each step is skipped if its output already exists; nothing is overwritten.
+    1. download   imagenetv2-matched-frequency.tar.gz from the Hugging Face dataset vaishaal/ImageNetV2, extracted.
+                  10,000 images, 10 per class; the folder name is the class label.
+    2. classes    imagenet_class_index.json, the Keras class index, only used for readable class names.
+    3. measure    imageNet_x4.npy, y = A_sr4(HR) for all 10,000 images as float32 [10000, 64, 64, 3], and
+                  imageNet_x4_index.csv (index, relative_path, label), images in sorted path order.
+                  HR: EXIF orientation, RGB, bicubic short-side resize to 256, centre crop, scale to [-1, 1]
+                  (iadrift.data.load_hr256). A_sr4: antialiased bicubic 256 -> 64 (iadrift.operators.A_sr4).
+    4. split      imageNetV2_split_80_20_seed2026.npz: 8 development and 2 test images per class, seed 2026.
+    5. sample     sr4_test_sample_100_seed2028.npz: 100 test images from 100 distinct classes, seed 2028.
 
---check recomputes everything that can be recomputed cheaply and compares it with the existing files (the index order,
-the split, the test sample, the class-index checksum, and A_sr4 of --check-images images), writing nothing.
+--check recomputes the cheap parts and compares them with the existing files: index order, split, test sample,
+class-index checksum, and A_sr4 on --check-images random images. It writes nothing.
 
 Usage:
     python scripts/data/prepare_data.py              # all steps (GPU recommended for step 3; ~10 min)
@@ -24,7 +24,7 @@ Output directory: IADRIFT_DATA (default <repo>/data/ImageNetV2).
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repository root, so `iadrift` imports without install
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repo root, so `iadrift` imports without install
 
 import argparse
 import csv
@@ -79,7 +79,7 @@ def index_rows_from_files(data_dir):
 
 
 def measure(hr_paths):
-    """A_sr4 of a list of HR images, in jitted batches of 32 (as in the original run)."""
+    """A_sr4 of a list of HR images, in jitted batches of 32 (the batch size used for the saved measurements)."""
     import jax
     import jax.numpy as jnp
     from iadrift.operators import A_sr4

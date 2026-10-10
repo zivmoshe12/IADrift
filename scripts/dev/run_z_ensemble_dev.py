@@ -1,25 +1,26 @@
-"""Larger posterior-mean ensembles over many noise labels z (development, 6 images).
+"""Larger posterior-mean ensembles over many style labels z (6 development images).
 
-Extends the 5-member ensembles of notebook 04, Section 5 to K = 12 CSGM members with distinct (eps, z), and tests whether
-shorter runs are enough when they are averaged. Correct label, development images only.
+Extends the 5-member development ensembles (run_ensemble_dev.py) to K = 12 CSGM members with distinct (eps, z), and
+tests whether shorter runs are enough once they are averaged. Correct label, development images only.
 
-Every member is one frozen CSGM run (Adam lr 0.02, CSGM.train_step, ||y - A G(eps; z, c)||^2, 5,000 steps) from
-csgm.initialize(i, r), which draws a fresh eps and a fresh z for each r; r0 and r1 are exactly the saved CSGM
-restarts, and the runner checks that they match bit for bit. The output, LR loss and eps are saved at steps 500, 1,000,
-2,000 and 5,000. Snapshots do not change the trajectory, so one run gives all four step budgets.
+Each member is one frozen CSGM run (Adam lr 0.02, CSGM.train_step, ||y - A G(eps; z, c)||^2, 5,000 steps) from
+csgm.initialize(i, r), which draws a fresh eps and z for each r. r0 and r1 are the saved CSGM restarts
+(run_csgm_dev.py, run_z_swap_confirm_dev.py), and the runner checks that they match bit for bit. The output, LR loss
+and eps are saved at steps 500, 1,000, 2,000 and 5,000; snapshots do not change the trajectory, so one run gives all
+four step budgets.
 
-Arms (per image, in this order):
+Arms, per image and in this order:
     A   distinct z: r = 0..N-1 on y                                          -> img#####_r##.npz
     C   z and grid phase: r = 0..3 on the shifted measurement S_s y = jnp.roll(y, s, axis=(1, 2)) for s in
         iadrift.ensemble.SHIFTS. Each snapshot is shifted back to the original frame (iadrift.ensemble.unshift_x)
         and its LR loss is computed there, as for Ens-W (protocol Section 11)       -> img#####_r##_shift##.npz
 
-IADrift continuation (--iadrift, a separate process: gradients w.r.t. theta need the 'platform' allocator, see
-iadrift.runtime). From each arm-A member's CSGM solution at step 5,000, IADrift as frozen (protocol Section 4): joint Adam on
-all generator weights theta (lr 1e-5) and on eps (lr 1e-3), fresh optimizer states, 100 steps against y. This is
-IADrift @100 of that member                                                  -> img#####_r##_iad100.npz
+IADrift continuation (--iadrift, a separate process, since theta gradients need the platform allocator; see
+iadrift.runtime): from each arm-A member's CSGM solution at step 5,000, the frozen IADrift (protocol Section 4), i.e.
+joint Adam on all generator weights theta (lr 1e-5) and on eps (lr 1e-3), fresh optimizer states, 100 steps against
+y. This gives IADrift @100 of that member                                    -> img#####_r##_iad100.npz
 
-HR is used only for the PSNR stored in metrics_json (scoring), never to select, weight or stop anything.
+HR is used only for the PSNR stored in metrics_json, never to select, weight or stop.
 
 Usage (the full run, ~3 h on an RTX A4000; about 1 min per CSGM member, 6 s per IADrift continuation):
     python scripts/dev/run_z_ensemble_dev.py --dry-run                     # plan and cache status; writes nothing
@@ -28,11 +29,12 @@ Usage (the full run, ~3 h on an RTX A4000; about 1 min per CSGM member, 6 s per 
     python scripts/dev/run_z_ensemble_dev.py --iadrift --smoke             # GPU: 403 r0 vs iadrift_ensemble_dev_v1
     python scripts/dev/run_z_ensemble_dev.py --iadrift                     # IADrift @100 from every arm-A member
     python scripts/dev/run_z_ensemble_dev.py --arms C                      # 4 z x 3 shifts per image
-Images 403 and 9780 were run first with --members 16; the analysis uses r0..11 on every image.
+Images 403 and 9780 were first run with --members 16; the analysis uses r0..11 on every image.
 
 Outputs (IADRIFT_DATA/z_ensemble_dev_v1/): one .npz per run with x_hat_step{T}, lr_loss_step{T}, eps_step{T} for
 T in SNAPSHOTS, noise_labels, trace_steps, trace_loss (every 50 steps, before the update), metrics_json. Resumable:
-existing files are skipped; saves are atomic. Analysis: scripts/analysis/export_z_ensemble_results.py.
+existing files are skipped and saves are atomic. Analysis: scripts/analysis/export_z_ensemble_results.py (report
+Appendix, larger ensembles).
 """
 
 import os

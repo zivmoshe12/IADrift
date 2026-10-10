@@ -1,17 +1,14 @@
-"""theta-only adaptation from CSGM (development, 4 images; notebook 02 "why adaptation fails", theta-only rows/curves).
+"""theta-only adaptation from CSGM (4 development images).
 
 Freeze the CSGM solution's (eps, z) and the class, and adapt only the generator weights:
 
     theta_hat = argmin_theta ||y - A G_theta(eps_CSGM; z, c)||^2,     x_hat = G_theta_hat(eps_CSGM; z, c)
 
-(IADrift with the eps learning rate exactly zero: no eps optimizer at all). theta starts at the pretrained weights
-(a fresh copy per run), Adam on all 241 tensors, 2,000 steps, theta lr 1e-6 and 1e-5, each from the same start.
-Start: the correct-label restart of csgm_dev_5000steps_lr0.02/ with the lowest final LR loss
-(scripts/dev/run_csgm_dev.py). Images: 8117, 3939, 403, 347. Every 50 steps (and at step 0) the compiled output is
-scored against HR (LR loss, PSNR, band SNR): evaluation only. The final output comes from the eager generator path.
-
-Ported from notebooks/05_theta_only_dev.ipynb cells 4 and 6 (make_theta_step = iadrift.adaptation.Adaptation
-.make_theta_step; run_theta_only). theta gradients: platform allocator, as the original.
+This is IADrift without an eps optimizer. theta starts at the pretrained weights, a fresh copy per run; Adam on all 241
+tensors, 2,000 steps, theta lr 1e-6 and 1e-5. Start: the correct-label restart in csgm_dev_5000steps_lr0.02/ with
+the lower final LR loss (run_csgm_dev.py). Images 8117, 3939, 403, 347. Every 50 steps and at step 0 the compiled
+output is scored against HR (LR loss, PSNR, band SNR), for evaluation only. The final output comes from the eager
+generator path. Platform allocator (theta gradients).
 
 Usage:
     python scripts/dev/run_theta_only_dev.py --dry-run     # plan and cache status; runs and writes nothing (CPU)
@@ -19,7 +16,8 @@ Usage:
     python scripts/dev/run_theta_only_dev.py               # run what is missing (existing files are kept)
 
 Outputs (IADRIFT_DATA/theta_only_dev_v1/): img#####_lrt{lr}_steps2000.npz with x (the eager output at step 2,000)
-and result_json (settings, seconds, csgm_restart, the every-50-steps trace).
+and result_json (settings, seconds, csgm_restart, the every-50-steps trace). Read by
+scripts/analysis/export_dev_results.py (theta-only rows of report Table 2).
 """
 
 import sys
@@ -112,7 +110,7 @@ def main():
                 "eps": jnp.asarray(eps), "noise_labels": jnp.asarray(noise_labels), "restart": r}
 
     def run_theta_only(im, step_fn, opt, steps):
-        theta = ad.fresh_weights()  # the original params are never donated
+        theta = ad.fresh_weights()  # a copy, so the pretrained params are never donated
         state = opt.init(theta)
         trace = {"step": [], "lr_loss": [], "psnr": [], **{b: [] for b in BAND_NAMES}}
 

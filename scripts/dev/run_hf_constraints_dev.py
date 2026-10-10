@@ -1,23 +1,26 @@
-"""Two high-frequency constraints: a colour penalty in CSGM and a frequency anchor in IADrift (development, image 403;
-notebook 04, Section 6).
+"""Two high-frequency constraints on development image 403: a colour penalty in CSGM, a frequency anchor in IADrift.
 
-Check 16, one development image (403, crane), correct label. HP keeps radial frequencies >= 0.125 cycles/pixel (the LR
-limit; circular FFT mask); chroma = (Cb, Cr) of YCbCr. HR is never used for a decision.
+One image (403, crane), correct label. HP keeps radial frequencies >= 0.125 cycles/pixel, the LR limit (circular FFT
+mask); chroma = (Cb, Cr) of YCbCr. HR is never used for a decision.
 
-A (CSGM stage; default allocator; --a): CSGM with a penalty on high-frequency colour content,
-      L(eps) = ||S_s y - A G(eps)||^2 + lam_A ||HP(chroma(G(eps)))||^2,
+A (CSGM stage, default allocator, --a): CSGM with a penalty on high-frequency colour,
+
+    L(eps) = ||S_s y - A G(eps)||^2 + lam_A ||HP(chroma(G(eps)))||^2,
+
    otherwise frozen CSGM (Adam lr 0.02 on eps, 5,000 steps). Members as in the development ensemble: restarts r0, r1
-   and the r0-start runs on y shifted by (0, 1), (1, 0), (1, 1) LR pixels. lam_A = 0.1 for all members, 0.3 for r0.
-B (IADrift stage; platform allocator; --b): IADrift (joint theta + eps, Adam theta lr 1e-5 / eps lr 1e-3, 1,000 steps,
-   eager outputs at 100 and 1,000) with an anchor keeping the high band close to the start image x0 (the member's
-   CSGM output),
-      L(theta, eps) = ||S_s y - A G_theta(eps)||^2 + lam_B ||HP(G_theta(eps) - x0)||^2,   lam_B = 0.02,
+   and the r0-start runs on y shifted by (0, 1), (1, 0), (1, 1) LR pixels. lam_A = 0.1 for all members, also 0.3
+   for r0.
+B (IADrift stage, platform allocator, --b): IADrift (joint theta + eps, Adam theta lr 1e-5, eps lr 1e-3, 1,000 steps,
+   eager outputs at 100 and 1,000) with an anchor that keeps the high band close to the start image x0, the member's
+   CSGM output:
+
+    L(theta, eps) = ||S_s y - A G_theta(eps)||^2 + lam_B ||HP(G_theta(eps) - x0)||^2,   lam_B = 0.02
+
    started from every baseline CSGM member ("B") and from every A member with lam_A = 0.1 ("A + B").
 
-The two losses close over the class label (a Python constant) inside the jitted steps, unlike the package's CSGM and
-Adaptation steps, so the original code is kept here (with the package's generator calls, which are identical).
-
-Ported from scripts/run_hf_constraints_dev.py.
+Inputs of B: the baseline members from run_csgm_dev.py (r0, r1) and run_ensemble_dev.py (shifted, image 403).
+The two losses close over the class label inside the jitted steps, unlike the package's CSGM and Adaptation steps,
+so they are written out here; the generator calls are the package's.
 
 Usage:
     python scripts/dev/run_hf_constraints_dev.py --dry-run          # plan and cache status; writes nothing (CPU)
@@ -29,6 +32,7 @@ Usage:
 Outputs (IADRIFT_DATA/hf_constraints_dev_v1/): A_lam{0.1,0.3}_<member>.npz (metrics_json {image, member, shift, lam_A,
 fit_loss, chroma_hf, seconds}; x_hat, eps, noise_labels), B_from_{base,A}_<member>.npz (metrics_json {image, start,
 member, shift, lam_B, step100/step1000: {lr_loss, anchor, finite}, seconds}; x_step100, x_step1000).
+Used in the full report, Development ablations ("Also tried").
 """
 
 import os
@@ -150,7 +154,7 @@ class PartB:
         from iadrift.operators import A_sr4
 
         self.jax, self.jnp, self.adapt, self.label, self.y0 = jax, jnp, adapt, label, y0
-        generate = adapt.gen.generate_theta  # = run_sr4_iadrift_smoke.generate (float32 output)
+        generate = adapt.gen.generate_theta  # float32 output
         self.mask = mask = hp_mask(jnp)
         self.opt_t, self.opt_e = opt_t, opt_e = optax.adam(1e-5), optax.adam(1e-3)
 
@@ -174,7 +178,7 @@ class PartB:
         with np.load(src) as d:
             eps, z = jnp.asarray(d["eps"]), jnp.asarray(d["noise_labels"], jnp.int32).reshape(1, -1)
             x0 = jnp.asarray(d["x_hat"])
-        theta = self.adapt.fresh_weights()  # = tree_map(jnp.copy, params), as in the original
+        theta = self.adapt.fresh_weights()
         st_t, st_e = self.opt_t.init(theta), self.opt_e.init(eps)
         res, meta = {}, {"image": I, "start": kind, "member": name, "shift": [sy, sx], "lam_B": LAM_B}
         t0 = perf_counter()

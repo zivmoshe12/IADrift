@@ -1,20 +1,20 @@
-"""CSGM on the development images (development, 4 images; the starting point of every notebook 02 experiment).
+"""CSGM on the 4 development images. Every other development runner starts from these runs.
 
-Frozen CSGM (iadrift.csgm.FROZEN_CONFIG: Adam lr 0.02 on eps, 5,000 steps, no regularizer, 2 restarts from
-key(2026, image, restart)) on SR x4:
+Frozen CSGM (iadrift.csgm.FROZEN_CONFIG) on SR x4:
 
     eps_hat = argmin_eps ||y - A G(eps; z, c)||^2,     x_hat = G(eps_hat; z, c)
 
-Images: 4 development images (8117 streetcar, 3939 bonnet, 403 crane, 347 spoonbill), drawn with seed 2030 from the
-100 images of the CSGM settings sweep and checked to be outside the test split. Labels per image: the correct class
-("oracle") and one random wrong class (data.wrong_label_for, as in the test benchmark); for image 8117 also 5 more
-random wrong classes (seed (2031, 8117); notebook 02's label experiment, files "label<c>"). Every label starts from
-the same (eps, z). The restart with the lowest final LR loss is used downstream (never HR).
+Adam lr 0.02 on eps, 5,000 steps, no regularizer, 2 restarts from key(2026, image, restart). Downstream runners use
+the restart with the lower final LR loss (never HR).
 
-Ported from scripts/run_sr4_iadrift_dev.py (pick_dev_images, csgm_cached; it called run_sr4_csgm_test.reconstruct =
-iadrift.csgm.CSGM.reconstruct) and notebooks/02_iadrift_dev_tuning.ipynb cell 15 (the 5 extra labels). The originals
-ran in a process with XLA_PYTHON_CLIENT_ALLOCATOR=platform; notebook 04 Check 4 (default allocator) nevertheless
-reproduced img08117_oracle_r1 bit for bit, so this runner uses the default allocator like every CSGM runner.
+Images: 8117 (streetcar), 3939 (bonnet), 403 (crane), 347 (spoonbill), drawn with seed 2030 from the 100 images of
+the CSGM settings sweep (run_csgm_settings_sweep.py, whose results file this script reads) and checked to lie outside
+the test split. Labels per image: the correct class ("oracle") and one random wrong class (data.wrong_label_for, as
+in the test benchmark). Image 8117 also gets 5 more random wrong classes (seed (2031, 8117), files "label<c>"). All
+labels start from the same (eps, z).
+
+The saved runs were made with XLA_PYTHON_CLIENT_ALLOCATOR=platform. This script uses the default allocator, like the
+other CSGM runners; it still reproduces img08117_oracle_r1 bit for bit.
 
 Usage:
     python scripts/dev/run_csgm_dev.py --dry-run     # plan and cache status; runs and writes nothing (CPU)
@@ -23,6 +23,7 @@ Usage:
 
 Outputs (IADRIFT_DATA/csgm_dev_5000steps_lr0.02/): img#####_{oracle,wrong,label<c>}_r{0,1}.npz with metrics_json
 (initial/final LR loss, PSNR, eps statistics, class_label), eps, noise_labels, x_hat, trace_steps, trace_loss.
+Read by scripts/analysis/export_dev_results.py and export_ablation_results.py (report Table 2).
 """
 
 import sys
@@ -48,7 +49,7 @@ from iadrift import data, paths
 from iadrift.checkpoint import load_npz, load_results, save_npz
 
 CSGM_DIR = paths.DATA_DIR / "csgm_dev_5000steps_lr0.02"
-DEV_SEED = 2030                 # the 4 development images, from the sweep's 100 images
+DEV_SEED = 2030                 # draws the 4 development images from the sweep's 100
 SWEEP_RESULTS = "phase1_sr4_oracle_moments_dev_v1_6b22675bd557.jsonl"
 LABEL_IMAGE, NUM_EXTRA_WRONG, LABEL_SEED = 8117, 5, 2031
 NUM_RESTARTS = 2
@@ -85,7 +86,7 @@ def path_of(i, condition, restart):
 
 
 def is_cached(i, condition, restart, label):
-    """As the original csgm_cached: a file counts only if it was run with the same class label."""
+    """A file counts only if it was run with the same class label."""
     path = path_of(i, condition, restart)
     return path.exists() and load_npz(path)[0]["class_label"] == label
 

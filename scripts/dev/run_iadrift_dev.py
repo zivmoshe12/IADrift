@@ -1,26 +1,22 @@
-"""IADrift learning-rate grid (development, 4 images; notebook 02 "why adaptation fails", IADrift rows and curves).
+"""IADrift learning-rate grid on the 4 development images.
 
 IADrift (IAGAN-style joint adaptation) from the CSGM solution, correct label:
 
     (theta_hat, eps_hat) = argmin_{theta, eps} ||y - A G_theta(eps; z, c)||^2,     x_hat = G_theta_hat(eps_hat; z, c)
 
-theta starts at the pretrained weights (all 241 tensors), (eps, z) at the CSGM solution: the restart of
-csgm_dev_5000steps_lr0.02/ with the lowest final LR loss (scripts/dev/run_csgm_dev.py). Two Adam optimizers,
-1,000 steps, grid theta lr {1e-6, 3e-6, 1e-5} x eps lr {0 (eps frozen), 1e-3} = 6 settings x 4 development images
-(8117, 3939, 403, 347). Every 50 steps (and at step 0) the compiled generator output is scored against HR (PSNR, LR
-loss, band SNR): evaluation only, never used to stop or choose. Final output from the eager generator path, plus
-"+ BP" (back-projection onto {x : A x = y}) and "+ fusion" (bicubic outside 0.0625-0.125 cycles/pixel). The setting
-used everywhere later (theta lr 1e-5, eps lr 1e-3) was fixed before this grid; the grid shows the trade-off.
+theta starts at the pretrained weights (all 241 tensors); (eps, z) at the CSGM restart in csgm_dev_5000steps_lr0.02/
+with the lower final LR loss (run_csgm_dev.py). Two Adam optimizers, 1,000 steps, grid theta lr {1e-6, 3e-6, 1e-5}
+x eps lr {0 (eps frozen), 1e-3} = 6 settings x 4 images (8117, 3939, 403, 347). Every 50 steps and at step 0 the
+compiled output is scored against HR (PSNR, LR loss, band SNR), for evaluation only, never to stop or choose. The
+final output comes from the eager generator path and is also saved after BP (back-projection onto {x : A x = y}) and
+after fusion (bicubic outside 0.0625-0.125 cycles/pixel). The setting used later (theta lr 1e-5, eps lr 1e-3) was
+fixed before this grid; the grid only shows the trade-off. Platform allocator (theta gradients).
 
-Ported from notebooks/02_iadrift_dev_tuning.ipynb cells 4 and 6 (run_iadrift; step = run_sr4_iadrift_smoke
-.make_joint_step = iadrift.adaptation.Adaptation.make_joint_step). theta gradients: platform allocator, as the original.
-
-Reproducibility: this grid was the project's first IADrift run, made before XLA's deterministic GPU ops were enabled
-for weight-gradient runs (iadrift.runtime.setup). Without them the compiled programs pick between GPU kernels per
-process, so the cached traces are one draw of that variation (its step-0 LR loss is 65.23; the theta-only cache, same
-start, has 65.47). A rerun therefore cannot match this cache bit-exactly; --smoke checks agreement within the observed
-run-to-run variation (PSNR within 0.1 dB, LR loss within 2% over the first 100 steps). All later weight-gradient runners
-reproduce their caches bit-exactly.
+Reproducibility: this was the first IADrift run, made before XLA's deterministic GPU ops were enabled for
+weight-gradient runs (iadrift.runtime.setup). Without them each process may pick different GPU kernels, so the cached
+traces are one draw of that variation (step-0 LR loss 65.23, against 65.47 in the theta-only cache from the same
+start). A rerun cannot match the cache bit for bit, so --smoke accepts PSNR within 0.1 dB and LR loss within 2% over
+the first 100 steps. The later weight-gradient runners reproduce their caches exactly.
 
 Usage:
     python scripts/dev/run_iadrift_dev.py --dry-run     # plan and cache status; runs and writes nothing (CPU)
@@ -29,6 +25,7 @@ Usage:
 
 Outputs (IADRIFT_DATA/iadrift_dev_tuning_v1/): img#####_lrt{lr}_lre{lr}.npz with arrays "IADrift", "IADrift + BP",
 "IADrift + fusion" and result_json (settings, the every-50-steps trace, metrics of the three outputs).
+scripts/analysis/export_dev_results.py reads the lrt1e-05_lre0.001 files (IADrift rows of report Table 2).
 """
 
 import sys
@@ -91,7 +88,7 @@ class DevIADrift:
         self.ad, self.jnp, self.A_sr4 = Adaptation(gen), jnp, A_sr4
 
     def evaluate(self, x, hr, y):
-        """Notebook 02's metrics; y is the [1, 64, 64, 3] device array."""
+        """PSNR, LR loss and band SNR; y is the [1, 64, 64, 3] device array."""
         jnp = self.jnp
         lr_loss = float(jnp.sum((self.A_sr4(jnp.asarray(x, jnp.float32)[None]) - y) ** 2))
         return {"psnr": psnr(hr, x), "lr_loss": lr_loss, "band_snr_db": band_snr_db(x, hr)}
@@ -100,7 +97,7 @@ class DevIADrift:
         """IADrift from the CSGM start; returns (trace, eager output)."""
         ad, jnp = self.ad, self.jnp
         opt_theta, opt_eps, joint_step = step_fn or ad.make_joint_step(lr_theta, lr_eps)
-        theta = ad.fresh_weights()  # the original used jax.device_put(params); same values
+        theta = ad.fresh_weights()
         eps, noise_labels = jnp.asarray(im["eps"]), jnp.asarray(im["noise_labels"])
         state_theta, state_eps = opt_theta.init(theta), opt_eps.init(eps)
         trace = {"step": [], "psnr": [], "lr_loss": [], **{b: [] for b in BAND_NAMES}}

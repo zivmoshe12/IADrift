@@ -1,17 +1,16 @@
-"""Early noise-label swaps vs CSGM on two fresh development images (development; notebook 04, Section 5 uses its CSGM runs).
+"""Early style-label swaps vs CSGM on two more development images (9780, 8405).
 
-Check 10b. Every eps step is the frozen CSGM step (CSGM.train_step), so a run in which no swap is accepted is
-bit-identical to CSGM.
-  csgm   CSGM exactly as frozen: initialize(i, r), restarts 0 and 1, Adam lr 0.02, 5,000 steps (CSGM.reconstruct).
-         These two runs per image are also the restart members r0, r1 of the development ensembles (images 9780, 8405).
-  early  the same, but after 100 and 250 steps one swap round: all 32 x 63 = 2,016 single-coordinate changes of z are
-         screened by their exact LR loss at the current eps; the best 4 and "no swap" each get 100 more CSGM steps
-         (continuing the Adam state); the lowest LR loss wins. 5,000 eps steps along the path in total.
-Restart rule for both: lowest final LR loss. HR is never used for a decision. Images: the first 2 draws of the
-development pick (pick_dev_images(6): numpy seed 2030 over the 100-image pool of the CSGM settings sweep) that no
-earlier check used, i.e. 9780 and 8405; correct label.
+Every eps step is the frozen CSGM step (CSGM.train_step), so a run in which no swap is accepted is identical to CSGM.
 
-Ported from scripts/run_z_swap_confirm_dev.py.
+  csgm   frozen CSGM: initialize(i, r), restarts 0 and 1, Adam lr 0.02, 5,000 steps (CSGM.reconstruct). These two
+         runs per image are also the restart members r0, r1 of the development ensembles for images 9780 and 8405.
+  early  the same, plus one swap round after 100 and after 250 steps: all 32 x 63 = 2,016 single-coordinate changes
+         of z are screened by their exact LR loss at the current eps; the best 4 and "no swap" each get 100 more CSGM
+         steps, continuing the Adam state, and the lowest LR loss wins. 5,000 eps steps in total along the path.
+
+Both keep the restart with the lower final LR loss; HR is never used for a decision. Images: the first 2 draws of
+pick_dev_images(6) (numpy seed 2030 over the 100-image pool of run_csgm_settings_sweep.py) that are not among the
+4 images of run_csgm_dev.py, i.e. 9780 and 8405; correct label.
 
 Usage:
     python scripts/dev/run_z_swap_confirm_dev.py --dry-run   # plan and cache status; runs and writes nothing (CPU)
@@ -20,7 +19,8 @@ Usage:
 
 Outputs (IADRIFT_DATA/z_swap_dev_v1/confirm/): img#####_csgm_r{0,1}.npz (CSGM.reconstruct metrics + class_label;
 eps, noise_labels, x_hat, trace_steps, trace_loss), img#####_early_r{0,1}.npz (metrics with the swap rounds; x_hat,
-eps, noise_labels).
+eps, noise_labels). The csgm files are read by scripts/analysis/export_ablation_results.py and by the ensemble
+runners; the early files are not used by any reported number.
 """
 
 import os
@@ -60,7 +60,7 @@ SMOKE_IMAGE = 9780
 
 
 def pick_dev_images(num_images):
-    """scripts/run_sr4_iadrift_dev.py pick_dev_images: a seeded draw from the development sweep's image pool."""
+    """A seeded draw from the settings sweep's image pool (same seed and pool as run_csgm_dev.pick_dev_images)."""
     pool = sorted({json.loads(line)["image_index"] for line in DEV_POOL_PATH.open() if line.strip()})
     return [int(i) for i in np.random.default_rng(DEV_SEED).choice(pool, size=num_images, replace=False)]
 
@@ -83,7 +83,7 @@ def all_swaps(cur):
 
 
 class EarlySwaps:
-    """The original run_early with the package's frozen CSGM objects (train_step, optimizer, measurement_loss)."""
+    """CSGM with early swap rounds, built on the frozen CSGM objects (train_step, optimizer, measurement_loss)."""
 
     def __init__(self, csgm):
         import jax

@@ -1,18 +1,15 @@
-"""IADrift fitted to HR, A = identity (development, 4 images; notebook 02, the IADrift-HR rows and curves).
+"""IADrift fitted to HR with A = identity (4 development images).
 
-Diagnostic (uses HR as the target): can adapting the weights close the frozen generator's representation gap?
-Start from the R1 solution (CSGM fitted to HR, the restart with the lower final HR loss in
-representation_error_dev_v1/, scripts/dev/run_representation_dev.py) and jointly fit weights and noise:
+A diagnostic that uses HR as the target: can adapting the weights close the frozen generator's representation gap?
+Start from the R1 solution of run_representation_dev.py (CSGM fitted to HR, the restart with the lower final HR
+loss) and fit weights and noise jointly:
 
     (theta_hat, eps_hat) = argmin_{theta, eps} ||HR - G_theta(eps; z, c)||^2
 
-theta from the pretrained weights (all 241 tensors), two Adam optimizers (theta lr 1e-6 and 1e-5, eps lr 1e-3, the SR
-IADrift learning rates), 2,000 steps, z and the correct class fixed. Images 8117, 3939, 403, 347. Every 50 steps (and
-at step 0) the compiled output is scored (HR loss, PSNR, LPIPS, LR loss, band SNR): evaluation only. The final output
-comes from the eager generator path.
-
-Ported from scripts/run_hr_fit_iadrift_dev.py (the loss ||G_theta(eps) - HR||^2 is that script's hr_fit_loss and
-step, copied; the generator call is iadrift.generator.Generator.generate_theta). theta gradients: platform allocator.
+theta starts at the pretrained weights (all 241 tensors). Two Adam optimizers with the SR IADrift learning rates:
+theta lr 1e-6 and 1e-5, eps lr 1e-3; 2,000 steps; z and the correct class fixed. Images 8117, 3939, 403, 347.
+Every 50 steps and at step 0 the compiled output is scored (HR loss, PSNR, LPIPS, LR loss, band SNR), for evaluation
+only. The final output comes from the eager generator path. Platform allocator (theta gradients).
 
 Usage:
     python scripts/dev/run_hr_fit_dev.py --dry-run     # plan and cache status; runs and writes nothing (CPU)
@@ -20,7 +17,8 @@ Usage:
     python scripts/dev/run_hr_fit_dev.py               # run what is missing (existing files are kept)
 
 Outputs (IADRIFT_DATA/hr_fit_iadrift_dev_v1/): img#####_lrt{lr}_lre0.001_steps2000.npz with x (eager output),
-eps, and result_json (settings, r1_restart, seconds, the every-50-steps trace).
+eps, and result_json (settings, r1_restart, seconds, the every-50-steps trace). Read by
+scripts/analysis/export_dev_results.py (IADrift-HR rows of report Table 2).
 """
 
 import sys
@@ -100,7 +98,7 @@ def main():
     from iadrift.metrics import band_snr_db, lpips_dist, psnr
     from iadrift.operators import A_sr4
 
-    torch.set_num_threads(4)  # as the original (LPIPS on the CPU)
+    torch.set_num_threads(4)  # LPIPS on the CPU
     ad = Adaptation(load_generator())
     generate, generate_jit = ad.gen.generate_theta, ad.generate_jit
     lr_all = data.load_measurements()

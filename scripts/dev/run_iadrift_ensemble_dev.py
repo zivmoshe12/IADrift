@@ -1,16 +1,18 @@
-"""IADrift from every member of the development CSGM ensemble (development, 6 images; notebook 04, Section 5).
+"""IADrift from every member of the development CSGM ensemble (6 development images).
 
-Check 14. For each of the 6 development images (8117, 3939, 403, 347, 9780, 8405; correct label) and each CSGM ensemble
-member (restarts r0, r1 and the r0-start runs on the measurement shifted by (0, 1), (1, 0), (1, 1) LR pixels; see
-run_ensemble_dev.py), IADrift exactly as frozen (docs/PROTOCOL.md, Section 4; iadrift.adaptation): joint Adam on all generator
-weights theta (lr 1e-5) and on eps (lr 1e-3) from that member's (eps, z), 1,000 steps, against that member's
-measurement (shifted for shift members),
-    min_{theta, eps} ||S_s y - A G_theta(eps; z, c)||^2,
-saving the eager outputs at steps 100 and 1,000 in the member's own (possibly shifted) frame. Averaging, un-shifting,
-back-projection and scoring are done by scripts/analysis/export_ablation_results.py (weights from the CSGM members'
-LR losses, never HR). The printed PSNR uses the HR image shifted into the member's frame (logging only).
+For each image (8117, 3939, 403, 347, 9780, 8405; correct label) and each CSGM ensemble member (restarts r0, r1 and
+the r0-start runs on the measurement shifted by (0, 1), (1, 0), (1, 1) LR pixels; see run_ensemble_dev.py), run the
+frozen IADrift (docs/PROTOCOL.md, Section 4; iadrift.adaptation) from that member's (eps, z) against that member's
+measurement:
 
-Ported from scripts/run_iadrift_ensemble_dev.py.
+    min_{theta, eps} ||S_s y - A G_theta(eps; z, c)||^2
+
+Joint Adam on all generator weights theta (lr 1e-5) and on eps (lr 1e-3), 1,000 steps. The eager outputs at steps 100
+and 1,000 are saved in the member's own, possibly shifted, frame. Averaging, un-shifting, back-projection and scoring
+are in scripts/analysis/export_ablation_results.py, with weights from the CSGM members' LR losses. The printed PSNR
+uses HR shifted into the member's frame and is only logged.
+
+Needs the member files of run_csgm_dev.py, run_z_swap_confirm_dev.py and run_ensemble_dev.py.
 
 Usage:
     python scripts/dev/run_iadrift_ensemble_dev.py --dry-run   # plan and cache status; runs and writes nothing (CPU)
@@ -19,6 +21,7 @@ Usage:
 
 Outputs (IADRIFT_DATA/iadrift_ensemble_dev_v1/img#####_<member>.npz): metrics_json {image, member, shift, source,
 step100/step1000: {lr_loss, psnr, finite}, seconds}; x_step100, x_step1000.
+Read by scripts/analysis/export_ablation_results.py (section 5, ensembles).
 """
 
 import os
@@ -68,7 +71,7 @@ def members(i):
 
 
 def run_member(adapt, steps, i, label, hr, y0, src, shift, num_steps=CKPTS[-1]):
-    """IADrift from one member (the original loop). Returns (info, outputs)."""
+    """IADrift from one member. Returns (info, outputs)."""
     import jax.numpy as jnp
 
     opt_t, opt_e, step = steps

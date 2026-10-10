@@ -1,18 +1,18 @@
-"""CSGM with eps projected onto the Gaussian shell (development, 4 images; notebook 04, Section 3, "eps on the sphere").
+"""CSGM with eps projected onto the Gaussian shell (4 development images).
 
-Does keeping eps on the shell of a typical Gaussian draw (PULSE-like) help CSGM? After every Adam step:
+Does keeping eps on the shell of a typical Gaussian draw, as in PULSE, help CSGM? After every Adam step:
+
     global sphere      eps <- eps sqrt(d) / ||eps||,  d = 196,608
     per-patch sphere   every 16x16x3 patch of eps (one generator token, 768 values) rescaled to norm sqrt(768)
-The start eps is projected too; Adam's moments are left as they are. Everything else is frozen CSGM: initialize(i, r)
-for restarts 0 and 1, Adam lr 0.02, 5,000 steps, loss ||y - A G(eps)||^2; the restart with the lowest final LR loss is
-kept (never HR). Baseline: the saved runs without projection (csgm_dev_5000steps_lr0.02/).
-Development images 8117, 3939, 403, 347, correct label.
 
-Reproduction test (run first in the notebook): the generic step with the identity projection (CSGM.run) must reproduce
-the saved CSGM run of image 8117, restart 1 bit for bit (final loss, eps, output, loss trace).
+The start eps is projected too; Adam's moments are left unchanged. Everything else is frozen CSGM: initialize(i, r)
+for restarts 0 and 1, Adam lr 0.02, 5,000 steps, loss ||y - A G(eps)||^2, keep the restart with the lower final LR
+loss. Baseline: the runs without projection in csgm_dev_5000steps_lr0.02/ (run_csgm_dev.py).
+Images 8117, 3939, 403, 347, correct label.
 
-Ported from notebooks/04_postproc_controls_dev.ipynb cells 37 and 39 (Check 4; iadrift.csgm.CSGM.run is cell 37's
-run_csgm without the caching).
+Before the variants run, the generic step with the identity projection (CSGM.run) has to reproduce the saved CSGM run
+of image 8117, restart 1 bit for bit (final loss, eps, output, loss trace). Otherwise the comparison would mix the
+projection with a change of numerics.
 
 Usage:
     python scripts/dev/run_eps_projection_dev.py --dry-run       # plan, cache status, cached-repro check (CPU)
@@ -24,6 +24,7 @@ Usage:
 Outputs (IADRIFT_DATA/csgm_eps_projection_dev_v1/): img#####_{global,perpatch}_sphere_r{0,1}.npz (metrics_json
 {final_loss, seconds}; eps, noise_labels, x_hat, trace_steps, trace_loss), repro_img08117_none_r1.npz (the
 reproduction run), summary.json (per variant and image: kept restart, metrics raw and + BP, eps statistics).
+Used in the full report, Development ablations.
 """
 
 import os
@@ -78,7 +79,7 @@ def check_cached_repro():
     return same_run(m, a, saved_m, saved)
 
 
-# ---------------------------------------------------------------- summary (notebook cell 32 eps_stats, cell 39)
+# ---------------------------------------------------------------- summary
 GAUSS_PATCH_STD = 1 / np.sqrt(2 * 768)
 
 
@@ -101,8 +102,8 @@ def eps_stats(e, e0=None):
 
 
 def make_summary(index_rows, lr_all):
-    """summary.json as written by notebook 04 cell 39 (metrics of notebook 04 cell 8: PSNR, clipped PSNR, LPIPS,
-    LR loss, band SNR; raw and + BP). Needs only the cached runs (CPU)."""
+    """summary.json: PSNR, clipped PSNR, LPIPS, LR loss and band SNR of the kept restarts, raw and + BP.
+    Needs only the cached runs (CPU)."""
     import jax
     import jax.numpy as jnp
     import torch
@@ -115,7 +116,7 @@ def make_summary(index_rows, lr_all):
         key = jax.random.fold_in(jax.random.fold_in(jax.random.PRNGKey(data.SWEEP_SEED), i), r)
         return np.asarray(jax.random.normal(jax.random.split(key)[0], (1, 256, 256, 3), dtype=jnp.float32))
 
-    def lr_loss(x, y):  # y: [1, 64, 64, 3], as in the notebook
+    def lr_loss(x, y):  # y: [1, 64, 64, 3]
         from iadrift.operators import A_sr4
         return float(jnp.sum((A_sr4(jnp.asarray(x, jnp.float32)[None]) - y) ** 2))
 
@@ -164,7 +165,7 @@ def main():
     train, test = data.load_split(labels)
     assert set(IMAGES) <= set(train.tolist()) and not set(IMAGES) & set(test.tolist()), "development images only"
     lr_all = data.load_measurements()
-    plan = [(i, slug, r) for slug in VARIANTS.values() for i in IMAGES for r in RESTARTS]  # notebook order
+    plan = [(i, slug, r) for slug in VARIANTS.values() for i in IMAGES for r in RESTARTS]  # order of the saved runs
 
     if args.dry_run:
         files = [run_path(*p) for p in plan] + [repro_path(), OUT_DIR / "summary.json"]

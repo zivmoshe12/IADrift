@@ -1,11 +1,11 @@
-"""File locations. Every location can be set with an environment variable; no JAX import here.
+"""File locations, each overridable by an environment variable. No JAX import.
 
-    IADRIFT_DATA       ImageNet-V2 MatchedFrequency, the derived measurement files and every experiment cache
-                       (default: <repo>/data/ImageNetV2)
-    DRIFTING_DIR       a clone of https://github.com/lambertae/drifting (default: <repo>/third_party/drifting)
-    IADRIFT_HF_CACHE   where the pretrained pixel_B_sota weights are downloaded (default: <repo>/hf_cache)
+    IADRIFT_DATA       ImageNet-V2 MatchedFrequency, derived measurement files and experiment caches
+                       default <repo>/data/ImageNetV2
+    DRIFTING_DIR       clone of https://github.com/lambertae/drifting; default <repo>/third_party/drifting
+    IADRIFT_HF_CACHE   download location of the pixel_B_sota weights; default <repo>/hf_cache
 
-Example (the layout the experiments were run with):
+The layout used for the experiments:
 
     export IADRIFT_DATA=~/work/datasets/ImageNetV2 DRIFTING_DIR=~/work/drifting IADRIFT_HF_CACHE=~/work/hf_cache
 """
@@ -26,7 +26,7 @@ HF_CACHE_DIR = _env_path("IADRIFT_HF_CACHE", REPO_DIR / "hf_cache")
 RESULTS_DIR = REPO_DIR / "results"
 FIGURES_DIR = REPO_DIR / "figures"
 
-# Files created by scripts/data/prepare_data.py (names kept from the original runs, so caches stay valid).
+# Files written by scripts/data/prepare_data.py. The names match the existing caches; do not rename.
 INDEX_CSV = "imageNet_x4_index.csv"            # index, relative_path, label for the 10,000 images
 MEASUREMENTS_NPY = "imageNet_x4.npy"           # y = A_sr4(HR) for every image, float32 [10000, 64, 64, 3]
 SPLIT_NPZ = "imageNetV2_split_80_20_seed2026.npz"

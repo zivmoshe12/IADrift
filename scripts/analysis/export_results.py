@@ -1,17 +1,15 @@
-"""Export the compact test-set result files the notebooks read (results/; CSGM benchmark and IADrift). CPU only.
+"""Export the compact CSGM and IADrift test results to results/, where scripts/report/ reads them. CPU only.
 
-The full experiment outputs (~1 GB of arrays per run family) stay outside the repository. This script reads the run
-caches and the analysis caches of scripts/analysis/evaluate_test.py from IADRIFT_DATA and writes:
+The full run outputs (~1 GB of arrays per run family) stay outside the repository. This script reads the run caches
+and the evaluate_test.py caches from IADRIFT_DATA and writes:
 
-    results/test_sample.json        the 100 test images: index, true class, wrong class, class names, kept CSGM restart
-    results/test_metrics.json       per-image metrics (PSNR, LPIPS, blockiness, LR loss, band SNR) of every method on
-                                    the 100 test images, correct and wrong label (csgm_ and iadrift_test_postproc_v1)
-    results/primary_iadrift.json    the 4 pre-registered primary tests (iadrift_test_postproc_v1/primary.json)
-    results/iadrift_traces.npz      IADrift LR loss over steps, every test image and label condition
-    results/examples_test.npz       the first 4 test images (fixed sample order, not chosen by result): LR, HR and
-                                    every method's output, float16 (display and spot checks only)
-
-Ported from scripts/export_results.py in our working repository.
+    results/test_sample.json        the 100 test images: index, true and wrong class (label and name), kept CSGM restart
+    results/test_metrics.json       per-image metrics (PSNR, LPIPS, blockiness, LR loss, band SNR) of every method,
+                                    correct and wrong label, from csgm_test_postproc_v1 and iadrift_test_postproc_v1
+    results/primary_iadrift.json    the 4 pre-registered primary tests (copy of iadrift_test_postproc_v1/primary.json)
+    results/iadrift_traces.npz      IADrift LR loss over steps for every test image and label condition
+    results/examples_test.npz       the first 4 test images in sample order: LR, HR and every method's output, float16,
+                                    for figures only
 
 Usage:
     python scripts/analysis/export_results.py --check    # write to a temporary directory, compare with results/
@@ -21,7 +19,7 @@ Usage:
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repository root, so `iadrift` imports without install
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repo root, so `iadrift` imports without install
 
 from iadrift.runtime import setup_cpu
 
@@ -56,7 +54,7 @@ def export(out):
     iad = {(r["image_index"], r["condition"]): r for r in load_results(D / f"{IAD_STEM}.jsonl")}
     assert len(csgm) == 400 and len(iad) == 200
     kept = {(i, c): min((0, 1), key=lambda r: (csgm[(i, c, r)]["final_loss"], r)) for i in sample for c in COND}
-    for i in sample:  # IADrift started from the kept CSGM restart
+    for i in sample:  # IADrift must have started from the kept CSGM restart
         for c in COND:
             assert iad[(i, c)]["csgm_restart"] == kept[(i, c)]
 
@@ -141,7 +139,7 @@ def _compare_json(new, old, path, s, rtol):
 
 
 def compare_dirs(new_dir, old_dir, files, rtol=1e-12):
-    """JSON: values equal within rtol (and the same keys in the same order); .npz: same names, dtypes and values."""
+    """JSON: same keys in the same order, values equal within rtol. .npz: same names, dtypes and values."""
     ok = True
     for f in files:
         new, old = new_dir / f, old_dir / f

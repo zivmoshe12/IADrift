@@ -1,27 +1,25 @@
-"""Export the development results behind notebook 02 ("why adaptation fails") into results/ (CPU only).
+"""Export the development results on why adaptation fails to results/, where scripts/report/ reads them. CPU only.
 
-Development images only (never test images): 8117 streetcar, 3939 bonnet, 403 crane, 347 spoonbill, correct label.
-Reads the cached outputs of the development runs and computes every metric on the CPU:
+Development images only, never test images: 8117 streetcar, 3939 bonnet, 403 crane, 347 spoonbill; correct label.
+Reads the cached outputs of the development runs and computes all metrics on the CPU:
 
     results/dev_metrics.json    per image and method: PSNR, LPIPS, LR loss, band SNR, blockiness, patch-grid score,
                                 radial SNR curve; in-range SR (R3) metrics; patch-grid scores of random samples
-    results/dev_traces.json     optimization curves every 50 steps: theta-only adaptation (SR) and IADrift fitted to HR
-    results/dev_examples.npz    images for the figures (float16): 2 development images x all methods, in-range
-                                targets and reconstructions, the generator's random samples (CFG 1.0 / 1.5 / 2.5)
+    results/dev_traces.json     loss curves every 50 steps: theta-only adaptation (SR) and IADrift fitted to HR
+    results/dev_examples.npz    images for the figures, float16: 2 development images x all methods, the in-range
+                                targets and reconstructions, and random generator samples at CFG 1.0, 1.5 and 2.5
 
-Methods per image: bicubic, CSGM (restart with the lowest final LR loss), IADrift (theta lr 1e-5, eps lr 1e-3,
-1,000 steps), each also + BP (back-projection); theta-only adaptation (theta lr 1e-6, 1e-5); CSGM-HR (R1) and
-IADrift-HR (theta lr 1e-6, 1e-5). In-range SR (R3) is scored against the generated target x*, not HR.
+Methods per image: bicubic, CSGM (restart with the lowest final LR loss) and IADrift (theta lr 1e-5, eps lr 1e-3,
+1,000 steps), each raw and + BP; theta-only adaptation (theta lr 1e-6 and 1e-5); CSGM-HR (R1) and IADrift-HR
+(theta lr 1e-6 and 1e-5). In-range SR (R3) is scored against the generated target x*, not HR.
 
-Sources (IADRIFT_DATA) and the runners that wrote them (scripts/dev/):
+Reads from IADRIFT_DATA, written by these runners in scripts/dev/:
     csgm_dev_5000steps_lr0.02/      run_csgm_dev.py
     iadrift_dev_tuning_v1/          run_iadrift_dev.py
     theta_only_dev_v1/              run_theta_only_dev.py
     representation_error_dev_v1/    run_representation_dev.py   (R1, R3, summary.json)
     hr_fit_iadrift_dev_v1/          run_hr_fit_dev.py
     generator_samples_dev_v1.npz    run_generator_samples_dev.py
-
-Ported from scripts/export_dev_results.py in our working repository, onto the iadrift package.
 
 Usage:
     python scripts/analysis/export_dev_results.py            # write results/dev_*
@@ -31,7 +29,7 @@ Usage:
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repository root, so `iadrift` imports without install
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repo root, so `iadrift` imports without install
 
 from iadrift.runtime import setup_cpu
 
@@ -51,17 +49,17 @@ from iadrift.metrics import band_snr_db, blockiness, grid_score, lpips_dist, psn
 from iadrift.operators import A_sr4, backproject, bicubic_up
 
 DEV_IMAGES = list(data.DEV_IMAGES_4)
-FIGURE_IMAGES = [403, 8117]  # images stored for the figures: crane (strongest effects), streetcar
+FIGURE_IMAGES = [403, 8117]  # stored for the figures: crane (strongest effects), streetcar
 IAD_CFG = "lrt1e-05_lre0.001"
 R3_CONDITIONS = ("noise labels known", "noise labels random")
 FILES = ("dev_metrics.json", "dev_traces.json", "dev_examples.npz")
 
-torch.set_num_threads(4)  # as the original export (LPIPS values depend slightly on the thread count)
+torch.set_num_threads(4)  # LPIPS values depend slightly on the thread count; results/ was written with 4
 
 
 def evaluate(x, ref, y):
     f, s = radial_snr_db(x, ref)
-    # LR loss summed over the [64, 64, 3] array, as in the original export
+    # LR loss summed over the [64, 64, 3] array
     lr_loss = float(jnp.sum((A_sr4(jnp.asarray(x, jnp.float32)[None])[0] - jnp.asarray(y, jnp.float32)) ** 2))
     return {"psnr": psnr(ref, x), "lpips": lpips_dist(x, ref), "lr_loss": lr_loss, "band_snr_db": band_snr_db(x, ref),
             "blockiness": blockiness(x), "grid_score": grid_score(x), "radial_snr": s.tolist()}
@@ -187,7 +185,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--check", action="store_true",
                         help="export to a temporary directory and compare with results/")
-    parser.add_argument("--out", type=Path, default=paths.RESULTS_DIR, help="output (or, with --check, reference) dir")
+    parser.add_argument("--out", type=Path, default=paths.RESULTS_DIR, help="output dir; the reference dir with --check")
     args = parser.parse_args()
     if args.check:
         raise SystemExit(0 if check(args.out) else 1)

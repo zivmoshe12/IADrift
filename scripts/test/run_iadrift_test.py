@@ -1,20 +1,16 @@
-"""IADrift test run (docs/PROTOCOL.md, Section 4; pre-registered): 100 test images x {correct, wrong label}.
+"""IADrift test run (docs/PROTOCOL.md, Section 4, pre-registered): 100 test images x {correct, wrong label}.
 
-For each image of the fixed 100-image test sample and each label condition:
-    start   the saved CSGM test run with the lowest final LR loss (its eps, noise labels z and class label;
-            phase1_sr4_csgm_label_test_v2_n100_9e24c78a47ab, scripts/test/run_csgm_test.py)
-    theta   the pretrained pixel_B_sota weights (a fresh copy per run)
+One deterministic run per (image, condition), no restarts:
+    start   the saved CSGM test run with the lowest final LR loss (eps, z, class label), from
+            phase1_sr4_csgm_label_test_v2_n100_9e24c78a47ab (scripts/test/run_csgm_test.py)
+    theta   the pretrained pixel_B_sota weights, a fresh copy per run
     loss    ||y - A G_theta(eps; z, c)||^2
-    optim   Adam on all 241 theta leaves (lr 1e-5) and Adam on eps (lr 1e-3), one jitted joint step with donated
-            buffers (iadrift.adaptation.Adaptation.make_joint_step)
-    steps   1,000; outputs at the pre-declared checkpoints 100 and 1,000, each through the eager generator path
-One deterministic run per (image, condition); no restarts, nothing chosen with HR (HR is used only for logging PSNR).
-Start check: the CSGM output is regenerated eagerly in this process and its max difference from the saved CSGM output
-is recorded (0.0 for every saved run). Back-projection, LPIPS, blockiness, band SNR and the primary tests are computed
-later by scripts/analysis/evaluate_test.py --part iadrift (notebook dev_archive/03 Part 3).
-
-Ported from scripts/run_sr4_iadrift_test.py (+ generate / iadrift_loss / make_joint_step / eager_metrics of
-scripts/run_sr4_iadrift_smoke.py).
+    optim   Adam on all 241 theta leaves (lr 1e-5) and on eps (lr 1e-3), in one jitted joint step
+            (iadrift.adaptation.Adaptation.make_joint_step)
+    steps   1,000; outputs saved at the pre-declared checkpoints 100 and 1,000, via the eager generator path
+HR is only used to log PSNR. As a start check, the CSGM output is regenerated in this process and its max difference
+from the saved CSGM output is recorded; it is 0.0 for every saved run. Back-projection, LPIPS, blockiness, band SNR and
+the primary tests are computed afterwards by scripts/analysis/evaluate_test.py --part iadrift.
 
 Usage:
     python scripts/test/run_iadrift_test.py --dry-run           # plan and cache status; runs and writes nothing (CPU)
@@ -22,24 +18,26 @@ Usage:
     python scripts/test/run_iadrift_test.py --max-runs 10       # resumable chunk of 10 runs
     bash scripts/test/run_overnight.sh iadrift                  # all runs, resumable, chunked
 
-Outputs (IADRIFT_DATA): phase2_sr4_iadrift_test_v1_n<N>_<hash>.{jsonl,manifest.json} and ..._arrays/
-img#####_{oracle,wrong}.npz (x_step{100,1000}, eps_step{100,1000}, trace_steps, trace_loss, noise_labels). For N = 100
-the hash is 00ca59364e18. ~60-70 s per run on an RTX A4000 (200 runs ~3.5 h); runs in chunks of 10 (a 32-run chunk
-segfaulted after 16 runs, protocol Section 8).
+Outputs (in IADRIFT_DATA):
+    phase2_sr4_iadrift_test_v1_n<N>_<hash>.{jsonl,manifest.json}
+    phase2_sr4_iadrift_test_v1_n<N>_<hash>_arrays/img#####_{oracle,wrong}.npz
+        x_step{100,1000}, eps_step{100,1000}, trace_steps, trace_loss, noise_labels
+For N = 100 the hash is 00ca59364e18. About 60-70 s per run on an RTX A4000 (200 runs, ~3.5 h). Run it in chunks of
+10: a 32-run chunk once segfaulted after 16 runs (protocol Section 8).
 """
 
 import os
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repository root, so `iadrift` imports without install
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repo root, so `iadrift` imports without install
 
 if "--dry-run" in sys.argv:
-    os.environ.setdefault("JAX_PLATFORMS", "cpu")  # the dry run never imports JAX; this is only a safeguard
+    os.environ.setdefault("JAX_PLATFORMS", "cpu")  # the dry run never imports JAX; just in case
 
 from iadrift.runtime import setup
 
-setup(theta_gradients=True)  # gradients w.r.t. all 134M weights: XLA_PYTHON_CLIENT_ALLOCATOR=platform
+setup(theta_gradients=True)  # gradients w.r.t. all 134M weights need the platform allocator
 
 import argparse
 import io
@@ -54,7 +52,7 @@ from iadrift.checkpoint import Checkpoint, atomic_write_bytes, free_gb, load_res
 EXPERIMENT_VERSION = "sr4_iadrift_test_v1"
 CONDITIONS = ("oracle", "wrong")
 CSGM_STEM = "phase1_sr4_csgm_label_test_v2_n100_9e24c78a47ab"
-# Kept verbatim (including "protocol" and "start"): every run-plan row carries these keys, so they enter the spec hash.
+# Every run-plan row carries these keys, "protocol" and "start" included, so any change here changes the spec hash.
 FROZEN_CONFIG = {
     "protocol": "docs/PROTOCOL.md (frozen 2026-10-05)",
     "lr_theta": 1e-5,
@@ -113,10 +111,10 @@ def run_key(run):
 
 def iadrift(adapt, joint_step, run, y, hr, num_steps=FROZEN_CONFIG["num_steps"],
             checkpoints=tuple(FROZEN_CONFIG["checkpoints"])):
-    """One frozen IADrift run; returns (metrics, arrays). num_steps / checkpoints are shortened only by --smoke.
+    """One frozen IADrift run; returns (metrics, arrays). Only --smoke shortens num_steps / checkpoints.
 
-    The loop of the original runner (not Adaptation.run_iadrift, which also stores x_start and has no start check),
-    so the saved .npz files and JSONL rows have exactly the original fields.
+    Written out here instead of calling Adaptation.run_iadrift, which also stores x_start and has no start check, so
+    the .npz and JSONL fields match the saved runs.
     """
     import jax.numpy as jnp
     from iadrift.metrics import psnr
@@ -127,12 +125,12 @@ def iadrift(adapt, joint_step, run, y, hr, num_steps=FROZEN_CONFIG["num_steps"],
         eps = jnp.asarray(saved["eps"])
         noise_labels = jnp.asarray(saved["noise_labels"])
         csgm_x = saved["x_hat"]
-    # Start check: the CSGM output regenerated eagerly with the pretrained weights in this process.
+    # Start check: regenerate the CSGM output with the pretrained weights.
     x0, loss0, psnr0 = adapt.eager_metrics(adapt.gen.params, eps, label, noise_labels, y, hr)
     metrics = {"start_lr_loss": loss0, "start_psnr": psnr0,
                "start_max_abs_diff_vs_saved_csgm": float(np.abs(x0 - csgm_x).max())}
 
-    theta = adapt.fresh_weights()  # fresh copy; gen.params itself is never donated
+    theta = adapt.fresh_weights()  # a copy, since step_fn donates its buffers
     state_theta, state_eps = opt_theta.init(theta), opt_eps.init(eps)
     arrays, trace_steps, trace_loss = {}, [], []
     start = perf_counter()

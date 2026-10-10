@@ -1,13 +1,11 @@
-"""The measurement operator of SR x4 and the operations built on it.
+"""The SR x4 measurement operator and the operations built on it.
 
-    A_sr4(x)           antialiased bicubic downsampling 256 -> 64 (a fixed linear map; y = A x*)
-    bicubic_up(y)      the bicubic baseline 64 -> 256
+    A_sr4(x)           antialiased bicubic downsampling 256 -> 64, a fixed linear map: y = A x*
+    bicubic_up(y)      bicubic baseline 64 -> 256
     backproject(x, y)  BP(x) = x + A^T (A A^T)^{-1} (y - A x), the orthogonal projection onto {x' : A x' = y}
-                       (parameter-free)
     lr_loss(x, y)      ||y - A x||^2
 
-A^T is obtained by automatic transposition (jax.linear_transpose) and (A A^T) u = r is solved with conjugate
-gradients (tolerance 1e-6, at most 500 iterations).
+A^T comes from jax.linear_transpose; (A A^T) u = r is solved by conjugate gradients (tol 1e-6, at most 500 iterations).
 """
 
 import jax
@@ -17,7 +15,7 @@ from jax.scipy.sparse.linalg import cg
 
 HR_SHAPE = (256, 256, 3)
 LR_SHAPE = (64, 64, 3)
-LR_NYQUIST = 0.125  # cycles per HR pixel: the highest frequency a 64x64 measurement holds
+LR_NYQUIST = 0.125  # highest frequency a 64x64 measurement holds, in cycles per HR pixel
 
 
 def A_sr4(x):
@@ -27,7 +25,7 @@ def A_sr4(x):
 
 
 def bicubic_up(y):
-    """[64, 64, 3] -> [256, 256, 3], the bicubic baseline (no antialiasing needed when upsampling)."""
+    """[64, 64, 3] -> [256, 256, 3] bicubic upsampling."""
     return np.asarray(jax.image.resize(jnp.asarray(y, dtype=jnp.float32), HR_SHAPE, method="cubic", antialias=False))
 
 
@@ -46,8 +44,7 @@ def _backproject(x, y):
 
 
 def backproject(x, y):
-    """x [256, 256, 3], y [64, 64, 3] -> back-projected image [256, 256, 3]: the closest image to x that reproduces
-    y exactly."""
+    """Closest image to x [256, 256, 3] that reproduces y [64, 64, 3] exactly."""
     x = jnp.asarray(x, jnp.float32)[None]
     y = jnp.asarray(np.asarray(y, np.float32))[None]
     out = _backproject(x, y)

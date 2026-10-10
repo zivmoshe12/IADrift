@@ -1,15 +1,15 @@
 """Resumable experiment checkpoints.
 
-A run plan (a list of dicts, one per optimization run) plus everything that defines the experiment form a *spec*.
-The spec's SHA-256 (first 12 hex digits) names the output files, so a changed setting never mixes with old results:
+An experiment is described by a spec: the run plan (one dict per optimization run) and all settings. The first 12 hex
+digits of the spec's SHA-256 go into the file names, so results from a changed setting never mix with old ones:
 
-    <stem>.manifest.json   the spec (written once; must match on every resume)
-    <stem>.jsonl           one JSON row per finished run (rewritten atomically after every run)
+    <stem>.manifest.json   the spec; written once and checked on every resume
+    <stem>.jsonl           one JSON row per finished run, rewritten atomically after each run
     <stem>_arrays/         one .npz per run (eps, outputs, loss traces)
-    <stem>.lock            an flock, so two processes never write the same checkpoint
+    <stem>.lock            flock held while a process writes the checkpoint
 
-Each runner processes at most --max-runs runs per call and prints a line starting with ALL RUNS COMPLETE when the
-plan is finished, which the overnight drivers (scripts/test/*.sh) use to stop.
+Runners do at most --max-runs runs per call and print "ALL RUNS COMPLETE" when the plan is done; the overnight driver
+(scripts/test/run_overnight.sh) stops on that line.
 """
 
 import fcntl
@@ -26,7 +26,7 @@ import numpy as np
 
 # ---------------------------------------------------------------- atomic files
 def atomic_write_bytes(path, data):
-    """Write a complete temporary file, then atomically replace path (and fsync the directory)."""
+    """Write to a temporary file, then atomically replace path; fsyncs the file and the directory."""
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temporary_name = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=path.parent)
@@ -57,7 +57,7 @@ def load_results(path):
 
 
 def save_npz(path, arrays, metrics=None):
-    """Compressed .npz, atomically; metrics (a dict) are stored as a JSON string under 'metrics_json'."""
+    """Atomic compressed .npz. metrics (a dict) is stored as a JSON string under 'metrics_json'."""
     buffer = io.BytesIO()
     extra = {} if metrics is None else {"metrics_json": json.dumps(metrics)}
     np.savez_compressed(buffer, **extra, **arrays)
@@ -65,7 +65,7 @@ def save_npz(path, arrays, metrics=None):
 
 
 def load_npz(path):
-    """(metrics or None, {name: array}) from a file written by save_npz."""
+    """Inverse of save_npz: (metrics or None, {name: array})."""
     with np.load(path) as data:
         metrics = json.loads(str(data["metrics_json"])) if "metrics_json" in data.files else None
         return metrics, {k: data[k] for k in data.files if k != "metrics_json"}
@@ -78,7 +78,7 @@ def spec_hash(spec):
 
 
 class Checkpoint:
-    """JSONL checkpoint named by the spec hash: stem = <directory>/<prefix>_n<N>_<hash>."""
+    """JSONL checkpoint named by the spec hash: stem = <directory>/<prefix>_<hash>."""
 
     def __init__(self, directory, prefix, spec, key_fn):
         self.spec = spec
@@ -101,7 +101,7 @@ class Checkpoint:
 
     @contextmanager
     def open(self):
-        """Lock, write or check the manifest; yields (results so far, runs still to do)."""
+        """Take the lock, write or check the manifest, and yield (results so far, runs still to do)."""
         with Path(f"{self.stem}.lock").open("a+") as lock_file:
             try:
                 fcntl.flock(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)

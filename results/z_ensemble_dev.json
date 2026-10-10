@@ -105,7 +105,7 @@
    }
   }
  },
- "references_note": "All + BP. bicubic = BP(bicubic_up(y)), computed here; the rest from results/ablation_metrics.json['ensembles'] (notebook 04 \u00a75): CSGM = the better of r0, r1 (5,000 steps); Ens-U / Ens-W = 5 x 5,000 steps (r0, r1 and 3 shifts of r0, so 2 distinct z); IADrift @100 [Ens-U, Ens-W] = IADrift @100 from the same members (Ens-W weighted by the CSGM losses)",
+ "references_note": "All + BP. bicubic = BP(bicubic_up(y)), computed here; the rest from results/ablation_metrics.json['ensembles']: CSGM = the better of r0, r1 (5,000 steps); Ens-U / Ens-W = 5 x 5,000 steps (r0, r1 and 3 shifts of r0, so 2 distinct z); IADrift @100 [Ens-U, Ens-W] = IADrift @100 from the same members (Ens-W weighted by the CSGM losses)",
  "csgm_rule": {
   "500": {
    "psnr_raw": 17.911055223294706,

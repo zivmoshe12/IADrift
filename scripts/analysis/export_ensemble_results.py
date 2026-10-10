@@ -1,17 +1,16 @@
-"""Export the posterior-mean ensemble test results (docs/PROTOCOL.md, Section 11, Addendum A) into results/. CPU only.
+"""Export the posterior-mean ensemble test results (docs/PROTOCOL.md, Section 11, Addendum A) to results/. CPU only.
 
-    results/ensemble_test_metrics.json   per test image (100): metrics of CSGM + BP and of the ensembles E1, E2, Ens-U, Ens-W
-                                         (+ BP); the 5 members' LR losses and MSEs, the ensemble weights, and the MSE of
-                                         each ensemble before BP (for the MMSE check)
-    results/ensemble_primary.json        the 2 primary tests (Holm), as computed by evaluate_test.py --part ensemble
-    results/ensemble_examples.npz        first 4 test images (fixed sample order): the 5 members (shifted back to the
-                                         original frame), Ens-U + BP and Ens-W + BP, float16
+    results/ensemble_test_metrics.json   per test image: metrics of CSGM + BP and of E1, E2, Ens-U, Ens-W (each + BP),
+                                         plus the members' LR losses and MSEs, the weights, and each ensemble's MSE
+                                         before BP for the MMSE check
+    results/ensemble_primary.json        the 2 primary tests, copied from evaluate_test.py --part ensemble
+    results/ensemble_examples.npz        the first 4 test images in sample order: the 5 members (shifted back),
+                                         Ens-U + BP and Ens-W + BP, float16
 
-Sources (IADRIFT_DATA): csgm_test_ensemble_postproc_v1/ (scripts/analysis/evaluate_test.py --part ensemble),
-csgm_test_ensemble_v1/ (shifted CSGM runs, scripts/test/run_ensemble_test.py),
-phase1_sr4_csgm_label_test_v2_n100_9e24c78a47ab_arrays/ (restarts r0, r1, scripts/test/run_csgm_test.py).
-
-Ported from scripts/export_ensemble_results.py in our working repository.
+Reads from IADRIFT_DATA:
+    csgm_test_ensemble_postproc_v1/                            scripts/analysis/evaluate_test.py --part ensemble
+    csgm_test_ensemble_v1/                                     shifted CSGM runs, scripts/test/run_ensemble_test.py
+    phase1_sr4_csgm_label_test_v2_n100_9e24c78a47ab_arrays/    restarts r0, r1, scripts/test/run_csgm_test.py
 
 Usage:
     python scripts/analysis/export_ensemble_results.py --check   # write to a temporary directory, compare with results/
@@ -21,8 +20,8 @@ Usage:
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repository root, so `iadrift` imports without install
-sys.path.insert(0, str(Path(__file__).resolve().parent))      # export_results (shared --check code)
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repo root, so `iadrift` imports without install
+sys.path.insert(0, str(Path(__file__).resolve().parent))      # for export_results
 
 import json
 

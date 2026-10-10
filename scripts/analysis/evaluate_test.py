@@ -1,25 +1,25 @@
-"""Test-set evaluation (100 test images; notebooks dev_archive/03 Parts 1-3 and dev_archive/07 Part 1). CPU only.
+"""Test-set evaluation on the 100 test images, CPU only.
 
-Reads the saved GPU outputs and computes everything the reported test numbers are built from:
+Reads the saved GPU runs and computes the per-image metrics and paired tests behind the reported test numbers.
 
-  --part csgm      (notebook 03 Parts 1-2; the CSGM benchmark, back-projection and metrics)
-      Restart selection: per image and label condition, the CSGM restart with the lowest final LR loss (never HR).
-      Methods: bicubic, bicubic + BP, CSGM (correct label), CSGM (correct) + BP, CSGM (wrong label), CSGM (wrong) + BP.
-  --part iadrift   (notebook 03 Part 3; pre-registered)
-      IADrift outputs at steps 100 and 1,000, correct and wrong label, raw and + BP. Primary analysis (protocol Section 6):
-      IADrift @1000 + BP and @100 + BP vs CSGM + BP, correct label, on PSNR and LPIPS: 4 tests, Holm-corrected.
-  --part ensemble  (notebook 07 Part 1; protocol Section 11, post-hoc)
-      Members r0, r1 (saved CSGM test restarts) and 3 shifted CSGM runs (shifted back); ensembles E1, E2, Ens-U (uniform)
-      and Ens-W (w_k ~ exp(-(L_k - L_min) / std L), L_k = ||y - A x_k||^2), each + BP; CSGM + BP reference. Primary
-      analysis: Ens-W + BP vs CSGM + BP on PSNR and LPIPS, Holm over 2. MMSE check fields: each member's MSE to HR and
-      each ensemble's MSE and LR loss before BP.
+  --part csgm
+      Restart selection: for each image and label condition, the CSGM restart with the lowest final LR loss (never HR).
+      Methods: bicubic, CSGM with the correct label, CSGM with a wrong label; each raw and + BP.
+  --part iadrift   (pre-registered)
+      IADrift at steps 100 and 1,000, correct and wrong label, raw and + BP. Primary analysis (protocol Section 6):
+      IADrift @1000 + BP and @100 + BP vs CSGM + BP, correct label, on PSNR and LPIPS; 4 tests, Holm-corrected.
+  --part ensemble  (protocol Section 11, post-hoc)
+      Members: the saved CSGM test restarts r0, r1 and the 3 shifted CSGM runs, shifted back. Ensembles: E1, E2,
+      Ens-U (uniform) and Ens-W, w_k ~ exp(-(L_k - L_min) / std L) with L_k = ||y - A x_k||^2; each + BP, against
+      CSGM + BP. Primary analysis: Ens-W + BP vs CSGM + BP on PSNR and LPIPS, Holm over 2. Also stores, for the MMSE
+      check, each member's MSE to HR and each ensemble's MSE and LR loss before BP.
 
-Back-projection BP(x) = x + A^T (A A^T)^{-1} (y - A x) (parameter-free; CG tol 1e-6, at most 500 iterations).
-Metrics per method and image: PSNR (data range 2) and clipped PSNR, LPIPS (AlexNet, inputs clipped to [-1, 1]),
-blockiness (16-pixel tile seams; ~1 = none), LR loss ||y - A x||^2, band SNR (4 radial bands). Paired tests: mean
-of the per-image differences d_i with a normal 95% interval (mean +- 1.96 s / sqrt n; s = sample standard deviation
-of the d_i, divisor n - 1; n = number of images), Wilcoxon signed-rank p, count of images where A is better.
-Secondary comparisons (exploratory, uncorrected) are printed, not stored (as in the notebooks).
+Back-projection: BP(x) = x + A^T (A A^T)^{-1} (y - A x), solved by CG (tol 1e-6, at most 500 iterations).
+Metrics per method and image: PSNR (data range 2), clipped PSNR, LPIPS (AlexNet, inputs clipped to [-1, 1]),
+blockiness (16-pixel tile seams, ~1 means none), LR loss ||y - A x||^2, and band SNR in 4 radial bands.
+Paired tests on the per-image differences d_i: mean with a normal 95% interval, mean +- 1.96 s / sqrt(n) where s is the
+sample standard deviation (ddof 1); Wilcoxon signed-rank p; number of images where A is better. Secondary comparisons
+are exploratory and uncorrected; they are printed but not stored.
 
 Usage:
     python scripts/analysis/evaluate_test.py --check                       # recompute all parts into a temporary
@@ -27,26 +27,27 @@ Usage:
     python scripts/analysis/evaluate_test.py --check --part csgm --num-images 5
     python scripts/analysis/evaluate_test.py --part all --out DIR          # write fresh caches under DIR
 
-Outputs (per part, default directory IADRIFT_DATA; refuses to overwrite an existing cache unless --overwrite):
-    csgm_test_postproc_v1/      metrics.json ({image: {"hr_blockiness", method: metrics}}), img#####.npz
-                                (metrics_json, bicubic_BP, CSGM_correct_label_BP, CSGM_wrong_label_BP)
-    iadrift_test_postproc_v1/   metrics.json, primary.json (the 4 primary tests), img#####.npz
-                                (metrics_json, bp_{oracle,wrong}_step{100,1000})
-    csgm_test_ensemble_postproc_v1/  metrics.json (incl. "info": member LR losses, kept restart, weights, n_eff,
-                                mse_raw, lr_loss_raw, member_mse), primary.json (2 tests; only with all 100 images),
-                                img#####.npz (metrics_json, E1_BP, E2_BP, Ens-U_BP, Ens-W_BP, CSGM_BP)
-The iadrift and ensemble parts read the CSGM part's results from DIR/csgm_test_postproc_v1 if it exists there (e.g.
-computed in the same call), else from IADRIFT_DATA.
+Outputs, one directory per part under IADRIFT_DATA by default. An existing cache is not overwritten without --overwrite.
+    csgm_test_postproc_v1/           metrics.json ({image: {"hr_blockiness", method: metrics}}),
+                                     img#####.npz (metrics_json, bicubic_BP, CSGM_correct_label_BP, CSGM_wrong_label_BP)
+    iadrift_test_postproc_v1/        metrics.json, primary.json (the 4 primary tests),
+                                     img#####.npz (metrics_json, bp_{oracle,wrong}_step{100,1000})
+    csgm_test_ensemble_postproc_v1/  metrics.json, with an "info" entry per image: member LR losses, kept restart,
+                                     weights, n_eff, mse_raw, lr_loss_raw, member_mse;
+                                     primary.json (2 tests, written only for all 100 images);
+                                     img#####.npz (metrics_json, E1_BP, E2_BP, Ens-U_BP, Ens-W_BP, CSGM_BP)
+The iadrift and ensemble parts take the CSGM part's results from DIR/csgm_test_postproc_v1 if it exists, for example
+when computed in the same call, and from IADRIFT_DATA otherwise.
 """
 
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repository root, so `iadrift` imports without install
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repo root, so `iadrift` imports without install
 
 from iadrift.runtime import setup_cpu
 
-setup_cpu()  # JAX_PLATFORMS=cpu: never touches the GPU
+setup_cpu()  # JAX_PLATFORMS=cpu
 
 import argparse
 import hashlib
@@ -85,7 +86,7 @@ ENSEMBLES = {"E1: mean of 2 restarts": ["r0", "r1"], "E2: mean of r0 + 3 shifts"
              "Ens-U: mean of 5 CSGM runs": list(MEMBERS), "Ens-W: weighted 5 CSGM runs": list(MEMBERS)}
 ENS_METHODS = [n + " + BP" for n in ENSEMBLES]
 
-# Bicubic baseline exactly as in the notebooks (jitted; iadrift.operators.bicubic_up is the same resize, not jitted).
+# Same resize as iadrift.operators.bicubic_up, but jitted; the saved caches were computed this way.
 _upsample = jax.jit(lambda y: jax.image.resize(y, (256, 256, 3), method="cubic", antialias=False))
 
 
@@ -98,13 +99,13 @@ def mse(hr, x):
 
 
 def evaluate(x, hr, y):
-    """The notebooks' metric set, in their key order (iadrift.metrics.evaluate orders the keys differently)."""
+    """Same metrics as iadrift.metrics.evaluate, in the key order of the saved caches."""
     return {"psnr": psnr(hr, x), "psnr_clipped": psnr(hr, np.clip(x, -1, 1)), "lpips": lpips_dist(x, hr),
             "blockiness": blockiness(x), "lr_loss": lr_loss(x, y), "band_snr_db": band_snr_db(x, hr)}
 
 
 def paired_stats(d, key):
-    """Notebook version (differs from iadrift.stats.paired_stats only in returning p = 1 if all d are 0)."""
+    """Like iadrift.stats.paired_stats, except that p = 1 when all d are 0."""
     lower_better = key in ("lpips", "blockiness")
     half = 1.96 * d.std(ddof=1) / np.sqrt(len(d))
     return {"mean": d.mean(), "lo": d.mean() - half, "hi": d.mean() + half,
@@ -177,8 +178,7 @@ class Inputs:
         return data.hr_image(self.index_rows, i)
 
     def _csgm_best(self):
-        """Notebook 03 cell 4: validate the CSGM test run; per image and condition the restart with the lowest final
-        LR loss."""
+        """Validate the CSGM test run and pick, per image and condition, the restart with the lowest final LR loss."""
         plan = json.loads((paths.DATA_DIR / f"{CSGM_STEM}.manifest.json").read_text())["run_plan"]
         rows = load_results(paths.DATA_DIR / f"{CSGM_STEM}.jsonl")
         key = lambda r: (r["image_index"], r["condition"], r["restart"])
@@ -204,7 +204,7 @@ class Inputs:
             return d["x_hat"]
 
 
-# ---------------------------------------------------------------- part csgm (notebook 03 Parts 1-2)
+# ---------------------------------------------------------------- part csgm
 def part_csgm(inp, out_dir):
     images = inp.images
     i = images[0]
@@ -242,7 +242,7 @@ def part_csgm(inp, out_dir):
     return post
 
 
-# ---------------------------------------------------------------- part iadrift (notebook 03 Part 3)
+# ---------------------------------------------------------------- part iadrift
 def part_iadrift(inp, out_dir, post):
     images = inp.images
     iad_rows = load_results(paths.DATA_DIR / f"{IAD_STEM}.jsonl")
@@ -304,7 +304,7 @@ def part_iadrift(inp, out_dir, post):
     return iad_post
 
 
-# ---------------------------------------------------------------- part ensemble (notebook 07 Part 1)
+# ---------------------------------------------------------------- part ensemble
 def part_ensemble(inp, out_dir, csgm_dir, csgm_post):
     images = inp.images
     run_dir = paths.DATA_DIR / ENS_RUN_DIR
@@ -336,7 +336,7 @@ def part_ensemble(inp, out_dir, csgm_dir, csgm_post):
                 out[f"shift{sy}{sx}"] = unshift_x(d["x_hat"], sy, sx)
         return out
 
-    def weights(L, weighted):  # = iadrift.ensemble.weights
+    def weights(L, weighted):  # same as iadrift.ensemble.weights
         w = np.exp(-(L - L.min()) / max(L.std(), 1e-6)) if weighted else np.ones(len(L))
         return w / w.sum()
 
@@ -345,7 +345,7 @@ def part_ensemble(inp, out_dir, csgm_dir, csgm_post):
         y, hr = inp.lr_all[i], inp.hr(i)
         members = load_members(i)
         L = {m: lr_loss(x, y) for m, x in members.items()}
-        kept = inp.best[(i, "oracle")]["restart"]  # the frozen restart rule (lowest final LR loss)
+        kept = inp.best[(i, "oracle")]["restart"]  # lowest final LR loss
         outputs, info = {}, {"L": L, "kept": kept}
         outputs["CSGM, correct label + BP"] = backproject(members[f"r{kept}"], y)
         for name, names in ENSEMBLES.items():
@@ -381,7 +381,7 @@ def part_ensemble(inp, out_dir, csgm_dir, csgm_post):
         return ens_post
     summary = primary([("Ens-W: weighted 5 CSGM runs + BP", "CSGM, correct label + BP", key)
                        for key in ("psnr", "lpips")], v)
-    if complete:  # as in the notebook: primary.json only for the full test sample
+    if complete:  # primary.json only for the full test sample
         write_json(out_dir / "primary.json", summary)
     print_primary(f"[ensemble] PRIMARY (protocol Section 11; {len(images)} test images, Holm over 2)", summary)
     print_secondary("[ensemble] secondary", [(m, "CSGM, correct label + BP") for m in ENS_METHODS
@@ -492,7 +492,7 @@ def main():
                         help="the first N images of the fixed test sample (primary tests are stored for any N >= 2; "
                              "the ensemble's primary.json only for N = 100)")
     parser.add_argument("--out", type=Path, default=None,
-                        help="parent directory of the part directories (default: IADRIFT_DATA, the original caches)")
+                        help="parent directory of the part directories (default: IADRIFT_DATA, i.e. the saved caches)")
     parser.add_argument("--overwrite", action="store_true", help="allow writing into an existing cache directory")
     parser.add_argument("--check", action="store_true",
                         help="recompute into a temporary directory and compare with the caches in IADRIFT_DATA")
@@ -505,7 +505,7 @@ def main():
         parser.error("--check writes to a temporary directory; do not combine it with --out")
 
     import torch
-    torch.set_num_threads(4)  # as in the notebooks (LPIPS on the CPU)
+    torch.set_num_threads(4)  # LPIPS on the CPU; the caches were computed with 4 threads
 
     parts = ("csgm", "iadrift", "ensemble") if args.part == "all" else (args.part,)
     out = Path(tempfile.mkdtemp(prefix="evaluate_test_check_")) if args.check else (args.out or paths.DATA_DIR)

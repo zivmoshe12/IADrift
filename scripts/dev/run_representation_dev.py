@@ -1,20 +1,22 @@
-"""Representation error of the frozen generator (development, 4 images; notebook 02, CSGM-HR and in-range SR rows).
+"""Representation error of the frozen generator (4 development images).
 
-Diagnostics, not methods. Both use the frozen CSGM loop (Adam lr 0.02 on eps, 5,000 steps, restarts r0 and r1 from
-key(2026, image, restart), keep the restart with the lower final loss, no projection):
+Two diagnostics, not methods. Both use the frozen CSGM loop (Adam lr 0.02 on eps, 5,000 steps, restarts r0 and r1
+from key(2026, image, restart), keep the restart with the lower final loss, no projection).
 
-R1, CSGM fitted to HR (A = identity; uses HR on purpose, the best the frozen generator can do for the image):
+R1, CSGM fitted to HR (A = identity). It uses HR on purpose: the best the frozen generator can do for the image.
+
     eps_hat = argmin_eps ||HR - G(eps; z, c)||^2
-R3, in-range SR x4 (the target is in the generator's range, so the representation error is zero):
-    x* = G(eps*; z*, c), y* = A x*, with eps* ~ N(0, I), z* random (key fold_in(2032, image)); then CSGM SR from y*
-    with z = z* ("noise labels known") or z from initialize ("noise labels random", the real setting), scored
-    against x*, plus ||eps - eps*|| / ||eps*||.
+
+R3, in-range SR x4. The target is in the generator's range, so the representation error is zero:
+
+    x* = G(eps*; z*, c),  y* = A x*,  eps* ~ N(0, I),  z* random (key fold_in(2032, image))
+
+then CSGM SR from y* with z = z* ("noise labels known") or z from initialize ("noise labels random", the real
+setting), scored against x*, plus ||eps - eps*|| / ||eps*||.
+
 Images 8117, 3939, 403, 347, correct class. summary.json holds the metrics of the kept restarts (PSNR, LPIPS, LR loss,
 band SNR; eps statistics for R1; for R3 also bicubic(y*) and bicubic + BP, the eps error and the loss at eps*).
-
-Ported from notebooks/04_postproc_controls_dev.ipynb Check 5, cells 42 (R1) and 44 (R3), with the generic CSGM loop
-of cell 37 (= iadrift.csgm.CSGM.run) and eps_stats of cell 32. Default allocator, as the original notebook (whose
-Check 4 reproduced a saved CSGM run bit for bit with this loop).
+Default allocator; with it, the generic loop CSGM.run reproduces a saved frozen CSGM run bit for bit.
 
 Usage:
     python scripts/dev/run_representation_dev.py --dry-run     # plan and cache status; runs and writes nothing (CPU)
@@ -23,7 +25,8 @@ Usage:
 
 Outputs (IADRIFT_DATA/representation_error_dev_v1/): R1_img#####_r{0,1}.npz and
 R3_img#####_noise_labels_{known,random}_r{0,1}.npz (metrics_json: final_loss, seconds; eps, noise_labels, x_hat,
-trace_steps, trace_loss), summary.json.
+trace_steps, trace_loss), summary.json. Read by scripts/analysis/export_dev_results.py (CSGM-HR and in-range rows of
+report Table 2); R1 is also the start of run_hr_fit_dev.py.
 """
 
 import sys
@@ -183,14 +186,14 @@ def main():
 
 
 def write_summary(path, r1, r3, index_rows, labels, lr_all, gen, measurement_loss):
-    """Notebook 04's summary: metrics of the kept restarts (as in cells 8, 42 and 44)."""
+    """summary.json: metrics of the kept restarts."""
     import jax.numpy as jnp
     import torch
 
     from iadrift.metrics import band_snr_db, lpips_dist, psnr
     from iadrift.operators import A_sr4, backproject, bicubic_up
 
-    torch.set_num_threads(4)  # as the notebook (LPIPS on the CPU)
+    torch.set_num_threads(4)  # LPIPS on the CPU
 
     def evaluate(x, ref, y):  # y: [1, 64, 64, 3]
         return {"psnr": psnr(ref, x), "psnr_clipped": psnr(ref, np.clip(x, -1, 1)), "lpips": lpips_dist(x, ref),
