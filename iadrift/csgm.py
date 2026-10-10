@@ -7,7 +7,7 @@ Frozen benchmark settings (docs/PROTOCOL.md §3): Adam lr 0.02, 5,000 steps, 2 r
 with the lowest final LR loss is kept (never chosen with HR).
 
 Two loops, both reproducing the saved runs bit-exactly:
-    CSGM.reconstruct   the frozen benchmark loop (test runs, ensemble members, noisy SR with lambda = 0)
+    CSGM.reconstruct   the frozen benchmark loop (test runs, ensemble members)
     CSGM.run           a generic loop with any loss (e.g. A = identity) and an optional projection of eps after each
                        Adam step (development experiments)
 """

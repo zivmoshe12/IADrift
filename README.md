@@ -7,7 +7,8 @@ Does IAGAN-style adaptation (Hussein, Tirer & Giryes, AAAI 2020), which improves
 adapting the generator's weights to each measurement, carry over when the prior is a **drifting model**
 ([Deng et al., 2026](https://arxiv.org/abs/2602.04770)) instead of a GAN? Both generate an image in a single forward
 pass, but a drifting model is trained with a different objective and takes Gaussian noise of the same dimension as the
-image (plus 32 discrete noise labels), not a low-dimensional latent code. We study one pretrained drifting model,
+image (plus 32 discrete noise labels, written z in the code and notebooks and called style labels s in the report),
+not a low-dimensional latent code. We study one pretrained drifting model,
 `pixel_B_sota`, as the prior for **super-resolution ×4** (64×64 → 256×256) of ImageNet-V2 images, against CSGM
 (Bora et al., 2017) and bicubic upsampling. All conclusions are about this generator and this task.
 
@@ -23,11 +24,12 @@ command-line runner per experiment (`scripts/`), and notebooks that present the 
 | CSGM + BP | 22.75 | 0.284 |
 | IADrift @100 steps + BP | 22.63 | 0.276 |
 | IADrift @1000 steps + BP | 19.83 | 0.366 |
-| *Post-hoc addendum:* weighted ensemble of 5 CSGM runs (E3w) + BP | 24.32 | **0.252** |
+| *Post-hoc addendum:* weighted ensemble of 5 CSGM runs (E3w) + BP | 24.32 | 0.252 |
+| *Post-hoc addendum, secondary:* uniform ensemble of the same 5 runs (E3) + BP | 24.88 | **0.247** |
 
 BP = back-projection onto the images consistent with the measurement. The first four rows are pre-registered
-(`docs/PROTOCOL.md`, frozen before the IADrift test run); the ensemble was specified in a protocol addendum (§11)
-before its test run. With this generator, CSGM is perceptually better than bicubic (LPIPS) but worse in PSNR;
+(`docs/PROTOCOL.md`, frozen before the IADrift test run); the ensembles were specified in a protocol addendum (§11)
+before their test run, with E3w as the primary method and E3 as a secondary one (uncorrected). With this generator, CSGM is perceptually better than bicubic (LPIPS) but worse in PSNR;
 adapting the weights keeps lowering the measurement loss while filling the unmeasured frequencies above the LR limit
 with invented detail; averaging several reconstructions (an approximate posterior mean) removes much of it.
 
@@ -37,7 +39,7 @@ with invented detail; averaging several reconstructions (an approximate posterio
 
 ```
 iadrift/                 the library: operator and back-projection, generator calls, CSGM, IADrift, ensembles,
-                         noisy SR, metrics, statistics, resumable checkpoints
+                         metrics, statistics, resumable checkpoints
 scripts/data/            prepare_data.py: download ImageNet-V2, measurements, split, test sample
 scripts/test/            the test-set runs (CSGM, IADrift, ensemble) and their overnight driver
 scripts/dev/             the development experiments (development images only)
@@ -107,10 +109,17 @@ python scripts/data/prepare_data.py --check    # verify (index, split, test samp
 | ε kept on the Gaussian shell | `run_eps_projection_dev.py` | 04 §3 |
 | Noise-label search | `run_noise_label_search_dev.py`, `run_z_swap_confirm_dev.py` | 04 §4 |
 | Ensembles of CSGM and of IADrift runs | `run_ensemble_dev.py`, `run_iadrift_ensemble_dev.py` | 04 §5 |
+| Larger ensembles: 12 distinct z, shorter runs (500-2,000 steps), grid shifts, IADrift @100 members | `run_z_ensemble_dev.py` | — (`results/z_ensemble_dev.json`, `figures/z_ensemble_dev*.png`) |
 | Colour penalty and frequency anchor | `run_hf_constraints_dev.py` | 04 §6 |
-| Noisy SR ×4, σ = 10/255, Gaussian prior on ε (development sweep only) | `run_noisy_dev.py` | — |
 
-Then `python scripts/analysis/export_dev_results.py` and `export_ablation_results.py` rebuild `results/`.
+Some runners start from another runner's outputs, so run them in this order: `run_csgm_settings_sweep.py` (its image
+pool fixes the development images) → `run_csgm_dev.py`, `run_z_swap_confirm_dev.py` → `run_ensemble_dev.py` →
+`run_iadrift_ensemble_dev.py`, `run_hf_constraints_dev.py --a` → `--b`; `run_representation_dev.py` →
+`run_hr_fit_dev.py`, `run_generator_samples_dev.py`. The others need only `run_csgm_dev.py` or nothing.
+
+Then `python scripts/analysis/export_dev_results.py`, `export_ablation_results.py` and `export_z_ensemble_results.py`
+(in this order: the last reads `results/ablation_metrics.json`) rebuild `results/`; `export_z_ensemble_results.py`
+also redraws `figures/z_ensemble_dev*.png`.
 
 **4. Notebooks** (CPU, seconds): `jupyter lab notebooks/`. They read only `results/`.
 
@@ -130,8 +139,10 @@ Every runner's `--smoke` (or `--repro-check`) reruns part of a saved run and com
 (JAX 0.4.37, CUDA 12) all of them match bit-exactly, except `scripts/dev/run_iadrift_dev.py`: that learning-rate grid
 was the first IADrift run, made before the deterministic flag, so its cache is one draw of the kernel variation and
 its smoke checks agreement within the observed run-to-run variation (≤ 0.1 dB PSNR). `prepare_data.py --check`,
-`evaluate_test.py --check` and the `export_*.py --check` modes recompute the derived files and compare them with the
-saved ones (identical).
+`evaluate_test.py --check` and the `--check` modes of `export_results.py`, `export_ensemble_results.py` and
+`export_dev_results.py` recompute the derived files and compare them with the saved ones (identical);
+`export_ablation_results.py --check` compares within float tolerances (relative 1e-4 for metrics, absolute 2e-3 for the
+float16 images), since its saved files were made on another platform. `export_z_ensemble_results.py` has no check mode.
 
 ## Data and license
 

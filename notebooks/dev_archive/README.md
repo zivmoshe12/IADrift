@@ -16,4 +16,4 @@ cells it was ported from, and its `--dry-run` finds the cached outputs these not
 | `04_postproc_controls_dev.ipynb` | development Checks 1–16 (fusion, θ-only, generator diagnostics, ε projection, representation tests, z experiments, ensembles, penalties) | notebooks 2 and 4 |
 | `05_theta_only_dev.ipynb` | θ-only adaptation runs | notebook 2 §3 |
 | `06_noise_label_role_dev.ipynb` | what z and ε control (8 classes) | notebook 4 §1 |
-| `07_ensemble_noisy_test.ipynb` | analysis of the post-hoc ensemble test run (`docs/PROTOCOL.md` §11) | notebook 3 |
+| `07_ensemble_test.ipynb` | analysis of the post-hoc ensemble test run (`docs/PROTOCOL.md` §11) | notebook 3 |

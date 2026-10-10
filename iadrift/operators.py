@@ -2,11 +2,11 @@
 
     A_sr4(x)           antialiased bicubic downsampling 256 -> 64 (a fixed linear map; y = A x*)
     bicubic_up(y)      the bicubic baseline 64 -> 256
-    backproject(x, y)  BP(x) = x + A^T (A A^T + eta I)^{-1} (y - A x); eta = 0 is the orthogonal projection onto
-                       {x' : A x' = y} (parameter-free), eta > 0 the regularized version for noisy y
+    backproject(x, y)  BP(x) = x + A^T (A A^T)^{-1} (y - A x), the orthogonal projection onto {x' : A x' = y}
+                       (parameter-free)
     lr_loss(x, y)      ||y - A x||^2
 
-A^T is obtained by automatic transposition (jax.linear_transpose) and (A A^T + eta I) u = r is solved with conjugate
+A^T is obtained by automatic transposition (jax.linear_transpose) and (A A^T) u = r is solved with conjugate
 gradients (tolerance 1e-6, at most 500 iterations).
 """
 
@@ -45,21 +45,12 @@ def _backproject(x, y):
     return x + A_transpose(u)
 
 
-@jax.jit
-def _backproject_reg(x, y, eta):
-    u, _ = cg(lambda v: A_sr4(A_transpose(v)) + eta * v, y - A_sr4(x), tol=1e-6, maxiter=500)
-    return x + A_transpose(u)
-
-
-def backproject(x, y, eta=0.0):
-    """x [256, 256, 3], y [64, 64, 3] -> back-projected image [256, 256, 3].
-
-    eta = 0: the closest image to x that reproduces y exactly (the noiseless BP of all main results).
-    eta > 0: x + A^T (A A^T + eta I)^{-1} (y - A x), for noisy measurements.
-    """
+def backproject(x, y):
+    """x [256, 256, 3], y [64, 64, 3] -> back-projected image [256, 256, 3]: the closest image to x that reproduces
+    y exactly."""
     x = jnp.asarray(x, jnp.float32)[None]
     y = jnp.asarray(np.asarray(y, np.float32))[None]
-    out = _backproject(x, y) if eta == 0 else _backproject_reg(x, y, jnp.float32(eta))
+    out = _backproject(x, y)
     return np.asarray(out[0])
 
 
@@ -68,13 +59,3 @@ def lr_loss(x, y):
     y = jnp.asarray(np.asarray(y, np.float32))[None]
     return float(jnp.sum((A_sr4(jnp.asarray(x, jnp.float32)[None]) - y) ** 2))
 
-
-def lambda_max_AAt(iters=300, seed=0):
-    """Largest eigenvalue of A A^T, by power iteration (scale for the regularized BP's eta)."""
-    v = jax.random.normal(jax.random.PRNGKey(seed), (1,) + LR_SHAPE, jnp.float32)
-    op = jax.jit(lambda v: A_sr4(A_transpose(v)))
-    lam = 0.0
-    for _ in range(iters):
-        w = op(v / jnp.linalg.norm(v))
-        lam, v = float(jnp.linalg.norm(w)), w
-    return lam

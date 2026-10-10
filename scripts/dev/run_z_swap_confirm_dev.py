@@ -11,7 +11,7 @@ Restart rule for both: lowest final LR loss. HR is never used for a decision. Im
 development pick (pick_dev_images(6): numpy seed 2030 over the 100-image pool of the CSGM settings sweep) that no
 earlier check used, i.e. 9780 and 8405; correct label.
 
-Ported from scripts/run_z_swap_confirm_dev.py; outputs are the cache the published results were computed from.
+Ported from scripts/run_z_swap_confirm_dev.py.
 
 Usage:
     python scripts/dev/run_z_swap_confirm_dev.py --dry-run   # plan and cache status; runs and writes nothing (CPU)

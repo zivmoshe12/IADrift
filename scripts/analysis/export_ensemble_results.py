@@ -11,7 +11,7 @@ Sources (IADRIFT_DATA): csgm_test_ensemble_postproc_v1/ (scripts/analysis/evalua
 csgm_test_ensemble_v1/ (shifted CSGM runs, scripts/test/run_ensemble_test.py),
 phase1_sr4_csgm_label_test_v2_n100_9e24c78a47ab_arrays/ (restarts r0, r1, scripts/test/run_csgm_test.py).
 
-Ported from github/scripts/export_ensemble_results.py of the working repository.
+Ported from scripts/export_ensemble_results.py in our working repository.
 
 Usage:
     python scripts/analysis/export_ensemble_results.py --check   # write to a temporary directory, compare with results/

@@ -12,7 +12,7 @@ Reproduction test (run first in the notebook): the generic step with the identit
 the saved CSGM run of image 8117, restart 1 bit for bit (final loss, eps, output, loss trace).
 
 Ported from notebooks/04_postproc_controls_dev.ipynb cells 37 and 39 (Check 4; iadrift.csgm.CSGM.run is cell 37's
-run_csgm without the caching); outputs are the cache the published results were computed from.
+run_csgm without the caching).
 
 Usage:
     python scripts/dev/run_eps_projection_dev.py --dry-run       # plan, cache status, cached-repro check (CPU)

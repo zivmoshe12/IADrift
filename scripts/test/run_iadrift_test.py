@@ -14,7 +14,7 @@ is recorded (0.0 for every saved run). Back-projection, LPIPS, blockiness, band 
 later by scripts/analysis/evaluate_test.py --part iadrift (notebook dev_archive/03 Part 3).
 
 Ported from scripts/run_sr4_iadrift_test.py (+ generate / iadrift_loss / make_joint_step / eager_metrics of
-scripts/run_sr4_iadrift_smoke.py); outputs are the cache the published results were computed from.
+scripts/run_sr4_iadrift_smoke.py).
 
 Usage:
     python scripts/test/run_iadrift_test.py --dry-run           # plan and cache status; runs and writes nothing (CPU)

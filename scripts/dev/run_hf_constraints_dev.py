@@ -17,7 +17,7 @@ B (IADrift stage; platform allocator; --b): IADrift (joint theta + eps, Adam the
 The two losses close over the class label (a Python constant) inside the jitted steps, unlike the package's CSGM and
 Adaptation steps, so the original code is kept here (with the package's generator calls, which are identical).
 
-Ported from scripts/run_hf_constraints_dev.py; outputs are the cache the published results were computed from.
+Ported from scripts/run_hf_constraints_dev.py.
 
 Usage:
     python scripts/dev/run_hf_constraints_dev.py --dry-run          # plan and cache status; writes nothing (CPU)

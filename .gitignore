@@ -7,6 +7,7 @@ logs/
 *.lock
 # Data, experiment caches (~1 GB per run family), model weights and the upstream code stay outside the repository;
 # results/ holds the compact files the notebooks read (scripts/analysis/export_*.py).
-data/
-hf_cache/
-third_party/
+# Anchored to the repository root: an unanchored "data/" also matched scripts/data/ (prepare_data.py).
+/data/
+/hf_cache/
+/third_party/

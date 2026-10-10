@@ -17,8 +17,7 @@ scripts/dev/run_csgm_dev.py) and z_swap_dev_v1/confirm/img#####_csgm_r{0,1}.npz 
 run_z_swap_confirm_dev.py). Check 12's other demos (seam penalty C, C + D) are not used by any reported result and are
 not part of the release.
 
-Ported from notebooks/04_postproc_controls_dev.ipynb cells 73 (Check 12 D) and 79 (Check 13); outputs are the cache the
-published results were computed from.
+Ported from notebooks/04_postproc_controls_dev.ipynb cells 73 (Check 12 D) and 79 (Check 13).
 
 Usage:
     python scripts/dev/run_ensemble_dev.py --dry-run   # plan and cache status (incl. restart members); writes nothing

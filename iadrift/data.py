@@ -24,7 +24,7 @@ WRONG_LABEL_SEED = 2029    # one random wrong class per test image (secondary an
 
 # Development images used by the development experiments (never test images).
 DEV_IMAGES_4 = (8117, 3939, 403, 347)                  # streetcar, bonnet, crane, spoonbill (Checks 1-12)
-DEV_IMAGES_6 = DEV_IMAGES_4 + (9780, 8405)             # + two fresh images (Checks 10b-14, noisy development sweep)
+DEV_IMAGES_6 = DEV_IMAGES_4 + (9780, 8405)             # + two fresh images (Checks 10b-14)
 
 
 def load_hr256(path):

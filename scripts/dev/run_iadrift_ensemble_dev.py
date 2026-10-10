@@ -10,7 +10,7 @@ saving the eager outputs at steps 100 and 1,000 in the member's own (possibly sh
 back-projection and scoring are done by scripts/analysis/export_ablation_results.py (weights from the CSGM members'
 LR losses, never HR). The printed PSNR uses the HR image shifted into the member's frame (logging only).
 
-Ported from scripts/run_iadrift_ensemble_dev.py; outputs are the cache the published results were computed from.
+Ported from scripts/run_iadrift_ensemble_dev.py.
 
 Usage:
     python scripts/dev/run_iadrift_ensemble_dev.py --dry-run   # plan and cache status; runs and writes nothing (CPU)

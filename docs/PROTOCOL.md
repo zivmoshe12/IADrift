@@ -1,4 +1,4 @@
-> **Note for readers of the repository.** This is the project's working protocol, unchanged except for this note. It refers to files by their internal names: `notebooks/03_csgm_test_analysis.ipynb` and `notebooks/07_ensemble_noisy_test.ipynb` are in `notebooks/dev_archive/` (outputs cleared); their results are presented in `notebooks/01_sr4_csgm_vs_iadrift.ipynb` and `notebooks/03_ensemble_posterior_mean.ipynb`. Paths under `~/work/datasets/ImageNetV2/` are experiment caches outside the repository.
+> **Note for readers of the repository.** This is the project's working protocol, unchanged except for this note and the removal of a pointer to an internal working file. It refers to files by their internal names: `notebooks/03_csgm_test_analysis.ipynb` and `notebooks/07_ensemble_test.ipynb` are in `notebooks/dev_archive/` (outputs cleared); their results are presented in `notebooks/01_sr4_csgm_vs_iadrift.ipynb` and `notebooks/03_ensemble_posterior_mean.ipynb`. Paths under `~/work/datasets/ImageNetV2/` are experiment caches outside the repository. One difference between the text and the code: §6 and §11 say "t-based 95% CI", but the paired tests were computed with the normal approximation, mean ± 1.96 s/√n (`iadrift/stats.py`, `paired_stats`). With n = 100 the t-based interval would be about 1% wider, which changes none of the reported conclusions.
 
 # IADrift test protocol (SR ×4)
 
@@ -121,7 +121,7 @@ The run completed as specified: 200/200 runs, all outputs finite, the regenerate
 
 ## 10. Development work after the test run (not part of this protocol)
 
-After §9, further experiments were run **on development images only** (notebook 04, Checks 9–16): noise-label optimization and swaps, IADrift from better starts, one-image post-processing demos, posterior-mean ensembles of CSGM and IADrift runs, and high-frequency constraints (colour penalty, frequency anchor). None of them was run on the test set, and none changes §1–§9. They are exploratory (n = 1–6 images) and must be reported as such. Summary: `docs/HANDOFF_REPORT.md` §5–§7.
+After §9, further experiments were run **on development images only** (notebook 04, Checks 9–16): noise-label optimization and swaps, IADrift from better starts, one-image post-processing demos, posterior-mean ensembles of CSGM and IADrift runs, and high-frequency constraints (colour penalty, frequency anchor). None of them was run on the test set, and none changes §1–§9. They are exploratory (n = 1–6 images) and must be reported as such.
 
 ## 11. Addendum A (post-hoc, 2026-10-06): posterior-mean ensemble on the test set
 
@@ -134,13 +134,13 @@ After §9, further experiments were run **on development images only** (notebook
 - **Reference:** CSGM + BP as frozen in §3 (restart with the lowest final LR loss), recomputed and checked against `csgm_test_postproc_v1/`.
 - **Primary tests (Holm over 2):** E3w + BP vs CSGM + BP, on PSNR and on LPIPS; paired over the 100 images, mean difference with t-based 95% CI, Wilcoxon signed-rank p, count of images better (as in §6).
 - **Secondary (uncorrected, exploratory):** E3, E1, E2 + BP vs CSGM + BP; every ensemble vs bicubic + BP; PSNR of mean MSE; blockiness; band SNR; LR losses; weight entropy / effective number of members; MMSE check (members' mean MSE ÷ E3 MSE before BP, in dB, vs the independent-sample prediction 10·log₁₀(2/1.2) = 2.22 dB, with caveats); the first 4 images of the fixed sample as visual examples.
-- **Runner:** `scripts/run_sr4_ensemble_test.py`, settings hash **`ca2d0ec5e6ff`**, driver `scripts/run_overnight_ensemble_test.sh` (10-run chunks, log `logs/sr4_ensemble_test_n100.log`), output `csgm_test_ensemble_v1/`; analysis `notebooks/07_ensemble_noisy_test.ipynb` Part 1, cache `csgm_test_ensemble_postproc_v1/`.
+- **Runner:** `scripts/run_sr4_ensemble_test.py`, settings hash **`ca2d0ec5e6ff`**, driver `scripts/run_overnight_ensemble_test.sh` (10-run chunks, log `logs/sr4_ensemble_test_n100.log`), output `csgm_test_ensemble_v1/`; analysis `notebooks/07_ensemble_test.ipynb` Part 1, cache `csgm_test_ensemble_postproc_v1/`.
 - **Pre-launch checks (2026-10-06, passed):** `--repro-check` reproduced bit-exactly (final loss, ε, output, loss trace) the saved CSGM test run 1704/oracle/r0 (final loss 100.2454833984375) and the development shifted run 9780 shift (0,1) from notebook 04 Check 13 (107.30801391601562). Allocator: default (not `platform`).
 - **Failure handling:** as in §7.
 
 ### 11.1 Outcome (added after the run, 2026-10-07; does not change §11)
 
-The run completed as specified: 300/300 shifted runs, all finite; settings hash `ca2d0ec5e6ff` unchanged. Analysis: `notebooks/07_ensemble_noisy_test.ipynb` Part 1 (cache `csgm_test_ensemble_postproc_v1/`, primary tests in `primary.json`); presentation: `github/notebooks/03_ensemble_posterior_mean.ipynb`. The recomputed CSGM + BP reference is identical to `csgm_test_postproc_v1/`.
+The run completed as specified: 300/300 shifted runs, all finite; settings hash `ca2d0ec5e6ff` unchanged. Analysis: `notebooks/07_ensemble_test.ipynb` Part 1 (cache `csgm_test_ensemble_postproc_v1/`, primary tests in `primary.json`); presentation: `github/notebooks/03_ensemble_posterior_mean.ipynb`. The recomputed CSGM + BP reference is identical to `csgm_test_postproc_v1/`.
 
 **Primary results** (100 test images, correct label, Holm over 2; both significant):
 

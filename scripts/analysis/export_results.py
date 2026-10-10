@@ -11,7 +11,7 @@ caches and the analysis caches of scripts/analysis/evaluate_test.py from IADRIFT
     results/examples_test.npz       the first 4 test images (fixed sample order, not chosen by result): LR, HR and
                                     every method's output, float16 (display and spot checks only)
 
-Ported from github/scripts/export_results.py of the working repository.
+Ported from scripts/export_results.py in our working repository.
 
 Usage:
     python scripts/analysis/export_results.py --check    # write to a temporary directory, compare with results/

@@ -9,8 +9,7 @@ steps, and the one with the lowest final LR loss is the search result. HR is nev
 The runs use the frozen CSGM loop (CSGM.reconstruct with start = (eps, z)), so candidate k = 0 at full length is the
 saved baseline run: asserted on image 8117, restart 1 before the search starts (in the dry run: on the cached files).
 
-Ported from scripts/run_noise_label_search_dev.py (Check 7); outputs are the cache the published results were
-computed from.
+Ported from scripts/run_noise_label_search_dev.py (Check 7).
 
 Usage:
     python scripts/dev/run_noise_label_search_dev.py --dry-run   # plan, cache status, cached-repro check (CPU)
@@ -131,6 +130,8 @@ def main():
         print(f"Cache {OUT_DIR}: screening runs {sum(p.exists() for p in screens)} / {len(screens)}; "
               f"final runs {sum(p.exists() for p in finals)} / {len(IMAGES) * TOP_K}; summary.json "
               f"{'present' if summary else 'missing'}")
+        if not summary or not all(p.exists() for p in screens + finals):
+            return  # nothing complete to check yet
         # The summary's choices must follow from the cached losses (LR loss only).
         for i in IMAGES:
             s = summary[str(i)]

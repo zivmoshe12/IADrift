@@ -7,8 +7,7 @@ with s the per-channel standardized input image (bicubic(y), or the HR photo as 
 noise draw n = normal(PRNGKey(2040 + i), (256, 256, 3)); plus the raw (unstandardized) image as eps. No optimization;
 nothing is chosen. The regenerated PSNRs are checked against the table printed in notebook 04 (cell 85, 1 decimal).
 
-Ported from scripts/regen_dev_image_in_eps.py (= notebooks/04_postproc_controls_dev.ipynb cell 85, Check 15);
-outputs are the cache the published results were computed from.
+Ported from scripts/regen_dev_image_in_eps.py (= notebooks/04_postproc_controls_dev.ipynb cell 85, Check 15).
 
 Usage:
     python scripts/dev/run_image_in_eps_dev.py --dry-run   # plan and cache status; runs and writes nothing (CPU)

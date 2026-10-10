@@ -13,8 +13,7 @@ B. Locality: from the base sample (z_0, eps_0), 12 single-patch eps resamples an
    normalized entropy of the tile map (1 = uniform), RMS change.
 (Part C of the notebook, the per-tile R3 error maps, only re-reads representation_error_dev_v1/ and caches nothing.)
 
-Ported from notebooks/06_noise_label_role_dev.ipynb (cells 2, 4, 6, 10); outputs are the cache the published
-results were computed from.
+Ported from notebooks/06_noise_label_role_dev.ipynb (cells 2, 4, 6, 10).
 
 Usage:
     python scripts/dev/run_noise_label_role_dev.py --dry-run   # plan and cache status; runs and writes nothing (CPU)

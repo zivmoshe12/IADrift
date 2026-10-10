@@ -9,7 +9,7 @@ unshifted members (restarts r0, r1) are the saved CSGM test runs. The ensembles 
 are computed by scripts/analysis/evaluate_test.py --part ensemble (notebook dev_archive/07 Part 1). Method identical to
 development Check 13 (notebook dev_archive/04 cells 79-81). Nothing is chosen with HR.
 
-Ported from scripts/run_sr4_ensemble_test.py; outputs are the cache the published results were computed from.
+Ported from scripts/run_sr4_ensemble_test.py.
 
 Usage:
     python scripts/test/run_ensemble_test.py --dry-run          # plan and cache status; runs and writes nothing (CPU)

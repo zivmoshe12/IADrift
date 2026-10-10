@@ -16,7 +16,6 @@ Ported from scripts/run_sr4_moments_dev_chunked.py (an exported notebook; cells 
 regularizer, loss, step, initialization, run plan and checkpoint) and scripts/analyze_sr4_moments_dev.py (--analyze).
 The loss and step are copied verbatim: they differ from the frozen test CSGM (iadrift.csgm) in form (a generic
 loss_per_image with the operator and a regularizer as arguments), so they compile to a different program.
-The output is the cache the published sweep table was computed from.
 
 Usage:
     python scripts/dev/run_csgm_settings_sweep.py --dry-run     # plan, hash and cache status; runs and writes nothing

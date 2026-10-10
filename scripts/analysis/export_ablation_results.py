@@ -21,7 +21,7 @@ Sections and sources (IADRIFT_DATA), with the runners that made them:
 Ensemble weights: w_k ~ exp(-(L_k - L_min) / std L) from the CSGM members' LR losses (iadrift.ensemble.weights; never
 HR); the CSGM restart kept by the usual rule = the lower LR loss of r0, r1.
 
-Ported from github/scripts/export_ablation_results.py (helpers from export_dev_results.py / freq_metrics.py, now
+Ported from our working copy of export_ablation_results.py (helpers from export_dev_results.py / freq_metrics.py, now
 iadrift.metrics and iadrift.operators).
 
 Usage:

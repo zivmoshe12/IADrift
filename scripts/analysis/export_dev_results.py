@@ -21,7 +21,7 @@ Sources (IADRIFT_DATA) and the runners that wrote them (scripts/dev/):
     hr_fit_iadrift_dev_v1/          run_hr_fit_dev.py
     generator_samples_dev_v1.npz    run_generator_samples_dev.py
 
-Ported from github/scripts/export_dev_results.py onto the iadrift package.
+Ported from scripts/export_dev_results.py in our working repository, onto the iadrift package.
 
 Usage:
     python scripts/analysis/export_dev_results.py            # write results/dev_*
